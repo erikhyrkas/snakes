@@ -48,7 +48,9 @@ Example usage:
 ## Related Details
 
 Mamba 2 paper: https://arxiv.org/pdf/2405.21060
+
 HiPPO initialization paper: https://arxiv.org/pdf/2206.12037
+
 Blog on Mamba 2:
 
 * https://tridao.me/blog/2024/mamba2-part1-model/
