@@ -1,14 +1,24 @@
-# mamba 2 model
+# Example of a mamba 2 model
+
+`Why did it have to be snakes?`
 
 This is an example of a mamba 2 llm that works with CPU or GPU.
 
-## dependencies
+## Dependencies
+The model will work on cpu, but is a little slow. The linear version of the model (mamba 1) is much easier to run on cpu, but not as good.
 
+If you have cuda:
 ```
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
-## train
+If you don't have cuda:
+```
+pip install torch torchvision torchaudio
+```
+
+
+## Train
 
 Train the model with the command:
 
