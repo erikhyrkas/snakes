@@ -1,0 +1,140 @@
+import time
+
+import torch
+import torch.nn as nn
+import numpy as np
+
+
+class StateSpaceModel(nn.Module):
+    def __init__(self, state_dim, input_dim, output_dim, block_size=50, mode='linear', delta=0.01):
+        super(StateSpaceModel, self).__init__()
+        self.state_dim = state_dim
+        self.block_size = block_size
+        self.mode = mode
+        self.delta = delta  # Timescale parameter
+
+        self.A = nn.Parameter(self._init_hippo_legendre(state_dim))
+        self.B = nn.Parameter(torch.rand(state_dim, input_dim) * 0.1)
+        self.C = nn.Parameter(torch.rand(output_dim, state_dim) * 0.1)
+        self.D = nn.Parameter(torch.rand(output_dim, input_dim) * 0.1)
+
+        if self.mode == 'quadratic':
+            self.P = nn.Parameter(torch.rand(state_dim, state_dim, state_dim) * 0.1)
+            self.Q = nn.Parameter(torch.rand(state_dim, input_dim) * 0.1)
+            self.R = nn.Parameter(torch.rand(output_dim, state_dim) * 0.1)
+            self.S = nn.Parameter(torch.rand(output_dim, input_dim) * 0.1)
+
+    def _init_hippo_legendre(self, n):
+        A = np.zeros((n, n), dtype=np.float32)
+        for i in range(n):
+            for j in range(i + 1, n):
+                A[i, j] = (2 * i + 1) ** 0.5 * (2 * j + 1) ** 0.5
+            A[i, i] = -i
+        A *= -self.delta
+        return torch.from_numpy(A)
+
+    def forward(self, x):
+        device = x.device
+        batch_size, sequence_length, input_dim = x.shape
+        outputs = []
+        state = torch.zeros(batch_size, self.state_dim).to(device)
+
+        for start in range(0, sequence_length, self.block_size):
+            end = min(start + self.block_size, sequence_length)
+            x_block = x[:, start:end, :]
+
+            if self.mode == 'linear':
+                for t in range(x_block.shape[1]):
+                    input_t = x_block[:, t, :].unsqueeze(-1)  # Shape: (batch_size, input_dim, 1)
+                    state = torch.matmul(self.B.expand(batch_size, -1, -1), input_t).squeeze(-1) + state
+                    output_t = torch.matmul(self.C, state.unsqueeze(-1)).squeeze(-1) + \
+                               torch.matmul(self.D, input_t).squeeze(-1)
+                    outputs.append(output_t.unsqueeze(1))
+
+            elif self.mode == 'quadratic':
+                for t in range(x_block.shape[1]):
+                    input_t = x_block[:, t, :].unsqueeze(-1)
+
+                    state_quad = torch.matmul(state.unsqueeze(-1), state.unsqueeze(-2))
+                    state = torch.einsum('bij,bijk->bk', state_quad, self.P.unsqueeze(0)) + \
+                            torch.matmul(self.Q.expand(batch_size, -1, -1), input_t).squeeze(-1)
+
+                    # Normalize state to prevent explosion
+                    state = state / (torch.norm(state, dim=-1, keepdim=True) + 1e-6)
+
+                    output_t = torch.matmul(self.R, state.unsqueeze(-1)).squeeze(-1) + \
+                               torch.matmul(self.S.expand(batch_size, -1, -1), input_t).squeeze(-1)
+                    outputs.append(output_t.unsqueeze(1))
+
+            if torch.isnan(state).any():
+                print(f"NaN detected at step {start}-{end} in state.")
+                raise ValueError("NaN detected in state after block processing")
+
+            state = state.detach()
+
+        final_output = torch.cat(outputs, dim=1)
+
+        if torch.isnan(final_output).any():
+            raise ValueError("NaN detected in final output")
+
+        return final_output
+
+
+# Example usage:
+def example_model():
+    model = StateSpaceModel(state_dim=10, input_dim=5, output_dim=2, mode='quadratic')
+    x = torch.randn(1, 100, 5)  # Batch size of 1, sequence length of 100, input dimension of 5
+    output = model(x)
+    print(output.shape)  # Expected shape: (1, 100, 2)
+
+
+def benchmark_model(model, x):
+    start_time = time.time()
+    output = model(x)
+    end_time = time.time()
+    return output, end_time - start_time
+
+
+def test_model():
+    state_dim = 10
+    input_dim = 5
+    output_dim = 2
+    sequence_length = 1000
+    batch_size = 32
+
+    # random input data
+    x = torch.randn(batch_size, sequence_length, input_dim)
+
+    linear_model = StateSpaceModel(state_dim, input_dim, output_dim, mode='linear')
+    quadratic_model = StateSpaceModel(state_dim, input_dim, output_dim, mode='quadratic')
+
+    # Benchmark linear model
+    linear_output, linear_time = benchmark_model(linear_model, x)
+
+    # Benchmark quadratic model
+    quadratic_output, quadratic_time = benchmark_model(quadratic_model, x)
+
+    print(f"Linear mode time: {linear_time:.6f} seconds")
+    print(f"Quadratic mode time: {quadratic_time:.6f} seconds")
+    print(f"Output shape (Linear): {linear_output.shape}")
+    print(f"Output shape (Quadratic): {quadratic_output.shape}")
+
+
+def test_correctness():
+    model = StateSpaceModel(state_dim=10, input_dim=5, output_dim=2, mode='linear')
+    x = torch.randn(1, 10, 5)  # A small batch of 10 sequences
+
+    expected_output_shape = (1, 10, 2)  # Expecting output to match input sequence length
+
+    # Run the model
+    output = model(x)
+    print(f"Output shape: {output.shape}")
+
+    assert output.shape == expected_output_shape, "Output shape does not match expected shape"
+    print("Output shape is correct.")
+
+
+if __name__ == "__main__":
+    example_model()
+    test_model()
+    test_correctness()
