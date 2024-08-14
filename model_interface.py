@@ -38,7 +38,7 @@ class ModelInterface:
     def prompt(self, prompt: str, top_p: float = 0.9, max_tokens: int = 100000):
         new_prompt = prompt
         if '<start>' not in prompt:
-            new_prompt = prompt + '<start>'
+            new_prompt = prompt + '\n<start>'
 
         result = self.complete(new_prompt, top_p, max_tokens)
         return result.replace('<end>', '').strip()

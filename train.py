@@ -94,7 +94,7 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
 
         val_loss /= len(val_loader)
         print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss}')
-        scheduler.step(val_loss)
+        scheduler.step()
 
         early_stopping.check(val_loss)
         if early_stopping.stop_training:
@@ -162,8 +162,8 @@ def split_dataset(dataset, val_split=0.2):
 
 def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_save_path="model.bin",
              tokenizer_save_path="tokenizer.pkl"):
-    tokenizer, train_loader, val_loader = build_tokenizer_and_load_tokens(context_length, batch_size,
-                                                                          tokenizer_save_path)
+    tokenizer, train_loader, val_loader, number_of_samples = build_tokenizer_and_load_tokens(context_length, batch_size,
+                                                                                             tokenizer_save_path)
 
     model = LanguageModel(tokenizer.vocab_size())
 
@@ -172,9 +172,14 @@ def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_
         model.load_state_dict(torch.load(f"{base_path}model_checkpoint.bin"))
         print(f"Resumed training from {base_path}model_checkpoint.bin")
 
+    total_training_steps = (number_of_samples // batch_size) * max_epochs
+    if number_of_samples % batch_size != 0:
+        # Add one step for each epoch to cover the last incomplete batch
+        total_training_steps += max_epochs
+
+    optimizer = optim.AdamW(model.parameters(), lr=0.00001)
     # optimizer = optim.Adam(model.parameters(), lr=0.0005, weight_decay=1e-5)
-    optimizer = optim.AdamW(model.parameters(), lr=0.0005, weight_decay=1e-5)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3)
+    scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.0005, total_steps=total_training_steps)
     criterion = nn.CrossEntropyLoss()
 
     train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs, patience=patience)
@@ -214,7 +219,9 @@ def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_p
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
-    return tokenizer, train_loader, val_loader
+    number_of_samples = len(train_dataset)
+
+    return tokenizer, train_loader, val_loader, number_of_samples
 
 
 def get_training_file_names(directory="training_data"):
@@ -231,8 +238,8 @@ def notebook_do_train():
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
     tokenizer_path = f"{base_path}tokenizer.pkl"
-    do_train(context_length=20, batch_size=64,
-             max_epochs=15, patience=2,
+    do_train(context_length=256, batch_size=64,
+             max_epochs=100, patience=2,
              model_save_path=model_path,
              tokenizer_save_path=tokenizer_path)
 

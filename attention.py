@@ -10,10 +10,10 @@ class Attention(nn.Module):
         super(Attention, self).__init__()
         self.state_dim = state_dim
         self.block_size = block_size
-        self.P = nn.Parameter(torch.rand(state_dim, state_dim, state_dim) * 0.1)
-        self.Q = nn.Parameter(torch.rand(state_dim, input_dim) * 0.1)
-        self.R = nn.Parameter(torch.rand(output_dim, state_dim) * 0.1)
-        self.S = nn.Parameter(torch.rand(output_dim, input_dim) * 0.1)
+        self.P = nn.Parameter(torch.eye(state_dim).repeat(state_dim, 1, 1) * 0.1 + 0.01)
+        self.Q = nn.Parameter(torch.eye(state_dim, input_dim) * 0.1 + 0.01)
+        self.R = nn.Parameter(torch.eye(output_dim, state_dim) * 0.1 + 0.01)
+        self.S = nn.Parameter(torch.eye(output_dim, input_dim) * 0.1 + 0.01)
         self.layer_norm = nn.LayerNorm(state_dim)
 
     def forward(self, x):
