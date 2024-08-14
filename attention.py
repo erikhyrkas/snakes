@@ -2,26 +2,29 @@ import time
 import torch
 import torch.nn as nn
 
+ATTENTION_DEBUG = False
 
-class StateSpaceModel(nn.Module):
+
+class Attention(nn.Module):
     def __init__(self, state_dim, input_dim, output_dim, block_size=50):
-        super(StateSpaceModel, self).__init__()
+        super(Attention, self).__init__()
         self.state_dim = state_dim
         self.block_size = block_size
         self.P = nn.Parameter(torch.rand(state_dim, state_dim, state_dim) * 0.1)
         self.Q = nn.Parameter(torch.rand(state_dim, input_dim) * 0.1)
         self.R = nn.Parameter(torch.rand(output_dim, state_dim) * 0.1)
         self.S = nn.Parameter(torch.rand(output_dim, input_dim) * 0.1)
+        self.layer_norm = nn.LayerNorm(state_dim)
 
     def forward(self, x):
         device = x.device
         batch_size, sequence_length, input_dim = x.shape
         outputs = []
-        state = torch.zeros(batch_size, self.state_dim).to(device)
+        state = torch.zeros(batch_size, self.state_dim, device=device)
 
-        p_expanded = self.P.unsqueeze(0)  # Expand P to (1, state_dim, state_dim, state_dim)
-        q_expanded = self.Q.expand(batch_size, -1, -1)  # Expand Q to (batch_size, state_dim, input_dim)
-        s_expanded = self.S.expand(batch_size, -1, -1)  # Expand S to (batch_size, output_dim, input_dim)
+        p_expanded = self.P.unsqueeze(0)
+        q_expanded = self.Q.expand(batch_size, -1, -1)
+        s_expanded = self.S.expand(batch_size, -1, -1)
 
         for start in range(0, sequence_length, self.block_size):
             end = min(start + self.block_size, sequence_length)
@@ -34,14 +37,14 @@ class StateSpaceModel(nn.Module):
                 state = torch.einsum('bij,bijk->bk', state_quad, p_expanded) + \
                         torch.matmul(q_expanded, input_t).squeeze(-1)
 
-                # Normalize state to prevent explosion
-                state = state / (torch.norm(state, dim=-1, keepdim=True) + 1e-6)
+                # Apply layer normalization
+                state = self.layer_norm(state)
 
                 output_t = torch.matmul(self.R, state.unsqueeze(-1)).squeeze(-1) + \
                            torch.matmul(s_expanded, input_t).squeeze(-1)
                 outputs.append(output_t.unsqueeze(1))
 
-            if torch.isnan(state).any():
+            if ATTENTION_DEBUG and torch.isnan(state).any():
                 print(f"NaN detected at step {start}-{end} in state.")
                 raise ValueError("NaN detected in state after block processing")
 
@@ -49,14 +52,14 @@ class StateSpaceModel(nn.Module):
 
         final_output = torch.cat(outputs, dim=1)
 
-        if torch.isnan(final_output).any():
+        if ATTENTION_DEBUG and torch.isnan(final_output).any():
             raise ValueError("NaN detected in final output")
 
         return final_output
 
 
 def example_model():
-    model = StateSpaceModel(state_dim=10, input_dim=5, output_dim=2)
+    model = Attention(state_dim=10, input_dim=5, output_dim=2)
     x = torch.randn(1, 100, 5)  # Batch size of 1, sequence length of 100, input dimension of 5
     output = model(x)
     print(output.shape)  # Expected shape: (1, 100, 2)
@@ -79,7 +82,7 @@ def test_model():
     # random input data
     x = torch.randn(batch_size, sequence_length, input_dim)
 
-    quadratic_model = StateSpaceModel(state_dim, input_dim, output_dim)
+    quadratic_model = Attention(state_dim, input_dim, output_dim)
 
     # Benchmark quadratic model
     quadratic_output, quadratic_time = benchmark_model(quadratic_model, x)
@@ -89,7 +92,7 @@ def test_model():
 
 
 def test_correctness():
-    model = StateSpaceModel(state_dim=10, input_dim=5, output_dim=2)
+    model = Attention(state_dim=10, input_dim=5, output_dim=2)
     x = torch.randn(1, 10, 5)  # A small batch of 10 sequences
 
     expected_output_shape = (1, 10, 2)  # Expecting output to match input sequence length

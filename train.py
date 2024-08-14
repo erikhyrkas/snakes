@@ -1,34 +1,19 @@
 import os
+import random
+
 import torch
-import numpy as np
 import torch.nn as nn
 from torch import optim
-from torch.utils.data import TensorDataset, DataLoader, random_split
+from torch.utils.data import DataLoader, random_split
 
+from early_stopping import EarlyStopping
 from model import LanguageModel
-from tokenizer import SimpleTokenizer
-
-
-class EarlyStopping:
-    def __init__(self, patience=5, min_delta=0.001):
-        self.patience = patience
-        self.min_delta = min_delta
-        self.best_loss = np.inf
-        self.wait = 0
-        self.stop_training = False
-
-    def check(self, current_loss):
-        if (self.best_loss - current_loss) > self.min_delta:
-            self.best_loss = current_loss
-            self.wait = 0
-        else:
-            self.wait += 1
-            if self.wait >= self.patience:
-                self.stop_training = True
+from text_dataset import TextDataset
+from tokenizer import Tokenizer
 
 
 def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=100, max_grad_norm=1.0,
-                patience=5):
+                patience=5, accumulation_steps=4):
     print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device_name}")
@@ -37,24 +22,55 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
     model.to(device)
     early_stopping = EarlyStopping(patience=patience)
 
+    if device_name == "cuda":
+        # Initialize GradScaler for mixed precision if using GPU
+        scaler = torch.cuda.amp.GradScaler()
+    else:
+        scaler = None  # No scaler needed for CPU
+
+    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+
     print("First epoch starting...")
     for epoch in range(epochs):
         model.train()
         epoch_loss = 0.0
-        for inputs, targets in train_loader:
+        optimizer.zero_grad()  # Initialize the optimizer at the start of each epoch
+
+        for i, (inputs, targets) in enumerate(train_loader):
             inputs, targets = inputs.to(device), targets.to(device)
-            optimizer.zero_grad()
 
-            outputs = model(inputs)
-            batch_size, sequence_length, vocab_size = outputs.shape
-            outputs = outputs.view(batch_size * sequence_length, vocab_size)
-            targets = targets.view(batch_size * sequence_length)
+            if device_name == "cuda":
+                # Use autocast for mixed precision on GPU
+                with torch.cuda.amp.autocast():
+                    outputs = model(inputs)
+                    batch_size, sequence_length, vocab_size = outputs.shape
+                    outputs = outputs.view(batch_size * sequence_length, vocab_size)
+                    targets = targets.view(batch_size * sequence_length)
 
-            loss = criterion(outputs, targets)
-            loss.backward()
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
-            optimizer.step()
-            epoch_loss += loss.item()
+                    loss = criterion(outputs, targets) / accumulation_steps
+                # Scale the loss before backpropagation
+                scaler.scale(loss).backward()
+            else:
+                # Full precision for CPU
+                outputs = model(inputs)
+                batch_size, sequence_length, vocab_size = outputs.shape
+                outputs = outputs.view(batch_size * sequence_length, vocab_size)
+                targets = targets.view(batch_size * sequence_length)
+
+                loss = criterion(outputs, targets) / accumulation_steps
+                loss.backward()
+
+            # Accumulate gradients and update model after a certain number of steps
+            if (i + 1) % accumulation_steps == 0:
+                if device_name == "cuda":
+                    scaler.unscale_(optimizer)
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
+                optimizer.step()
+                if device_name == "cuda":
+                    scaler.update()
+                optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
+
+            epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
 
         # validation loss
         model.eval()
@@ -62,10 +78,18 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
         with torch.no_grad():
             for inputs, targets in val_loader:
                 inputs, targets = inputs.to(device), targets.to(device)
-                outputs = model(inputs)
-                outputs = outputs.view(-1, outputs.size(-1))
-                targets = targets.view(-1)
-                loss = criterion(outputs, targets)
+                if device_name == "cuda":
+                    with torch.cuda.amp.autocast():  # Use autocast for validation as well on GPU
+                        outputs = model(inputs)
+                        outputs = outputs.view(-1, outputs.size(-1))
+                        targets = targets.view(-1)
+                        loss = criterion(outputs, targets)
+                else:
+                    outputs = model(inputs)
+                    outputs = outputs.view(-1, outputs.size(-1))
+                    targets = targets.view(-1)
+                    loss = criterion(outputs, targets)
+
                 val_loss += loss.item()
 
         val_loss /= len(val_loader)
@@ -76,6 +100,11 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
         if early_stopping.stop_training:
             print(f"Early stopping triggered at epoch {epoch + 1}")
             break
+
+        # Save model checkpoint every 5 epochs
+        if epoch % 5 == 0:
+            torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
+            print(f"Checkpoint saved at epoch {epoch + 1} to {base_path}model_checkpoint.bin")
 
 
 def safe_tensor_conversion(data_list, dtype=torch.long):
@@ -137,7 +166,14 @@ def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_
                                                                           tokenizer_save_path)
 
     model = LanguageModel(tokenizer.vocab_size())
-    optimizer = optim.Adam(model.parameters(), lr=0.0005, weight_decay=1e-5)
+
+    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    if os.path.exists(f"{base_path}model_checkpoint.bin"):
+        model.load_state_dict(torch.load(f"{base_path}model_checkpoint.bin"))
+        print(f"Resumed training from {base_path}model_checkpoint.bin")
+
+    # optimizer = optim.Adam(model.parameters(), lr=0.0005, weight_decay=1e-5)
+    optimizer = optim.AdamW(model.parameters(), lr=0.0005, weight_decay=1e-5)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3)
     criterion = nn.CrossEntropyLoss()
 
@@ -149,36 +185,46 @@ def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_
 
 
 def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_path):
-    # we do this in a separate function to allow python to free up memory when we no longer need the text.
-    print("Loading training data...")
-    documents = read_all_documents()
-    print("Training tokenizer...")
-    tokenizer = SimpleTokenizer()
-    for document in documents:
-        tokenizer.append_to_vocab(document)
-    print("Saving tokenizer...")
+    print("Loading and tokenizing training data...")
+    training_file_names = get_training_file_names()
+    # Split file names for training and validation
+    random.shuffle(training_file_names)
+    split_index = int(0.8 * len(training_file_names))
+    train_files = training_file_names[:split_index]
+    val_files = training_file_names[split_index:]
+
+    # Initialize the tokenizer
+    tokenizer = Tokenizer()
+
+    # Update tokenizer vocab by iterating over each document
+    for file_path in training_file_names:
+        with open(file_path, 'r', encoding='utf-8') as file:
+            document = file.read()
+            tokenizer.learn_new_vocab(document)  # Add document content to vocab
+            del document  # Free memory as soon as possible
+
+    # Save the tokenizer with the built vocabulary
     tokenizer.save(tokenizer_save_path)
-    print("Tokenizer vocabulary size: ", tokenizer.vocab_size())
-    print(f"Tokenizer saved to {tokenizer_save_path}")
-    print("Tokenizing training data...")
-    x_train, y_train = prepare_training_data(documents, tokenizer, sequence_length=context_length)
-    dataset = TensorDataset(x_train, y_train)
-    train_dataset, val_dataset = split_dataset(dataset, val_split=0.2)
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+
+    # Create the TextDataset using file names, allowing on-the-fly loading
+    train_dataset = TextDataset(train_files, tokenizer, context_length)
+    val_dataset = TextDataset(val_files, tokenizer, context_length)
+
+    # DataLoader for batching (shuffle is done within the TextDataset)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
     val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+
     return tokenizer, train_loader, val_loader
 
 
-def read_all_documents(directory="training_data"):
+def get_training_file_names(directory="training_data"):
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
-    texts = []
+    file_names = []
     for filename in os.listdir(f"{base_path}{directory}"):
         if filename.endswith(".txt") or filename.endswith(".md"):
             filepath = os.path.join(f"{base_path}{directory}", filename)
-            with open(filepath, 'r', encoding='utf-8') as file:
-                content = file.read()
-                texts.append(content)
-    return texts
+            file_names.append(filepath)
+    return file_names
 
 
 def notebook_do_train():

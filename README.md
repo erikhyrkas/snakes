@@ -1,6 +1,7 @@
-# Example of a mamba 2 model
-
+# YS-LLM 
 `Why did it have to be snakes?`
+
+"Why Snakes Large Language Model" is an example LLM that leverages ideas from the Mamba 2 paper for its attention.
 
 This LLM is based on my understanding of Mamba 2 and works with CPU or GPU.
 
@@ -44,6 +45,8 @@ Context size and batch size can be changed at the bottom of `train.py`. Vocabula
 
 ### Observed GPU Used
 
+Note: These values are from before I changed batching to be more efficient:
+
 | Memory Used | Context Size | Batch Size | Vocabulary Size |
 |-------------|--------------|------------|-----------------|
 | 1.6 GB      | 5            | 64         | 13,148          |
@@ -84,6 +87,8 @@ Example usage:
 ## How many parameters does the model have?
 
 It depends on your vocab, etc. Assuming you didn't tweak the embedding size or anything else.
+
+Note: These values are from before I changed batching to be more efficient:
 
 | context size | batch size | vocab size | parameters |
 |--------------|------------|------------|------------|

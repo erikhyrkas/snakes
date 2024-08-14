@@ -4,7 +4,7 @@ import pickle
 DEBUG_TOKENIZER = False
 
 
-class SimpleTokenizer:
+class Tokenizer:
     def __init__(self):
         self.index_to_word = {}
         self.word_to_index = {}
@@ -12,7 +12,7 @@ class SimpleTokenizer:
         self.initialized = False
         self.special_tokens = ["<upper>", "<shout>", "<start>", "<end>", "<space>", "<newline>"]
 
-    def add_to_vocab(self, word):
+    def _add_to_vocab(self, word):
         if word not in self.word_to_index:
             self.index_to_word[self.current_index] = word
             self.word_to_index[word] = self.current_index
@@ -21,8 +21,8 @@ class SimpleTokenizer:
     def _initialize_vocabulary(self):
         if not self.initialized:
             for token in self.special_tokens:
-                self.add_to_vocab(token)
-            self.add_to_vocab('_')
+                self._add_to_vocab(token)
+            self._add_to_vocab('_')
             # Note:
             # We have to keep the model small, and there's no intention
             # of being exclusionary, but I have to focus on the text that I know.
@@ -42,21 +42,21 @@ class SimpleTokenizer:
             # Add ASCII characters to vocabulary
             for i in ascii_range:
                 char = chr(i)
-                self.add_to_vocab(char)
+                self._add_to_vocab(char)
 
             # Add common Western European accented characters and symbols
             for char in extended_chars:
-                self.add_to_vocab(char)
+                self._add_to_vocab(char)
 
             self.initialized = True
 
-    def append_to_vocab(self, document: str):
+    def learn_new_vocab(self, document: str):
         if not self.initialized:
             self._initialize_vocabulary()
         words = self.to_words(document)
         for word in words:
             if word not in self.word_to_index:
-                self.add_to_vocab(word)
+                self._add_to_vocab(word)
 
     @staticmethod
     def _split_text(text):
@@ -191,10 +191,10 @@ class SimpleTokenizer:
 
 
 def example_tokenize():
-    tokenizer = SimpleTokenizer()
+    tokenizer = Tokenizer()
     documents = ["Hello world\nthis is a Test", "Hello there", "break <start>dancing<end><start>"]
     for document in documents:
-        tokenizer.append_to_vocab(document)
+        tokenizer.learn_new_vocab(document)
     tokens = tokenizer.tokenize("hello 1980 <start>Test ërik's world<start><end> <html> Erik<start>")
     print("Tokens:", tokens)
     print("Detokenized:", tokenizer.detokenize(tokens))
@@ -203,7 +203,7 @@ def example_tokenize():
 
 
 def run_tokenizer_tests():
-    tokenizer = SimpleTokenizer()
+    tokenizer = Tokenizer()
     test_cases = [
         "LaSalle is a great example of camelCase splitting.",
         "The quick brown fox jumps over the lazy dog.",

@@ -1,6 +1,6 @@
 import os
 
-from model import ModelInterface
+from model_interface import ModelInterface
 
 
 def do_completions():
