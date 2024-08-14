@@ -81,6 +81,16 @@ This enters a cli mode where you give text, and it completes the text. Nothing f
 Example usage:
 ![img.png](img.png)
 
+## How many parameters does the model have?
+
+It depends on your vocab, etc. Assuming you didn't tweak the embedding size or anything else.
+
+| context size | batch size | vocab size | parameters |
+|--------------|------------|------------|------------|
+| 20           | 64         | 5,474      | 19,782,498 |
+
+
+
 ## Related Details
 
 Mamba 2 paper: https://arxiv.org/pdf/2405.21060

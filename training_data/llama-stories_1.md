@@ -634,7 +634,7 @@ Lyra's eyes lit up, and she threw her arms around Astra. "Really? You'd do that 
 Astra nodded enthusiastically, feeling a sense of excitement wash over her. She knew that no matter where life took them, friendship was the one constant that would always be there – in space or on any planet.
 
 As they hugged each other tightly, the stars outside seemed to twinkle with approval, and Astra knew that this was just the beginning of an epic journey – not just through space, but through the power of true friendship.<end>
-Prompt: Write a story that begins with a 33-year-old woman named Emma walking through the deserted streets of her village after sunset, feeling a growing sense of emptiness and unease as she tries to recall something important that she's lost. As she ventures deeper into the nearby woods, the atmosphere becomes increasingly ominous, and Emma discovers an ancient tree with glowing eyes, leading to a revelation about her past and a terrifying realization about her true circumstances in the village.<start>The sun had barely set over the village, casting long shadows across the thatched roofs of the cottages. Emma, a 33-year-old woman with long brown hair and a quiet demeanor, walked through the deserted streets, her eyes scanning the ground for something she couldn't quite remember.
+Write a story that begins with a 33-year-old woman named Emma walking through the deserted streets of her village after sunset, feeling a growing sense of emptiness and unease as she tries to recall something important that she's lost. As she ventures deeper into the nearby woods, the atmosphere becomes increasingly ominous, and Emma discovers an ancient tree with glowing eyes, leading to a revelation about her past and a terrifying realization about her true circumstances in the village.<start>The sun had barely set over the village, casting long shadows across the thatched roofs of the cottages. Emma, a 33-year-old woman with long brown hair and a quiet demeanor, walked through the deserted streets, her eyes scanning the ground for something she couldn't quite remember.
 
 She had lost it before, several times in fact, but this time felt different. This time, the feeling of emptiness was like a weight on her chest, making it hard to breathe. She tried to shake it off, telling herself it was just stress from work, but deep down, she knew it was more than that.
 
@@ -663,8 +663,6 @@ As the truth dawned on her, the forest around her began to change. The trees gre
 The last thing she saw was the old tree looming over her, its eyes burning with an otherworldly light. And then, everything went black.
 
 When they found Emma's body the next morning, it was curled up at the base of the ancient tree, her eyes frozen in terror. The villagers whispered among themselves about the cursed place and how some things were better left forgotten.<end>
-Here's your prompt:
-
 In a small desert town, a young woman is visited by three women who've been secretly checking in on her for months. As she realizes that their friendship goes far beyond just acquaintances, she's drawn into a mystery that will take all of them on a journey through the heart of friendship itself. What secrets are they hiding? And what does the future hold for this unlikely group of friends?<start>As I trudged through the desert sand, the blistering sun beating down on my skin like a malevolent entity, I couldn't shake the feeling that something was off. It wasn't just the isolation that was getting to me - it was the memories.
 
 I had been living in this small desert town for six months now, trying to escape the pain of my past. My friends back home had encouraged me to take a break, and I thought a change of scenery would be just what I needed. But as the days turned into weeks, and the weeks into months, I began to realize that something was missing.
@@ -763,8 +761,6 @@ The truth was, I couldn't help but feel as if Jasper's reemergence was stirring 
 So, as I rocked in my chair, sipping lemon tea from a chipped cup, I knew what needed doing. Time to pay a visit to Jasper himself – not that I suspected him of foul play or anything so melodramatic; just perhaps... maybe we might learn more about his past together, over a nice cuppa and some friendly banter.
 
 The mystery unfolding before me was clear: could our village's most unlikely newcomer be the key to unlocking the hidden truth behind Emilia's disappearance?<end>
-Here is the prompt:
-
 Write a story about a young person who stumbles upon an ancient secret hidden in a neglected alleyway of their village, and how this discovery sets them on a journey of self-discovery that challenges everything they thought they knew about themselves and the world around them.<start>As I wandered through the village, my feet carried me on autopilot to the local market square. It was a crisp autumn morning, and the air was alive with the smell of roasting chestnuts and baking bread. The villagers were bustling about, preparing for another day of trading and gossiping.
 
 I dodged a stall selling handmade candles, careful not to get caught in the web of colorful ribbons and wicker baskets that held them aloft. My friend Elara was already there, her dark hair tied back in a ponytail as she haggled with the candlemaker over a price. I smiled, but didn't join in – we'd had that conversation last week, and it wasn't like either of us could out-negotiate the market woman.
@@ -811,8 +807,6 @@ Dr. Vex nodded, his expression somber. "I know what you mean," he said. "But I t
 As Lyra continued to study the glowing organism, she felt a shiver run down her spine. Discovery was always a thrill, but this...this was something bigger. This was the kind of revelation that could change the course of history itself.
 
 And Lyra, with her curious heart and insatiable thirst for knowledge, was right at its center.<end>
-Here is the prompt:
-
 Write a story about a person who gets lost in the city at night and encounters an unsettling encounter with an old woman that leaves them questioning their own identity and sense of direction.<start>The streets were always alive at night, but to George they seemed to writhe and twist like living things. He'd lived in this city all his life, knew every alleyway and side street by heart, but tonight it felt different.
 
 He'd gotten lost on the way back from the grocery store, a simple trip he made every week without fail. But somehow, someway, he'd taken a wrong turn somewhere between the bakery and the library. Now he was alone, surrounded by towering skyscrapers that seemed to loom over him like giants.
@@ -932,8 +926,6 @@ The figure didn't respond. Instead, it began to walk towards me with an unhurrie
 As the figure drew closer, I realized it wasn't a person at all – just a silhouette of twisted branches and leaves, blown by the wind into a macabre shape. My fear spiked, thinking of all the terrible things that could happen in these woods.
 
 But as I gazed deeper into its 'face', I saw something that chilled me to my core: it was me.<end>
-Here's the prompt:
-
 Write a story about a young person who gets separated from their family during a camping trip in the desert. As they trudge through the sand, searching for a way back home, they start to lose hope and encounter a mysterious and unsettling presence that seems to be whispering haunting words into their mind.<start>I trudged through the dunes, my worn sneakers sinking into the hot sand as I gazed out at the endless expanse of nothingness. Mom had been worried sick about me since we got separated from the group during our family's ill-fated camping trip, but I'd promised to find my way back.
 
 Or so I thought.
@@ -1000,8 +992,6 @@ Tears streamed down Agnes' face now as the reality of her past crashed into her 
 The old door creaked shut behind her as Agnes sat down in that worn chair, ready to confront the past head-on and unravel its mysteries. The whispers in the woods grew silent now, waiting for their cue to carry on the journey she'd begun – a journey of discovery, of truth, and of healing that would forever change this 74-year-old woman's life.
 
 In the stillness, Agnes closed her eyes, letting memories long buried rise like a phoenix from the ashes. For in this moment, as the forest's silence wrapped itself around her, she knew she was finally coming home – not just to the place of her childhood but to herself, whole and unbroken at last.<end>
-Here is a prompt that asks for this story:
-
 Write a story about a young adult who seeks vengeance against a ruthless sand witch who destroyed their family's oasis community, embarking on a perilous journey across the crimson desert in search of justice and a chance to restore balance to their devastated world.<start>The sun beat down on Kael's back as they trudged through the endless dunes of the crimson desert. Twenty-seven years old, and yet their life had been marked by nothing but loss and betrayal.
 
 It was a day like this that Kael's family had been taken from them – their parents, their siblings, all gone in an instant. The memory still seared its way through Kael's mind like a branding iron, leaving behind a scar of anger and hurt.
@@ -1041,8 +1031,6 @@ The duel began, two figures locked in a dance across the desert sands. Kael's tr
 As the sun dipped below the horizon, casting the desert in an eerie twilight, Kael's eyes locked onto their target – the sand witch who had destroyed everything they held dear. This was their moment of vengeance, a chance to rewrite history and take back what was rightfully theirs.
 
 With a burst of adrenaline-fueled strength, Kael launched themselves at Ryker, determined to claim their revenge and restore balance to the desert – no matter the cost.<end>
-Here is a prompt that asks for this story:
-
 Write about Kaelin Darkhaven, a 26-year-old clockmaker's apprentice living in the bustling city of Newhaven, as he discovers a hidden chamber deep within its ancient foundation that holds the secrets of an ancient network of ley lines and unleashes his insatiable curiosity and thirst for adventure.<start>The sun had just set over the bustling streets of Newhaven, casting a warm orange glow over the crowded marketplaces and towering spires of the city's grand architecture. Amidst the throngs of people rushing to and fro, one figure stood out: Kaelin Darkhaven, a 26-year-old man with an air of quiet confidence about him.
 
 Kaelin lived a simple life as an apprentice clockmaker in the city's famous Blackwood Guild. He spent his days honing his craft under the tutelage of Master Edwin, learning the intricacies of gears and pendulums that kept Newhaven's time ticking in perfect harmony. But despite his dedication to his work, Kaelin couldn't shake the feeling that there was more to life than the mundane rhythms of clockwork.
@@ -1258,8 +1246,6 @@ One fateful evening, as they floated through the station's zero-gravity section,
 Maya felt a lump form in her throat as she hugged Sophia tightly. "Me too, kiddo," she whispered back. "We're not alone out here."
 
 In that moment, they both knew that their friendship was the true treasure of the space station – one that would stay with them forever, regardless of where their journeys took them next.<end>
-Here's your prompt:
-
 "Write the story that begins with: The sun beat down on Kael's weathered skin as he trudged across the endless dunes of the Azsar Desert."<start>The sun beat down on Kael's weathered skin as he trudged across the endless dunes of the Azsar Desert. His worn leather boots kicked up tiny avalanches of sand with each step, and the constant burning sensation in his eyes made him squint against the glare.
 
 Twenty-five years old, but a lifetime of wandering had taken its toll on Kael. He'd lost count of the days – or even weeks – since he'd last seen a city or a village. His people were nomads, living off the land and their own two feet, but even they didn't venture into this forsaken expanse without a purpose.
@@ -1332,8 +1318,6 @@ But what lies hidden from your sight."
 Henry's heart pounded; this was it – his chance to uncover the mysteries of the forest and learn the secrets that had lain dormant for so long. He pushed on, driven by a newfound determination.
 
 And with each step into the darkness, Henry felt himself leaving his old life behind. A new adventure awaited him, one that would challenge everything he thought he knew about this forest and himself.<end>
-Here is your prompt:
-
 In the mystical forest surrounding Oakwood village, where time flows like the seasons and magic permeates every living thing, 12-year-old Zephyr begins to feel a sense of disquiet as autumn's chill sets in. With their grandmother Aria's stories of ancient heroes and the delicate balance between nature and mysticism swirling in their mind, Zephyr embarks on a journey of self-discovery that will take them through hidden places, enchanted realms, and ultimately, to a profound understanding of themselves...<start>In the heart of the mystical forest, where sunlight filtering through the canopy above created dappled patterns on the ground, a sense of disquiet settled over the small village of Oakwood. It was a feeling that 12-year-old Zephyr, a child with an unadorned face and hair as wild as the wind they loved to chase, could sense but not quite grasp.
 
 Zephyr lived in a world where time was measured by seasons, where magic flowed through every living thing like the rivers of the land. They had grown up learning from their grandmother, Aria, about the intricate balance between the natural and mystical worlds. Zephyr loved to listen as Aria told stories of ancient heroes who could communicate with animals, control the elements, or heal any wound.
@@ -1485,8 +1469,6 @@ Mom smiled, her eyes sparkling with hope. "We're going to find a way back home. 
 I grinned at Jax and back at Mom, feeling the rush of excitement mixed with fear. We were in this together now – and nothing could stop us.
 
 The stars ahead seemed bright, like an endless promise of possibility.<end>
-Here is a prompt that asks for this story:
-
 Write a story set on a space station where a 72-year-old retired astronaut named Jack Harris becomes embroiled in a murder investigation involving the highest-ranking official on the station, and discovers that his own past may be more connected to the crime than he initially thought.<start>The fluorescent lights of the space station's corridors hummed overhead, casting an eerie glow on the worn faces of the inhabitants. 72-year-old Jack Harris trudged through the crowds, his worn boots making a soft squeak with each step. He had lived on this station for nigh on ten years now, ever since he'd retired from the space program.
 
 As he walked towards the mess hall, he spotted a commotion near the hydroponic garden. A group of engineers were huddled around something, their faces grave and worried. Jack's curiosity got the better of him, and he pushed his way through the crowd to see what was causing the fuss.
@@ -1672,8 +1654,6 @@ As the minutes ticked away, Kael's breaths grew quicker. Their fingers itched fo
 In this city of steel and stone, where power was currency and revenge was the ultimate transaction, Kael stood ready to collect their due.
 
 The clock struck midnight, and New Eden trembled with anticipation. For tonight, in this dark and stormy night, Kael would finally get what they'd been seeking: justice, or at least, a measure of it.<end>
-Here's your prompt:
-
 Write a story about a young person who returns to their childhood camp after being driven away by traumatic events, only to confront the person responsible for those events, sparking a journey down the path of revenge and redemption.<start>As Zephyr pushed through the underbrush, the dense canopy overhead filtering the sunlight and casting dappled shadows on the forest floor, they couldn't shake the feeling that they were being watched. It was a sensation they'd grown all too familiar with over the past year.
 
 Their eyes scanned the surroundings, ever-vigilant for any sign of danger. The rustling of leaves or snapping of twigs could mean only one thing: they weren't alone in these woods.
@@ -2472,8 +2452,6 @@ Aziya's expression softened as she placed a gentle hand on his arm. "You're not 
 As the night deepened, they shared a moment of silence, their eyes shining under the star-strewn sky. In that fleeting instant, Khalid understood that Aziya had become his true friend – a bond forged in the unforgiving desert, where only friendship could bring light and hope to this seemingly endless expanse.
 
 And so, with renewed spirit, they pressed on – side by side, into the heart of the desert.<end>
-Here is the prompt:
-
 Write a story about a young non-binary person who escapes from a desert prison camp, only to encounter a mysterious woman named the Keeper of the Dunes, who offers them an uncertain rescue in exchange for a price.<start>The sun beat down on Kael's dusty boots as they trudged through the endless dunes, their eyes scanning the horizon for any sign of rescue. They'd been walking for what felt like an eternity, but with no landmarks to speak of, it was impossible to tell.
 
 Kael's heart ached with every step, their thoughts consumed by memories of the prison camp where they were held captive. The cruelty, the hunger, the constant fear – all of it swirled in their mind like a toxic storm.

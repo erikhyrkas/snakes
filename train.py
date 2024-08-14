@@ -7,7 +7,6 @@ from torch.utils.data import TensorDataset, DataLoader, random_split
 
 from model import LanguageModel
 from tokenizer import SimpleTokenizer
-import faulthandler
 
 
 class EarlyStopping:
@@ -152,16 +151,17 @@ def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_
 def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_path):
     # we do this in a separate function to allow python to free up memory when we no longer need the text.
     print("Loading training data...")
-    all_text = read_all_documents()
+    documents = read_all_documents()
     print("Training tokenizer...")
     tokenizer = SimpleTokenizer()
-    tokenizer.append_documents_to_vocabulary(all_text)
+    for document in documents:
+        tokenizer.append_to_vocab(document)
     print("Saving tokenizer...")
     tokenizer.save(tokenizer_save_path)
     print("Tokenizer vocabulary size: ", tokenizer.vocab_size())
     print(f"Tokenizer saved to {tokenizer_save_path}")
     print("Tokenizing training data...")
-    x_train, y_train = prepare_training_data(all_text, tokenizer, sequence_length=context_length)
+    x_train, y_train = prepare_training_data(documents, tokenizer, sequence_length=context_length)
     dataset = TensorDataset(x_train, y_train)
     train_dataset, val_dataset = split_dataset(dataset, val_split=0.2)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -170,16 +170,26 @@ def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_p
 
 
 def read_all_documents(directory="training_data"):
+    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     texts = []
-    for filename in os.listdir(directory):
+    for filename in os.listdir(f"{base_path}{directory}"):
         if filename.endswith(".txt") or filename.endswith(".md"):
-            filepath = os.path.join(directory, filename)
+            filepath = os.path.join(f"{base_path}{directory}", filename)
             with open(filepath, 'r', encoding='utf-8') as file:
                 content = file.read()
                 texts.append(content)
     return texts
 
 
+def notebook_do_train():
+    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    model_path = f"{base_path}model.bin"
+    tokenizer_path = f"{base_path}tokenizer.pkl"
+    do_train(context_length=20, batch_size=64,
+             max_epochs=15, patience=2,
+             model_save_path=model_path,
+             tokenizer_save_path=tokenizer_path)
+
+
 if __name__ == "__main__":
-    faulthandler.enable()
-    do_train(context_length=768, batch_size=64, max_epochs=15, patience=2)
+    notebook_do_train()

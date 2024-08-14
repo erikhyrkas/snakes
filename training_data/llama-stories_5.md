@@ -125,8 +125,6 @@ Aster had heard tales of a mysterious figure known only as the Mapmaker, who sup
 Yet Aster's curiosity burned like a fire. They'd spent countless nights scouring the city for clues, studying every graffiti-covered wall and hidden alleyway. And tonight was no different. Tonight, they had a hunch where to start looking.
 
 With a spring in their step and a whispered incantation under their breath (a habit Aster couldn't break), they set off into the night, determined to find the Mapmaker – or at least escape this city for good.<end>
-Here is the prompt:
-
 "Write a story about a 72-year-old outcast who seeks revenge against their childhood adversary, a now-decades-older scientist who had been instrumental in devastating their community years ago."<start>The village of Ashwood was never much to speak of, just a handful of homes and small shops nestled between two great mountains. For 72-year-old Zephyr, it had been home for nearly five decades. They'd grown up here, built a life here, and watched as the world outside changed beyond recognition.
 
 Zephyr, who preferred they/them pronouns but was too old to care what anyone else thought, had always been a bit of an outcast. They were never one for grand gestures or loud declarations – more of a quiet, observant type. But that didn't mean Zephyr wasn't capable of feeling deeply.
@@ -211,7 +209,7 @@ She crept forward, silent as a ghost, and peered into the clearing. A group of r
 And there, standing beside him, was the one face that would bring her all the satisfaction she craved. The one face that would make it all worthwhile to have come this far. Kaelin Darkhaven, the one who had set fire to Aria's farm and destroyed her family.
 
 A slow smile spread across her face as she watched them laugh together, completely unaware of the storm brewing in front of them.<end>
-Prompt: Write a story about Zephyr, a non-binary desert dweller who sets out to search for their missing friend Azul in the small oasis town of El Cielo, and discovers that her disappearance is connected to something much deeper and more complex than initially thought.<start>The sun beat down on the dusty landscape like a relentless drumbeat, making every step feel like an eternity. I adjusted my worn-out sunglasses and squinted into the bright light, scanning the endless dunes of sand for any sign of life.
+Write a story about Zephyr, a non-binary desert dweller who sets out to search for their missing friend Azul in the small oasis town of El Cielo, and discovers that her disappearance is connected to something much deeper and more complex than initially thought.<start>The sun beat down on the dusty landscape like a relentless drumbeat, making every step feel like an eternity. I adjusted my worn-out sunglasses and squinted into the bright light, scanning the endless dunes of sand for any sign of life.
 
 As a non-binary person who'd grown up in this unforgiving desert, I'd learned to navigate its harsh conditions with ease. But it was what lay beneath the surface that really mattered – the hidden connections, the secret relationships that could make or break your existence out here.
 
@@ -532,7 +530,7 @@ Elara's grip on her canteen tightened. Was Jack here? And what did it mean – l
 The old woman leaned forward, a sly glint in her eye. "Oh, I think you might be looking for the wrong thing."
 
 As Elara's eyes widened in confusion, a faint memory tickled the back of her mind – something about the map and Jack's words: "I'm not lost, Elara. I'm just... misplaced."<end>
-Prompt: Write a story about a young person being pursued by SynthCorp security through a forest, with the goal of reaching safety and avoiding capture. The narrative should follow their desperate attempts to evade their pursuers, culminating in a narrow escape through a mist-shrouded waterfall.<start>As I ran, the sunlight filtering through the canopy above seemed to grow dimmer with every step. My breath came in ragged gasps, my heart pounding in my chest like a drumline. Behind me, the sounds of pursuit grew louder - the snapping of twigs, the rustling of leaves, the labored breathing of the people I'd managed to evade for hours.
+Write a story about a young person being pursued by SynthCorp security through a forest, with the goal of reaching safety and avoiding capture. The narrative should follow their desperate attempts to evade their pursuers, culminating in a narrow escape through a mist-shrouded waterfall.<start>As I ran, the sunlight filtering through the canopy above seemed to grow dimmer with every step. My breath came in ragged gasps, my heart pounding in my chest like a drumline. Behind me, the sounds of pursuit grew louder - the snapping of twigs, the rustling of leaves, the labored breathing of the people I'd managed to evade for hours.
 
 I'd been running since dawn, when the sun first broke over the treetops and I knew I had to get out. The forest was supposed to be a sanctuary, a place where the inhabitants of this world came to escape the constant monitoring of the SynthCorp drones that blanketed our cities. But for me, it was a prison.
 
@@ -570,8 +568,6 @@ With a deep breath, Emilia vanished into the darkness, her heart pounding in ant
 The wind howled through the trees as Emilia approached the castle walls, her eyes locked on the looming structure before her. The moon was full overhead, casting a silver glow over the landscape. It was a night like any other, yet Emilia felt it would be the last for Lord Ravenswood's dynasty.
 
 With a quiet smile, Emilia slipped into the shadows, ready to unleash a storm of revenge that would shake the foundations of Brindlemark and change its history forever.<end>
-Here is the prompt:
-
 Write a story about a mysterious phenomenon known as "The Lost Hour" that occurs once a year on the summer solstice in a small village on the edge of a great forest, where time itself seems to unravel and reality grows thin, and follows Kael, a rugged and simple villager who begins to experience strange occurrences as the Lost Hour approaches, ultimately leading him to uncover a hidden world beyond their own.<start>The villagers called it the Lost Hour, when time itself seemed to unravel and the fabric of reality grew thin. It happened once a year, on the summer solstice, when the sun hung low in the sky.
 
 Kael was 36 years old, with a rugged face and hands that had grown calloused from years of working the land. He lived in a small village on the outskirts of a great forest, where the air was sweet with the scent of blooming wildflowers. It was a simple life, one that he loved.
@@ -644,7 +640,7 @@ Breathless and shaken, I stumbled towards the back of the bus, collapsing into a
 The city receded behind us, but I knew I wasn't safe yet – not until we reached the outskirts and I was sure this was the end of my journey through hell.
 
 But even now, as the bus rumbled towards freedom, I couldn't shake the feeling that I'd left something behind. And in the darkness outside, a whisper seemed to follow us, echoing across the miles: "You'll never leave."<end>
-Prompt: Write a story about a 12-year-old girl named Kali who lives in a small village on the edge of a vast forest. She forms an unlikely friendship with a new girl named Akira, but discovers that their bond is built upon dark secrets and supernatural forces that threaten to destroy the entire village.<start>The villagers called me Kali, which meant "black" in their tongue. I was a girl of twelve winters, with skin as dark as the night and hair as wild as the trees that swayed in the wind.
+Write a story about a 12-year-old girl named Kali who lives in a small village on the edge of a vast forest. She forms an unlikely friendship with a new girl named Akira, but discovers that their bond is built upon dark secrets and supernatural forces that threaten to destroy the entire village.<start>The villagers called me Kali, which meant "black" in their tongue. I was a girl of twelve winters, with skin as dark as the night and hair as wild as the trees that swayed in the wind.
 
 I lived in a small village on the edge of a vast forest, where the trees grew so thick they seemed to have lives of their own. Our village was tiny, consisting of only twenty-five homes, each one surrounded by a patch of land that belonged to its occupant. We were a close-knit community, where everyone knew everyone else's business.
 
@@ -1167,8 +1163,6 @@ Kaelin wandered through the narrow space, running her fingers over a collection 
 In those swirling colors and sounds, Kaelin glimpsed a truth hidden for centuries: Elyria was not just any city, but a nexus point, a place where countless worlds converged. Her heart racing with excitement, she turned to Mirabel – only to find that the old woman had vanished into thin air.
 
 The stall, too, seemed to have disappeared. Kaelin stood alone in the empty alleyway, the shadows cast by the merchant quarter's towering buildings now imbued with an otherworldly significance. She realized then that her life would never be the same – for she had finally discovered the first line of a great secret book, one that promised to lead her down paths both wondrous and unknown.<end>
-Here's your prompt:
-
 Write a story about a woman named Elara who lives in the city of New Eden after a mysterious event known as The Great Renewal has altered her memories and sense of identity. She finds herself lost and disoriented, struggling to navigate the familiar streets with fragmented memories and half-remembered conversations. Can she find her way back to her life before the Renewal, or will she uncover something even more significant?<start>The streets of New Eden were always alive, even at this late hour. But for Elara, the neon lights and bustling crowds only served to heighten her sense of disorientation.
 
 She clutched her walker tightly as she navigated through the throngs of people, her mind a jumble of fragmented memories and half-remembered conversations. It had been three days since she'd lost...whatever it was. Her phone? No, that was still in her pocket. A memory? That was a constant feeling now.
@@ -1327,8 +1321,6 @@ Over the next few days, I spent every waking moment studying the rock, pouring o
 And then, as suddenly as it had begun, the visions stopped. The rock's glow faded away, leaving me feeling lost and incomplete once more. But even without the revelations, I knew my life would never be the same. I'd caught a glimpse of something that lay beyond our tiny world – something that beckoned to me like an unexplored frontier, full of secrets waiting to be uncovered.
 
 I took one final look at the rock before turning back towards the village, knowing that there was still so much more to discover, and that this time, I was ready.<end>
-Here is your prompt:
-
 Write a story about a cartographer who discovers a mysterious disappearance in their village of Willow Creek, leading them on a journey to uncover secrets and unravel mysteries in the heart of their community.<start>I woke up to the sound of rain pattering against the windows of my small cottage on the outskirts of Willow Creek village. As I got dressed, the fire crackled in the hearth, casting a warm glow over the room. It was going to be one of those days where the whole world felt muffled and grey.
 
 I made myself a cup of tea and stepped outside into the chill morning air. The rain had turned the village streets into a muddy mess, but I knew every inch of this place like the back of my hand. As a cartographer, I'd spent years mapping the surrounding countryside, learning its secrets and rhythms.
@@ -1536,8 +1528,6 @@ Inside, Kael expertly bypassed security systems using the street art techniques 
 Finally, Kael reached Halsey's office – a lavishly decorated penthouse with panoramic views of the city. They waited patiently for the executive to emerge from his meeting, a cruel smile spreading across their face as they watched him exit into the open air.
 
 Halsey never stood a chance.<end>
-Here is the prompt:
-
 Write a story about an elderly woman, forced to flee her home after a mysterious fire, who finds unexpected help in a group of strangers while trying to escape through the dense forest and ultimately takes matters into her own hands by commandeering a truck to make a break for freedom.<start>As she trudged through the underbrush, Agnes's creaky joints protested with every step. She had been walking for hours, and the dense forest seemed to be closing in on her. At 77 years young, she wasn't as spry as she used to be, but desperation drove her forward.
 
 It started when she woke up that morning to find her cabin surrounded by a ring of fire. The flames had engulfed everything, leaving nothing but ash and char behind. A group of rough-looking men, their faces obscured by smoke and soot, had been waiting for her as she emerged from the inferno.
@@ -1714,8 +1704,6 @@ And then, nothing.
 When they found me, days later, I was curled up in a ball, catatonic and covered in dust. The villagers said I'd been walking through those woods for three nights straight, completely lost. But something about the way I looked... seemed different. My eyes had an unsettling glint to them – as if I'd seen horrors that no child should ever witness.
 
 The village elder whispered a warning to Mom and Dad: "Some paths are better left unexplored."<end>
-Here is the prompt:
-
 Write a story about a former convict named Alex who seeks revenge against Victor Vex, the CEO of Omicron Innovations, after being framed for embezzlement and sabotage three years prior. Alex teams up with an old contact named Jack to infiltrate a high-profile business conference where Vex will be speaking, in order to take him down once and for all.<start>As he floated through the cramped corridors of the space station, Alex's eyes narrowed into slits. He had been on the run for three years now, ever since that fateful day when Victor Vex, the ruthless CEO of Omicron Innovations, had framed him for embezzlement and sabotage.
 
 The pain still seared through his chest like a hot brand, but Alex had spent countless sleepless nights nursing a burning fire in his belly. He was determined to take down Vex and everything he stood for.
@@ -1782,7 +1770,7 @@ Suddenly, the streetlights flickered and died, plunging us into darkness. My hea
 In the dim light of a streetlamp ahead, I spotted an exit from the city's maze-like streets. One final chance at escape beckoned – but so did that watching presence.
 
 Which path would Zephyr choose tonight?<end>
-Prompt: Write a tense and emotional confrontation between two siblings on a space station, with the younger sister seeking justice for her brother's betrayal three years prior. The story should delve into themes of pain, anger, and retribution in a futuristic setting.<start>The fluorescent lights of the space station's corridors hummed overhead, casting an eerie glow on the rows of cryopod storage units. Kaelin Vex navigated through the crowded walkways, her eyes scanning for a glimpse of his target.
+Write a tense and emotional confrontation between two siblings on a space station, with the younger sister seeking justice for her brother's betrayal three years prior. The story should delve into themes of pain, anger, and retribution in a futuristic setting.<start>The fluorescent lights of the space station's corridors hummed overhead, casting an eerie glow on the rows of cryopod storage units. Kaelin Vex navigated through the crowded walkways, her eyes scanning for a glimpse of his target.
 
 She'd been waiting for this moment for three years – 108 Earth months to be exact. The pain and anger still simmered in her chest like a low-grade fire, refusing to be extinguished by time or distance. It was all because of him: Arin Vex, her older brother who'd betrayed their family's trust and left them on the brink of ruin.
 
@@ -2035,8 +2023,6 @@ The elder nodded slowly, as if weighing the pros and cons of his decision. "Very
 Kaelin's heart pounded in his chest as he accepted the elder's words. Tonight was just the beginning – for him, for his family's memory, and for the pursuit of justice that would consume him until the very end.
 
 With a resolute nod, Kaelin turned away from the hut, out into the darkness beyond Brindlemark, where Lyra waited, her fate intertwined with his own.<end>
-Here's your prompt:
-
 Write a story about an elderly individual who, despite physical limitations, ventures into the wilderness and discovers a hidden tree that holds secrets to the natural world and beyond. As they explore its depths, they uncover ancient artifacts imbued with otherworldly energy, leading them to a revelation that changes their understanding of the world forever.<start>As Zephyr made their way through the dense underbrush, the sunlight filtering through the canopy above cast dappled shadows on the forest floor. At 68, they'd grown accustomed to the creaks and groans of their aging body, but that didn't mean they weren't still capable of exploring the wilderness.
 
 Their name, Zephyr, was a nod to the gentle breeze that rustled through the leaves – a reminder that even in their later years, they still had a connection to the natural world. And it was this connection that brought them to this forest today, with its secrets waiting to be unearthed.
@@ -2120,8 +2106,6 @@ With a nod, Edgar sealed the final piece of machinery into place. It was a ricke
 Mary nodded once more before gesturing toward the vehicle. As they climbed aboard, Edgar felt a mix of emotions: fear for what lay ahead, excitement at the prospect of freedom, and a deep sense of gratitude to Mary for joining him on this perilous journey.
 
 Their escape was far from certain, but in that moment, Edgar knew one thing with absolute clarity: it was their only hope.<end>
-Here's your prompt:
-
 Write a story about Zephyr, a non-binary maintenance worker living on a space station, who is summoned by the AI EVE for an emergency meeting regarding lost supplies and strange anomalies in the inventory system. As Zephyr delves deeper into the mystery, they discover that someone is intentionally hiding or manipulating information, and the stakes are higher than they initially thought - with a solar flare threatening to cripple the station's energy grid.<start>I floated through the cramped corridors of the space station, my worn-out sneakers making soft squeaking sounds on the polished metal floor. As a maintenance worker, I'd grown accustomed to this labyrinthine layout, but today felt different. The fluorescent lights above seemed to hum with an otherworldly intensity, and every shadow cast by the narrow bays between modules made me jump.
 
 My name is Zephyr, and I'm one of the few non-binary folks living on this space station. It's a weird privilege, having a place to call home in the vastness of space. The rest of humanity's scattered across the cosmos, stuck on cramped ships or clinging to the fringes of established colonies.
@@ -2215,8 +2199,6 @@ Within hours, their conclusions were clear: Elyria was real, and its secrets hel
 Ariana floated amidst the chaos, a triumphant smile spreading across her face. In this moment, she knew that the discovery would reshape not just the station's history but also the course of humanity itself.
 
 With Elyria's coordinates confirmed, the space station erupted into a flurry of activity – as if the very fabric of reality had shifted to reveal a new world full of possibilities and wonder.<end>
-Prompt:
-
 Write a story about Jack Harris, a 63-year-old man with a long-standing grudge against Victor Lane, as he returns to the desert after a twenty year absence, driven by a mix of vengeance and mortality, only to find himself face-to-face with the ruthless rancher on his own ranch, on the anniversary of his wife's death.<start>The sun beat down on the desert sand, relentless in its ferocity. Jack Harris, a 63-year-old man with a weathered face and a grudge to match, trudged through the dunes, his eyes scanning the horizon for any sign of...what, he wasn't quite sure.
 
 It had been twenty years since he'd left this godforsaken place, driven out by the same cruel fate that had taken his wife from him. The memories still seethed in his mind like a festering wound. The fire, the screams, the smoke that had choked the life from her lungs...all of it had been set by one man: Victor Lane.
@@ -2387,8 +2369,6 @@ For an eternal moment, they hovered at the edge of town, the buildings towering 
 And then, in an instant, the drone vanished into the crowded streets below. The sky erupted with a cacophony of sirens and alarms as the drone made its way towards the heart of the city.
 
 Kael stood frozen, his eyes glued to the spot where the drone had disappeared. Tears pricked at the corners of his eyes – he might just make it out alive after all. With newfound determination, he took off in pursuit of the drone, leaving the unforgiving desert behind him for good.<end>
-Here is the prompt:
-
 Write the story of Zee, a crew member of the Aurora Space Station, as they investigate the sabotage of their main oxygen tank and uncover a sinister plot targeting the station's power source, leading them on a quest for answers and justice in the midst of tensions between Earth and Mars.<start>I stepped out of my quarters and onto the worn metal deck of the Aurora Space Station, the hiss of airlocks and hum of life support systems filling the air. It was a typical morning on the station – crew members rushing to their duties, the smell of synth-coffee wafting from the cafeteria.
 
 But I wasn't just here for breakfast. My name's Zee, and my pronouns are they/them – not that it matters much in space. What mattered is that I was on a mission to find out who was behind the sabotage of our station's main oxygen tank.

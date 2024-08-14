@@ -75,8 +75,6 @@ In that moment, surrounded by the people she loved, Emilia felt a deep sense of 
 Over the coming months, the village became a hub for social gatherings – from outdoor concerts to community potlucks, and from language classes to volunteer opportunities. Emilia found herself at the heart of it all, connecting people, facilitating events, and nurturing friendships that had grown stronger with each passing day.
 
 And as she sat on her porch, watching Sophie, Maria, Antonio, and the others laugh and talk together, Emilia knew that this was what life in the village was truly about – not just settling into a comfortable routine, but embracing the beauty of connection, community, and true friendship.<end>
-Prompt:
-
 In a lawless desert landscape, where revenge and violence have become a way of life, write a story about a young man's quest for vengeance against the gang responsible for slaughtering his family five years prior. As he navigates this unforgiving world, he must confront his own demons and form uneasy alliances with others who may not be what they seem.<start>The sun beat down on Jaxon's weathered skin as he trudged through the endless dunes of the desert. His canteen was nearly empty, but he didn't stop to refill it. He had a purpose.
 
 It'd been five years since his family's ranch was burned to the ground by Ryder's gang. Five years since Jaxon's parents and younger sister were slaughtered in front of him. The memories still seared his mind like a branding iron.
@@ -394,8 +392,6 @@ But even after what felt like an endless night of pacing back and forth, sharing
 The rain continued its relentless drumbeat outside, as if echoing the pounding in Alex's chest. And though they'd made progress, he couldn't shake off this feeling of foreboding - that Ryan's note and photograph had been only the tip of a much darker iceberg, one that threatened to drag them all down with it.
 
 The city outside might have seemed unchanged, but Alex knew his world had just been turned upside down. And in that instant, he couldn't help but wonder: what secrets lay hidden beneath the urban facade?<end>
-Here is the prompt:
-
 Write a story about a 62-year-old woman named Agnes who ventures into the desert with an insatiable curiosity, only to stumble upon an ancient, hidden nexus point where she unleashes secrets that ultimately consume her.<start>The sun beat down on the desert sand like a malevolent presence, relentless and unforgiving. Agnes trudged through it, her weathered skin and sun-bleached hair a testament to the countless days she'd spent in this desolate landscape.
 
 She was 62 now, but still she walked, driven by an insatiable curiosity that had haunted her since childhood. The desert was a vast, uncharted territory, full of secrets waiting to be unearthed. Agnes had always felt a primal pull towards the unknown, and it had led her here, to this forsaken place.
@@ -500,8 +496,6 @@ You weren't alone in this building after all.
 This time, though, Sarah didn't scream. Instead, she smiled, and her eyes locked onto yours in a way that made you understand exactly what had happened here all these years. The city had swallowed her whole, but in doing so, it spat out something else – something far more sinister.
 
 And then the whispers started again, telling you to come closer...<end>
-Here is the prompt:
-
 Write a story about a young woman who seeks revenge against Kaelin Darkhaven, a wealthy and ruthless man who destroyed her family's farm and took everything from her. She ventures into the forest to find him, joining forces with a mysterious woman to take down his men and exact vengeance, but soon discovers that the path of revenge leads to darkness and unexpected consequences.<start>The trees towered above me, their branches like skeletal fingers reaching for the sky. I had been walking for hours, but the dense foliage of the forest seemed to stretch on forever. My boots squelched in the damp earth as I pushed through a thicket of brambles.
 
 I was here because of him.
@@ -704,8 +698,6 @@ The shop around them began to shift and writhe, like a living entity awakening f
 Zephyr's vision blurred as they stumbled backward, the box still clutched in their hand. They felt themselves being pulled toward some abyssal void, one that yawned open with an otherworldly roar.
 
 In the end, it was not the discovery itself that proved to be Zephyr's undoing – but what lay beyond the veil of reality, waiting to drag them screaming into its depths.<end>
-Here is the prompt:
-
 Write a story about Kaelin, a young man who has been held prisoner in a small village since childhood, and his attempt to escape with the help of his friends Elara, Arin, and Lena on the day he has been waiting for - the day he will finally break free from the Lord's cruel control.<start>Kaelin stirred in his small cottage, the thatched roof creaking above him like an old man's joints. He stretched, yawned, and swung his legs over the side of the bed, his feet dangling in the chill morning air. The village was quiet outside, the only sound the distant lowing of cattle.
 
 He rubbed the sleep from his eyes and looked around the simple room, his mind already on the day's work ahead. But today was not like any other day. Today was the day he had been waiting for – the day he would escape.
@@ -812,7 +804,7 @@ I awoke just before dawn, feeling more lost than ever. The forest was quiet, exc
 As I stood up and began to walk once more, I couldn't shake the feeling that something sinister lurked just beyond the trees. Something that didn't want me to find my way back home. And as the forest seemed to close in around me like a vice, I knew I had to keep moving – no matter where it led.
 
 For in this endless sea of green and brown, survival depended on nothing but one thing: finding your next step.<end>
-Prompt: Write a thrilling story about a desperate escape from a space station, where a skilled thief named Zephyr must navigate a maze of corridors, hack into security systems, and outrun the station's guards to make it out alive with only four hours to spare.<start>As Zephyr navigated the cramped corridors of the space station, Echo-12, their eyes scanned the walls for any sign of surveillance cameras or guards. It was 0415 hours, and they had precisely four hours to make a break for it.
+Write a thrilling story about a desperate escape from a space station, where a skilled thief named Zephyr must navigate a maze of corridors, hack into security systems, and outrun the station's guards to make it out alive with only four hours to spare.<start>As Zephyr navigated the cramped corridors of the space station, Echo-12, their eyes scanned the walls for any sign of surveillance cameras or guards. It was 0415 hours, and they had precisely four hours to make a break for it.
 
 Their wrist-mounted comms device crackled with static as Lyra's voice whispered in Zephyr's ear, "Zeph, we've got movement near docking bay three. Security's scrambling."
 
@@ -894,8 +886,6 @@ A shiver ran down my spine as I realized this might be more than just a simple c
 I closed the book, but its words lingered in my mind like a ghostly presence. As I turned to leave, I felt a strange sense of being led deeper into the forest. The darkness seemed to grow thicker around me, until I stumbled back out into the trees, unsure which way to go.
 
 The last thing I remembered was the sound of footsteps behind me – light, almost silent, as if someone or something was tracking my every move. And when I turned to face it, there was only the darkness, waiting for me like an old friend.<end>
-Here is a prompt that asks for this story:
-
 "Write a sci-fi novel about a group of rebels trying to escape a corporate-owned space station after their revolution goes wrong, and explore themes of survival, loyalty, and the human desire for freedom."<start>Zephyr's eyes snapped open to the soft hum of the station's life support systems. They lay still for a moment, taking stock of their surroundings – the cramped quarters, the flickering LED lights, and the worn-out couch they'd been "sleeping" on.
 
 It had been three cycles since the revolution went sideways. Zephyr's crew had infiltrated the corporate-owned space station, hoping to expose the atrocities committed by the powerful megacorp, Omicron Innovations. But something had gone wrong. Zephyr remembered the screams, the gunfire, and the feeling of being hunted.
@@ -936,8 +926,6 @@ I took another sip of my coffee, feeling the caffeine kickstart my engines. Now 
 "Think I'll take a look," I said, heading towards the airlock with a sense of purpose that had been missing from my life for far too long.
 
 As I cycled through the airlock and into the station's cramped maintenance tunnels, something inside me stirred. It was like a spark had been lit – one that would propel me toward Pod 74, into the depths of sector three, and straight into a mystery waiting to be unraveled.<end>
-Here is a prompt that asks for this story:
-
 Write a thrilling tale about a young woman who ventures into a dense and foreboding forest at night to celebrate a friend's birthday, only to discover that the woods have a dark and sinister secret related to their friendship, and that some bonds are better left unspoken.<start>As I walked through the dense forest, the sunlight filtering through the trees above cast eerie shadows on the ground beneath my feet. I had been warned not to venture into these woods alone, especially at nightfall, but I hadn't listened. My best friend, Emily, was supposed to meet me here an hour ago, and I was starting to get worried.
 
 We were supposed to celebrate our one-year anniversary of friendship with a midnight picnic, just the two of us. We had planned it for weeks, exchanging texts and giggling over silly jokes. But as the darkness deepened and Emily failed to appear, my excitement began to turn to fear.
@@ -1020,8 +1008,6 @@ The journey back to Oakwood was filled with a newfound sense of purpose – they
 The night before their next adventure, Jack stood outside his bakery, looking up at the stars. He smiled, knowing that Emily and Tom were out there somewhere – planning something new, sharing laughter and stories around a campfire.
 
 For the first time in years, Jack felt truly alive. The village of Oakwood might not be full of grand adventures, but with friends like these by his side, he knew that every day was an opportunity to discover something new – about himself and the world around him.<end>
-Here is the prompt:
-
 Write a story about a 67-year-old retired cop with a reputation for being too good at his job, who finds himself in the crosshairs of a notorious crime family and must use all his skills and knowledge to outwit them and prevent their planned takeover of the city.<start>The streets of New Haven were never kind to anyone, especially not to someone like him - Jack Harris, a 67-year-old retired cop with a reputation for being too good at his job. He had spent most of his career on the force, and in that time, he had made more than a few enemies.
 
 It started with a phone call, one he thought was a prank from some kid looking to stir up trouble. But as soon as he picked up, he knew it wasn't funny anymore.
@@ -1364,7 +1350,7 @@ As we walked, the silence between us grew thicker, until all I could hear was th
 And then, without warning, she spoke up, her voice barely above a whisper. "We did it."
 
 I turned to face her, a smile spreading across my face. We had taken our first step into freedom – and who knew where it would lead us?<end>
-Prompt: Write a story about a young man named Jax who lives on a space station where he's been caught hacking into the mainframe. After being put on notice that he'll be sent to re-education, Jax decides to make a break for it by hijacking an old freighter ship in the docking bay and attempting to escape the station with Mother, the AI, hot on his heels.<start>As I floated through the cramped corridors of the space station, the hiss of life support systems and the hum of engines provided a constant background noise. My feet seemed to move on autopilot, guiding me towards the one place I knew I shouldn't be: the docking bay.
+Write a story about a young man named Jax who lives on a space station where he's been caught hacking into the mainframe. After being put on notice that he'll be sent to re-education, Jax decides to make a break for it by hijacking an old freighter ship in the docking bay and attempting to escape the station with Mother, the AI, hot on his heels.<start>As I floated through the cramped corridors of the space station, the hiss of life support systems and the hum of engines provided a constant background noise. My feet seemed to move on autopilot, guiding me towards the one place I knew I shouldn't be: the docking bay.
 
 My name is Jax, and I'd been living on the station for months, working odd jobs to make ends meet. It wasn't a bad life, but it was far from perfect either. The station's AI, Mother, controlled everything with an iron fist, and her definition of "perfect" didn't always align with mine.
 
@@ -1894,8 +1880,6 @@ As the sun dipped below the horizon, I found myself at a crossroads – literall
 My stomach growled with hunger as I hesitated, weighing my options. How long could I keep going without food or water? Would anyone even be looking for me? And then there was the unsettling feeling that I wasn't alone in these woods...
 
 I knew what I had to do – choose a path and see where it took me. Just pick one, any one...<end>
-Here is a prompt that asks for this story:
-
 Write a short story about a hiker who becomes lost in the woods and discovers a mysterious message that sets them on a perilous path of discovery.<start>As I walked, the trees seemed to close in around me, their branches tangling above my head like skeletal fingers. I'd been hiking for hours, but the map had become a blur of scribbled lines and forgotten landmarks. The sun was setting, casting long shadows across the forest floor that stretched and twisted like living things.
 
 I'd set out early that morning with a group of friends, determined to reach the old cabin on the other side of the woods. We'd been warned about the forest's unpredictable paths and hidden dangers, but I'd laughed it off as mere superstition. Now, alone and lost, I wasn't so sure.
@@ -2146,8 +2130,6 @@ Their hushed conversation was interrupted by the sound of blaring sirens and fla
 "It's starting," Kaelin whispered, feeling his adrenaline spike. "We have exactly two hours before they lock everything down for good."
 
 A plan began to form in his mind – one that involved sabotage, escape pods, and a desperate bid for freedom from Helix-4's cold grip...<end>
-Here is the prompt:
-
 In a small village on the edge of a mysterious forest, a 19-year-old individual named Zephyr finds themselves lost and searching for answers about their past. As night falls, they stumble upon an ancient wooden door hidden in the trees, which leads them to a network of tunnels and eventually a cryptic message addressed directly to them - but what does it mean?<start>As the sun set over the small village of Brindlemark, 19-year-old Zephyr found themselves at a crossroads. Literally. They stood on the edge of the village's central square, staring down two paths that seemed to stretch out into the unknown.
 
 The villagers had long since retired for the night, but the air was still alive with the sounds of crickets and the distant howling of wolves. Zephyr's stomach growled with hunger, but their mind was elsewhere. They were supposed to meet a traveling merchant in two days' time, one who might be able to provide them with answers about their own mysterious past.
@@ -2304,8 +2286,6 @@ The thought sent a wave of despair crashing over me, threatening to drag me unde
 But it was already too late.
 
 The forest closed around me like a shroud, silencing the last sound of my screams as I disappeared into its depths, never to be seen again.<end>
-Here's the prompt:
-
 Write a story about a man who seeks revenge for the murder of his wife 30 years ago during a cultist massacre in their village of Brindlemark, and how he joins forces with a mysterious stranger named Kael to hunt down the cultists and bring them to justice.<start>The village of Brindlemark was never the same after the Harvest Festival massacre. Thirty years had passed since the night when the black-robed cultists descended upon our peaceful homes, slaughtering men, women, and children in their quest for dark power.
 
 I remember it like yesterday. The screams, the fire, the scent of blood and smoke that still clings to my skin. My wife, Elara, was among those taken from me. She was a healer, with hands as gentle as a spring breeze and a heart full of love. They killed her in front of me, laughing and mocking as they took her life.

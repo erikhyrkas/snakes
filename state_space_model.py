@@ -19,6 +19,10 @@ class StateSpaceModel(nn.Module):
         outputs = []
         state = torch.zeros(batch_size, self.state_dim).to(device)
 
+        p_expanded = self.P.unsqueeze(0)  # Expand P to (1, state_dim, state_dim, state_dim)
+        q_expanded = self.Q.expand(batch_size, -1, -1)  # Expand Q to (batch_size, state_dim, input_dim)
+        s_expanded = self.S.expand(batch_size, -1, -1)  # Expand S to (batch_size, output_dim, input_dim)
+
         for start in range(0, sequence_length, self.block_size):
             end = min(start + self.block_size, sequence_length)
             x_block = x[:, start:end, :]
@@ -27,14 +31,14 @@ class StateSpaceModel(nn.Module):
                 input_t = x_block[:, t, :].unsqueeze(-1)
 
                 state_quad = torch.matmul(state.unsqueeze(-1), state.unsqueeze(-2))
-                state = torch.einsum('bij,bijk->bk', state_quad, self.P.unsqueeze(0)) + \
-                        torch.matmul(self.Q.expand(batch_size, -1, -1), input_t).squeeze(-1)
+                state = torch.einsum('bij,bijk->bk', state_quad, p_expanded) + \
+                        torch.matmul(q_expanded, input_t).squeeze(-1)
 
                 # Normalize state to prevent explosion
                 state = state / (torch.norm(state, dim=-1, keepdim=True) + 1e-6)
 
                 output_t = torch.matmul(self.R, state.unsqueeze(-1)).squeeze(-1) + \
-                           torch.matmul(self.S.expand(batch_size, -1, -1), input_t).squeeze(-1)
+                           torch.matmul(s_expanded, input_t).squeeze(-1)
                 outputs.append(output_t.unsqueeze(1))
 
             if torch.isnan(state).any():
@@ -51,7 +55,6 @@ class StateSpaceModel(nn.Module):
         return final_output
 
 
-# Example usage:
 def example_model():
     model = StateSpaceModel(state_dim=10, input_dim=5, output_dim=2)
     x = torch.randn(1, 100, 5)  # Batch size of 1, sequence length of 100, input dimension of 5

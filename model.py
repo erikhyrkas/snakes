@@ -48,12 +48,16 @@ class ModelInterface:
         self.tokenizer.load(tokenizer_save_path)
         self.end_token = self.tokenizer.get_end_token()
         self.model = LanguageModel(vocab_size=self.tokenizer.vocab_size())
-        self.model.load_state_dict(torch.load(model_save_path, weights_only=True))
+        self.model.load_state_dict(torch.load(model_save_path), strict=False)
         self.model.eval()
         self.device_name = "cuda" if torch.cuda.is_available() else "cpu"
         print(f"Using {self.device_name}")
         self.device = torch.device(self.device_name)
         self.model.to(self.device)
+
+    def count_parameters(self):
+        total_params = sum(p.numel() for p in self.model.parameters())
+        return total_params
 
     def complete(self, current_context: str, top_p: float = 0.9, max_tokens: int = 100000):
         tokens = self.tokenizer.tokenize(current_context)

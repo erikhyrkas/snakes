@@ -654,8 +654,6 @@ Tonight was special, Emilia realized, as she took in the strange and wondrous si
 As they watched, Lyra began to sing, her voice soaring like a bird taking flight into the starry sky. The others joined in, their voices blending together in perfect harmony, creating a sound that seemed almost divine. Emilia felt her heart swell with emotion as she listened, knowing in this moment that these friendships were not just bonds between individuals – but threads that wove together the very fabric of Brindlemark itself.
 
 In that instant, Emilia knew she was exactly where she was meant to be. And as they sang and laughed together into the night, their spirits entwined like the threads of her loom, she felt a deep sense of belonging – one that would stay with her long after the summer solstice had passed, leaving behind a legacy of love and friendship that would forever change the course of Emilia's life.<end>
-Prompt:
-
 Write a story about Ava, an 18-year-old resident of the self-sustaining space station Kaelin-4, who has grown tired of living in limbo amidst ration shortages, malfunctioning life support systems, and constant threats from the Kraelion Empire's patrols. When the station's chief scientist, Dr. Elara Vex, reveals that an Imperial patrol is heading towards them, Ava musters the courage to take control of their own destiny and make a daring escape, all while navigating the complexities of living in a community on the brink of collapse.<start>Ava's eyes flickered open, the dim hum of the space station's life support systems mingling with the faint memory of their mother's whispered words in a dream. Eighteen years old and still trapped on the Kaelin-4, a self-sustaining hub orbiting a desolate planet.
 
 Ava stretched, their slender frame unfolding from the cramped bunk. Their short, dark hair stuck to their forehead as they sat up. In the small personal quarters, a holographic display flickered with updates from the station's AI, Echo. Ava's gaze lingered on the newsfeed before dismissing it – more of the same: ration shortages, malfunctioning life support systems, and the omnipresent threat of the Kraelion Empire's patrols.
@@ -886,8 +884,6 @@ With his mind racing, Jack began to make a mental list of all the colleagues he 
 As he exited the life support room, Jack felt his normal routine crumbling away like so much space dust. Something big was hidden within these steel walls, something that could have far-reaching consequences for everyone on this station – and beyond.
 
 The thrill of discovery coursed through him as Jack set a course to find Dr. Kim's quarters. Little did he know, the truth would be waiting just beyond the door – like an eclipse shrouding the entire station in shadows.<end>
-Here is a prompt that asks for this story:
-
 Write a coming-of-age story about a young person who has been living in the shadows of a big city, and finally finds the courage to break free from their past and start anew.<start>I stepped off the crowded bus and onto the worn sidewalk, the sounds of the city hitting me like a wave. I had been waiting for this moment for what felt like an eternity – my chance to finally break free.
 
 My name is Zephyr, and I've been living in the shadows of this city for years. People assume I'm a girl because of my hair, but they don't know that I identify as non-binary. It's not something I broadcast to strangers, not when there are people like my mom who still can't wrap their head around it.
@@ -915,8 +911,6 @@ Finally, I spotted it – a small bus heading out of the city limits. The neon l
 With one last burst of adrenaline-fueled speed, we leapt onto the bus and claimed two seats in the back. As the doors closed behind us, I let out a sigh – almost there.
 
 The bus pulled away from the curb, leaving the city's bright lights fading into the distance. I leaned my head against the window, watching as our pasts disappeared into the night – we'd made it out alive.<end>
-Here's your prompt:
-
 Write a story about a woman named Emily Mayfield who starts experiencing strange and unexplainable events in her small village of Ravenswood, which leads her on a desperate search for answers and raises questions about her own identity and the mysterious forces that seem to be controlling her life.<start>The snow swirled through the narrow streets of Ravenswood, casting an eerie silence over the village. Emily Mayfield bundled her scarf tighter, her eyes scanning the familiar landscape as if searching for something she couldn't quite remember. It was a feeling she'd grown accustomed to since moving back to her childhood home five years ago.
 
 At 43, Emily thought she knew every inch of Ravenswood, from the crumbling stone church to the crumbling old mill on the outskirts of town. But with each passing day, the village seemed to shift and twist around her like a living entity. She'd find herself walking down a street only to realize it was the wrong one, or stumble upon a doorway that led nowhere.
@@ -970,8 +964,6 @@ A gust of wind carried a whispered rumor through the village: Lord Ravenswood ha
 He folded his rag and tucked it into his belt, eyes fixed on the horizon as he made a silent vow to himself: when the tournament arrived, Thorne Blackwood would be there, sword in hand, ready to exact his revenge on Lord Ravenswood and claim the Golden Gauntlets for his own. The mountains themselves seemed to echo with his promise, their whispers growing louder with each passing moment.
 
 In that instant, Thorne felt a spark of determination ignite within him. He stood up, his small frame straightening as if the very weight of his anger had grown heavier on him. With a newfound resolve, he slipped into the tavern, disappearing into the shadows to begin his training – for the tournament was coming, and Thorne Blackwood would be ready.<end>
-Here is the prompt:
-
 Write a story about a 7-year-old boy named Groteus who feels like an outcast in his small village, but finds acceptance and companionship among the creatures of the forest, particularly with a wise old badger named Oakley, until he discovers that Oakley has made friends with someone new, a mysterious figure known as Bramble, whose presence sets off a chain of events that reveals the darker side of their friendship.<start>I trudged through the dense underbrush, my oversized boots making soft squelching sounds with each step. My name was Groteus, and I was seven years old. My parents said I wasn't like other boys my age. They said I was...different.
 
 As a 7-year-old man, I felt like an outcast in our small village. The other children would stare at me, whispering behind my back. But deep down, I didn't feel lonely. Not yet, anyway. There were creatures here, in the forest, that understood me.
@@ -1063,8 +1055,6 @@ The comms screen flickered back to life, displaying a new message:
 "THIS IS DR. ELARA. YOU HAVE 30 SECONDS TO SURRENDER. RESISTANCE WILL BE MET WITH DEADLY FORCE."
 
 The lights began to flash in time with my racing heart as I realized we had only one choice left: escape – or die trying.<end>
-Here is the prompt:
-
 Write a story about Maya Singh, the head of maintenance on a space station, who discovers an anomaly on one of the station's cameras showing a person wandering the corridors seemingly lost and disoriented, but when she investigates further, she realizes that this person doesn't exist on the station's manifest, and she must search for answers with her friend Elianore Quasar amidst a growing sense of unease and mystery.<start>As I floated through the cramped corridors of the space station, the soft hum of the life support systems and the gentle chatter of the other inhabitants created a sense of calm. It was a feeling I'd grown accustomed to over my 42 years, but one that couldn't shake the nagging sense of unease that had been building inside me for weeks.
 
 My name is Maya Singh, and I'm the station's head of maintenance. It's a job that requires attention to detail and a keen eye for trouble, skills I'd honed over decades of working in the harsh environments of the outer planets.
@@ -1137,7 +1127,7 @@ Kael interrupted him with a brutal kick that sent the CEO crashing against the f
 "You'll be the one to take the fall, Vex," Kael whispered, his eyes blazing with intensity. "And I will finally have my justice."
 
 In that moment, Kael was no longer a 28-year-old man seeking revenge; he had become the instrument of retribution – the embodiment of Elara's vengeance itself.<end>
-Prompt: Write a story about a young person named Zephyr who discovers a hidden clearing in the woods where they meet their closest friend, Lyra, and together with others who share similar sensitivities, they form a community built on acceptance, support, and listening to each other - and to the secrets the forest holds.<start>The sunlight filtering through the canopy above cast dappled shadows on the forest floor as Zephyr made their way deeper into the woods. They had always found solace here, among the ancient trees and whispering leaves. It was a place where they could be themselves, without fear of judgment or rejection.
+Write a story about a young person named Zephyr who discovers a hidden clearing in the woods where they meet their closest friend, Lyra, and together with others who share similar sensitivities, they form a community built on acceptance, support, and listening to each other - and to the secrets the forest holds.<start>The sunlight filtering through the canopy above cast dappled shadows on the forest floor as Zephyr made their way deeper into the woods. They had always found solace here, among the ancient trees and whispering leaves. It was a place where they could be themselves, without fear of judgment or rejection.
 
 As they walked, the soft earth crunching beneath their feet, Zephyr stumbled upon a clearing. In the center stood an enormous tree, its branches twisted and gnarled with age. Carved into the trunk was a message: "For the ones who listen".
 
@@ -1185,8 +1175,6 @@ A figure emerged from the haze – Aethon, their eyes shining like starlight in 
 Zhilak's mind reeled as they stumbled forward, unsure what to say or do. All they could manage was a single word, one that seemed to hold the weight of a thousand suns: "Lost."
 
 Aethon's smile lit up the cavern, and Zhilak knew in that moment that they were found – not just physically, but also within themselves. In this desolate expanse, where nothingness stretched out like an endless sea, Zhilak had discovered something profound: they were never truly lost when love was their compass.<end>
-Here is the prompt:
-
 Write the story of Kaelin "Kae" Thompson's pursuit of revenge against the New Order for taking his younger sister Aria five years ago, starting from the moment he receives a mysterious message from an unknown sender known as "The Phoenix".<start>The city was a maze of steel and concrete, its skyscrapers piercing the smog-filled sky like shards of glass. Kaelin "Kae" Thompson navigated its crowded streets with ease, his eyes scanning the crowds for a glimpse of his target.
 
 Five years had passed since the night his younger sister, Aria, was taken from him. Five years since the New Order's enforcers burst into their apartment, guns blazing, and dragged her away. Five years of searching, hunting, and waiting for the perfect moment to strike back.
@@ -1785,7 +1773,7 @@ It was all of us. We were trapped in this station with our own personal demons, 
 Dr. Patel might have been my first victim, but there were more where he came from. The others on the station would soon learn the true meaning of revenge... at my hands.
 
 The darkness closed in around me as I floated through the corridors once again, searching for my next target. I was Zax, and this space station had become a living nightmare - one that only I could escape from.<end>
-Prompt: Write a story about a young man on the run from some kind of authoritarian regime, who flees into a dense forest with the hope of reaching the mysterious "Clear Zone" where humans are supposedly free to live without fear of persecution.<start>Kael sprinted through the dense underbrush, his feet pounding against the damp earth as he pushed aside branches that seemed to reach out like skeletal fingers. He had been running for what felt like hours, but his mind told him it was probably just minutes since the...since the...he couldn't quite remember what they called it. The "Containment" or the "Quarantine". Something that kept people from escaping.
+Write a story about a young man on the run from some kind of authoritarian regime, who flees into a dense forest with the hope of reaching the mysterious "Clear Zone" where humans are supposedly free to live without fear of persecution.<start>Kael sprinted through the dense underbrush, his feet pounding against the damp earth as he pushed aside branches that seemed to reach out like skeletal fingers. He had been running for what felt like hours, but his mind told him it was probably just minutes since the...since the...he couldn't quite remember what they called it. The "Containment" or the "Quarantine". Something that kept people from escaping.
 
 As he ran, the trees grew taller and closer together, their canopies a kaleidoscope of greens above him. He had no idea where he was going, only that he needed to keep moving. A burst of adrenaline coursed through his veins as he recalled the words of the old man who'd given him the map.
 
@@ -1899,8 +1887,6 @@ The AI navigated paused, her expression unreadable.
 "I think," Zara said slowly, "that's a possibility we should consider."
 
 Aria felt a cold wind blow through the hub as the truth began to dawn on her: in this vast, unforgiving universe, losing oneself was not just possible...but also terrifyingly easy.<end>
-Here is a prompt that asks for this story:
-
 Write a dark and suspenseful tale about a man, Thomas, who is ostracized from his village after being falsely accused of a crime he didn't commit. As he seeks vengeance against those who wronged him, the villagers are consumed by fear and terror, leading to a descent into chaos and darkness.<start>The village of Ravenswood had always been a place of quiet unease for Thomas, but it was home nonetheless. Born and raised here, he knew every nook and cranny, every face that seemed to blend together in a sea of familiarity.
 
 It was on his 30th birthday that the darkness descended, shattering the complacent atmosphere that had reigned for so long. The village elder's son, James, had made it clear: Thomas would never be welcomed among them. Some unknown transgression from years past had earned him this ostracism, but no one seemed willing to discuss it.
@@ -2043,8 +2029,6 @@ Time seemed to warp as they moved through the darkness – hours slipping away l
 At last, after what felt like an eternity, the windmill loomed before them – its crumbling stones half-hidden in the trees, its door creaking invitingly on rusty hinges. Elara rushed towards it, their walking stick at the ready.
 
 As they entered the musty interior, a faint light flickered within, beckoning them deeper. Elara took one step forward, then another...and suddenly realized they weren't alone.<end>
-Prompt:
-
 Write a story where a solitary scientist discovers an ancient alien city deep within the clouds of Jupiter, but with each passing moment, he begins to question whether his find is truly real or just a product of his own mind playing tricks on him.<start>The hiss of recycled air and the soft hum of life support systems were the only sounds that broke the silence as Jack Harris made his way through the cramped corridors of the Jupiter Station. A 48-year-old man with a weathered face and a mop of graying hair, he had been stationed on this remote outpost for six months, tasked with monitoring the planet's atmospheric conditions.
 
 As he turned a corner, the soft glow of the station's main console caught his eye. He made his way towards it, his footsteps echoing off the metal walls. The station's AI, an androgynous voice known as "Mother", chimed in over the comms system.
@@ -2199,8 +2183,6 @@ A plan starts forming in my head then, a way for me to get back at Uncle Jasper 
 "Hey," I say to Max, trying to sound casual even though I'm really excited. "Want to help me with something?"
 
 Max raises an eyebrow but nods anyway. "What's up?"<end>
-Here's your prompt:
-
 Write a story about a young girl who boards a space station despite being told not to, only to find herself in the midst of a catastrophic malfunction that forces her and Captain Vex to flee for their lives. As they make their way through the chaotic corridors and eventually escape onto an emergency pod, Zhra'gha's innocence is tempered by the harsh realities of survival - but amidst all the danger and uncertainty, she discovers a glimmer of hope in the vast unknown expanse beyond the station's walls.<start>Zhra'gha's small hands grasped the worn, metallic railing as she peered out into the vast expanse of stars streaming past the viewport. Her eyes, an unsettling shade of green for one so young, sparkled with a mix of wonder and fear.
 
 "You're not supposed to be here," said the gruff voice behind her.

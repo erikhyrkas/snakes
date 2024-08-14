@@ -42,6 +42,11 @@ def generate_stories(num_stories, model_name='llama3.1', output_file='training_d
             user_prompt_response = generate(model_name, user_prompt)
             full_story = user_prompt_response[
                              'response'].strip() + "<start>" + story + "\n<end>"
+            full_story = full_story.replace("Here's the prompt:\n", "").replace("Here is the prompt:\n", "").replace(
+                "Here's your prompt:\n", "").replace("Here is your prompt:\n", "").replace("Prompt:\n", "").replace(
+                "Prompt: ", "").replace("Here is a prompt that asks for this story:\n", "").replace(
+                "Here is a prompt to request this story:\n", "").replace("Here's a prompt that asks for this story:\n",
+                                                                         "")
             file.write(full_story + '\n\n')
             file.flush()
             progress_count += 1
