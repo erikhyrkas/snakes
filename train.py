@@ -1,12 +1,13 @@
-from torch import optim
-from torch.utils.data import TensorDataset, DataLoader, random_split
 import os
 import torch
-import torch.nn as nn
 import numpy as np
+import torch.nn as nn
+from torch import optim
+from torch.utils.data import TensorDataset, DataLoader, random_split
 
 from model import LanguageModel
 from tokenizer import SimpleTokenizer
+import faulthandler
 
 
 class EarlyStopping:
@@ -27,8 +28,9 @@ class EarlyStopping:
                 self.stop_training = True
 
 
-def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=200, max_grad_norm=1.0,
+def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=100, max_grad_norm=1.0,
                 patience=5):
+    print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device_name}")
     device = torch.device(device_name)
@@ -36,6 +38,7 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
     model.to(device)
     early_stopping = EarlyStopping(patience=patience)
 
+    print("First epoch starting...")
     for epoch in range(epochs):
         model.train()
         epoch_loss = 0.0
@@ -76,18 +79,45 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
             break
 
 
+def safe_tensor_conversion(data_list, dtype=torch.long):
+    try:
+        tensor = torch.tensor(data_list, dtype=dtype)
+        return tensor
+    except Exception as e:
+        print(f"Error during tensor conversion: {e}")
+        previous_len = None
+        for i, data in enumerate(data_list):
+            data_len = len(data)
+            if previous_len is None:
+                print(f"Data length at index {i}: {data_len}")
+                previous_len = data_len
+            if data_len != previous_len:
+                print(f"Data length at index {i}: {data_len}")
+                print(f"Data at index {i}: {data}")
+            for token in data:
+                if token is not None:
+                    print(f"None found in data at index {i}: {data}")
+        raise e
+
+
 def prepare_training_data(texts, tokenizer, sequence_length=5):
-    x_train, y_train = [], []
+    x_train_list, y_train_list = [], []
     for text in texts:
         tokens = tokenizer.tokenize(text)
         if len(tokens) < sequence_length + 1:
             continue  # Skip sequences that are too short
         for i in range(len(tokens) - sequence_length):
-            x_train.append(tokens[i:i + sequence_length])  # Input sequence
-            y_train.append(tokens[i + 1:i + sequence_length + 1])  # Target sequence
+            intput_sequence = tokens[i:i + sequence_length]
+            target_sequence = tokens[i + 1:i + sequence_length + 1]
+            if len(intput_sequence) == sequence_length and len(target_sequence) == sequence_length:
+                x_train_list.append(intput_sequence)  # Input sequence
+                y_train_list.append(target_sequence)  # Target sequence
+            else:
+                print(
+                    f"Skipping a sequence with incorrect length: x_seq={len(intput_sequence)}, y_seq={len(target_sequence)}")
 
-    x_train = torch.tensor(x_train, dtype=torch.long)
-    y_train = torch.tensor(y_train, dtype=torch.long)
+    x_train = safe_tensor_conversion(x_train_list)
+    y_train = safe_tensor_conversion(y_train_list)
 
     # print(f"x_train shape: {x_train.shape}")  # Expect (num_sequences, sequence_length)
     # print(f"y_train shape: {y_train.shape}")  # Expect (num_sequences, sequence_length)
@@ -102,33 +132,44 @@ def split_dataset(dataset, val_split=0.2):
     return train_dataset, val_dataset
 
 
-# Note on mode: mamba 2 is quadratic, mamba 1 is linear
-def do_train(mode='quadratic', model_save_path="model.bin", tokenizer_save_path="tokenizer.pkl"):
-    tokenizer = SimpleTokenizer()
-    all_text = read_all_documents()
-    tokenizer.build_vocabulary(all_text)
+def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_save_path="model.bin",
+             tokenizer_save_path="tokenizer.pkl"):
+    tokenizer, train_loader, val_loader = build_tokenizer_and_load_tokens(context_length, batch_size,
+                                                                          tokenizer_save_path)
 
-    x_train, y_train = prepare_training_data(all_text, tokenizer, sequence_length=20)
-    dataset = TensorDataset(x_train, y_train)
-    train_dataset, val_dataset = split_dataset(dataset, val_split=0.2)
-
-    train_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
-    val_loader = DataLoader(val_dataset, batch_size=64, shuffle=False)
-
-    model = LanguageModel(tokenizer.vocab_size(), mode=mode)
+    model = LanguageModel(tokenizer.vocab_size())
     optimizer = optim.Adam(model.parameters(), lr=0.0005, weight_decay=1e-5)
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=3)
     criterion = nn.CrossEntropyLoss()
 
-    train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=100, patience=5)
+    train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs, patience=patience)
 
+    print("Saving model...")
     torch.save(model.state_dict(), model_save_path)
-    tokenizer.save(tokenizer_save_path)
     print(f"Model saved to {model_save_path}")
+
+
+def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_path):
+    # we do this in a separate function to allow python to free up memory when we no longer need the text.
+    print("Loading training data...")
+    all_text = read_all_documents()
+    print("Training tokenizer...")
+    tokenizer = SimpleTokenizer()
+    tokenizer.append_documents_to_vocabulary(all_text)
+    print("Saving tokenizer...")
+    tokenizer.save(tokenizer_save_path)
+    print("Tokenizer vocabulary size: ", tokenizer.vocab_size())
     print(f"Tokenizer saved to {tokenizer_save_path}")
+    print("Tokenizing training data...")
+    x_train, y_train = prepare_training_data(all_text, tokenizer, sequence_length=context_length)
+    dataset = TensorDataset(x_train, y_train)
+    train_dataset, val_dataset = split_dataset(dataset, val_split=0.2)
+    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+    return tokenizer, train_loader, val_loader
 
 
-def read_all_documents(directory="."):
+def read_all_documents(directory="training_data"):
     texts = []
     for filename in os.listdir(directory):
         if filename.endswith(".txt") or filename.endswith(".md"):
@@ -140,4 +181,5 @@ def read_all_documents(directory="."):
 
 
 if __name__ == "__main__":
-    do_train()
+    faulthandler.enable()
+    do_train(context_length=768, batch_size=64, max_epochs=15, patience=2)
