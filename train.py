@@ -98,6 +98,7 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
         scheduler.step()
         if math.isnan(val_loss) or math.isnan(epoch_loss) or math.isinf(val_loss) or math.isinf(epoch_loss):
             print("Stopping due to numerical instability.")
+            return False
 
         early_stopping.check(val_loss)
         if early_stopping.stop_training:
@@ -106,8 +107,11 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
 
         # Save model checkpoint every 5 epochs
         if epoch % 5 == 0:
+            if math.isnan(val_loss) or math.isnan(epoch_loss) or math.isinf(val_loss) or math.isinf(epoch_loss):
+                return False
             torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
             print(f"Checkpoint saved at epoch {epoch + 1} to {base_path}model_checkpoint.bin")
+    return True
 
 
 def safe_tensor_conversion(data_list, dtype=torch.long):
@@ -165,7 +169,8 @@ def split_dataset(dataset, val_split=0.2):
 
 def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience=5, model_save_path="model.bin",
              tokenizer_save_path="tokenizer.pkl"):
-    tokenizer, train_loader, val_loader, number_of_samples = build_tokenizer_and_load_tokens(training_sequence_length, batch_size,
+    tokenizer, train_loader, val_loader, number_of_samples = build_tokenizer_and_load_tokens(training_sequence_length,
+                                                                                             batch_size,
                                                                                              tokenizer_save_path)
 
     vocab_size = tokenizer.vocab_size()
@@ -190,14 +195,15 @@ def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience
     scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.0005, total_steps=total_training_steps)
     criterion = nn.CrossEntropyLoss()
 
-    train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs, patience=patience)
-
-    print("Saving model...")
-    torch.save(model.state_dict(), model_save_path)
-    print(f"Model saved to {model_save_path}")
-    total_params = sum(p.numel() for p in model.parameters())
-    print(f"Number of parameters: {total_params}")
-    print(f"Vocabulary size: {vocab_size}")
+    model_trained = train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs,
+                                patience=patience)
+    if model_trained:
+        print("Saving model...")
+        torch.save(model.state_dict(), model_save_path)
+        print(f"Model saved to {model_save_path}")
+        total_params = sum(p.numel() for p in model.parameters())
+        print(f"Number of parameters: {total_params}")
+        print(f"Vocabulary size: {vocab_size}")
 
 
 def build_tokenizer_and_load_tokens(training_sequence_length, batch_size, tokenizer_save_path):
@@ -252,8 +258,8 @@ def notebook_do_train():
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
     tokenizer_path = f"{base_path}tokenizer.pkl"
-    do_train(training_sequence_length=256, batch_size=64,
-             max_epochs=400, patience=5,
+    do_train(training_sequence_length=128, batch_size=64,
+             max_epochs=400, patience=20,
              model_save_path=model_path,
              tokenizer_save_path=tokenizer_path)
 

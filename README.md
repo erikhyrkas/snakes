@@ -99,19 +99,16 @@ Example training:
       files. A smaller vocabulary will reduce memory requirements and training time, but give you worse end results.
 * Parameters: This is total parameters (rather than trainable parameters) because it gives you a better sense of memory
   needs.
-* Embedding Dimensions: I used 256 for all of my experiments. I suspect that 768 or more would be better, but that would
-  use considerably more memory.
-* State Space Model Dimensions: I used 256. I'm sure more is likely useful, but... memory and money!
+* Embedding Dimensions: I started with 256, and found 368 was better for my vocabulary. I suspect that 768 or more would
+  be better, but that would use considerably more memory.
+* State Space Model Dimensions: I used 368. I started with 256, but then found that 368 was better for my vocab size
+* Output size: is how bit the output layer is before logits are calculated
 
-| Memory Used | Training Sequence Length | Batch Size | Attention Block Size | Vocabulary Size | Parameters |
-|-------------|--------------------------|------------|----------------------|-----------------|------------|
-| ?.? GB      | 5                        | ?          |                      | 13183           | ?          |
-| ?.? GB      | 20                       | ?          |                      | 13183           | ?          |
-| ?.? GB      | 128                      | ?          |                      | 13183           | ?          |
-| 19.0 GB     | 256                      | 64         | 64                   | 13183           | 23,737,727 |
-| ?.? GB      | 368                      | ?          |                      | 13183           | ?          |
-| 21.5 GB     | 512                      | 16         | 64                   | 13183           | 23,737,727 |
-| ?.? GB      | 768                      | ?          |                      | 13183           | ?          |
+| Memory Used | Training Sequence Length | Batch Size | Attention Block Size | Vocabulary Size | Embedding Size | SSD Size | Output Size | Parameters |
+|-------------|--------------------------|------------|----------------------|-----------------|----------------|----------|-------------|------------|
+| 21.5 GB     | 128                      | 64         | 64                   | 13183           | 368            | 368      | 368         | 59,959,647 |
+| 19.0 GB     | 256                      | 64         | 64                   | 13183           | 256            | 256      | 256         | 23,737,727 |
+| 21.5 GB     | 512                      | 16         | 64                   | 13183           | 256            | 256      | 256         | 23,737,727 |
 
 ## Run
 

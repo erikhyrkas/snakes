@@ -5,7 +5,7 @@ from attention import Attention
 
 
 class LanguageModel(nn.Module):
-    def __init__(self, vocab_size, embedding_dim=256, state_dim=256, output_dim=256):
+    def __init__(self, vocab_size, embedding_dim=368, state_dim=368, output_dim=368):
         super(LanguageModel, self).__init__()
         self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
         self.state_space_model = Attention(state_dim=state_dim, input_dim=embedding_dim, output_dim=output_dim)
