@@ -1,3 +1,4 @@
+import math
 import os
 import random
 
@@ -95,6 +96,8 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
         val_loss /= len(val_loader)
         print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss}')
         scheduler.step()
+        if math.isnan(val_loss) or math.isnan(epoch_loss) or math.isinf(val_loss) or math.isinf(epoch_loss):
+            print("Stopping due to numerical instability.")
 
         early_stopping.check(val_loss)
         if early_stopping.stop_training:
@@ -160,10 +163,13 @@ def split_dataset(dataset, val_split=0.2):
     return train_dataset, val_dataset
 
 
-def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_save_path="model.bin",
+def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience=5, model_save_path="model.bin",
              tokenizer_save_path="tokenizer.pkl"):
-    tokenizer, train_loader, val_loader, number_of_samples = build_tokenizer_and_load_tokens(context_length, batch_size,
+    tokenizer, train_loader, val_loader, number_of_samples = build_tokenizer_and_load_tokens(training_sequence_length, batch_size,
                                                                                              tokenizer_save_path)
+
+    vocab_size = tokenizer.vocab_size()
+    print(f"Vocabulary size: {vocab_size}")
 
     model = LanguageModel(tokenizer.vocab_size())
 
@@ -171,6 +177,8 @@ def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_
     if os.path.exists(f"{base_path}model_checkpoint.bin"):
         model.load_state_dict(torch.load(f"{base_path}model_checkpoint.bin"))
         print(f"Resumed training from {base_path}model_checkpoint.bin")
+        total_params = sum(p.numel() for p in model.parameters())
+        print(f"Number of parameters: {total_params}")
 
     total_training_steps = (number_of_samples // batch_size) * max_epochs
     if number_of_samples % batch_size != 0:
@@ -187,9 +195,12 @@ def do_train(context_length=5, batch_size=64, max_epochs=100, patience=5, model_
     print("Saving model...")
     torch.save(model.state_dict(), model_save_path)
     print(f"Model saved to {model_save_path}")
+    total_params = sum(p.numel() for p in model.parameters())
+    print(f"Number of parameters: {total_params}")
+    print(f"Vocabulary size: {vocab_size}")
 
 
-def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_path):
+def build_tokenizer_and_load_tokens(training_sequence_length, batch_size, tokenizer_save_path):
     print("Loading and tokenizing training data...")
     training_file_names = get_training_file_names()
     # Split file names for training and validation
@@ -200,20 +211,23 @@ def build_tokenizer_and_load_tokens(context_length, batch_size, tokenizer_save_p
 
     # Initialize the tokenizer
     tokenizer = Tokenizer()
+    if os.path.exists(tokenizer_save_path):
+        tokenizer.load(tokenizer_save_path)
+        print("Loaded existing tokenizer.")
+    else:
+        # Update tokenizer vocab by iterating over each document
+        for file_path in training_file_names:
+            with open(file_path, 'r', encoding='utf-8') as file:
+                document = file.read()
+                tokenizer.learn_new_vocab(document)  # Add document content to vocab
+                del document  # Free memory as soon as possible
 
-    # Update tokenizer vocab by iterating over each document
-    for file_path in training_file_names:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            document = file.read()
-            tokenizer.learn_new_vocab(document)  # Add document content to vocab
-            del document  # Free memory as soon as possible
-
-    # Save the tokenizer with the built vocabulary
-    tokenizer.save(tokenizer_save_path)
+        # Save the tokenizer with the built vocabulary
+        tokenizer.save(tokenizer_save_path)
 
     # Create the TextDataset using file names, allowing on-the-fly loading
-    train_dataset = TextDataset(train_files, tokenizer, context_length)
-    val_dataset = TextDataset(val_files, tokenizer, context_length)
+    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length)
+    val_dataset = TextDataset(val_files, tokenizer, training_sequence_length)
 
     # DataLoader for batching (shuffle is done within the TextDataset)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
@@ -238,8 +252,8 @@ def notebook_do_train():
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
     tokenizer_path = f"{base_path}tokenizer.pkl"
-    do_train(context_length=256, batch_size=64,
-             max_epochs=100, patience=2,
+    do_train(training_sequence_length=256, batch_size=64,
+             max_epochs=400, patience=5,
              model_save_path=model_path,
              tokenizer_save_path=tokenizer_path)
 

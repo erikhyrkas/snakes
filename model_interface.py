@@ -21,6 +21,9 @@ class ModelInterface:
         total_params = sum(p.numel() for p in self.model.parameters())
         return total_params
 
+    def vocab_size(self):
+        return self.tokenizer.vocab_size()
+
     def complete(self, current_context: str, top_p: float = 0.9, max_tokens: int = 100000):
         tokens = self.tokenizer.tokenize(current_context)
         for i in range(max_tokens):

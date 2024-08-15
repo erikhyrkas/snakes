@@ -39,5 +39,3 @@ class LanguageModel(nn.Module):
         next_token_id = torch.multinomial(top_p_probs, 1)
 
         return top_p_indices[next_token_id].item()
-
-

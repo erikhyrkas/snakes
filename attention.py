@@ -6,7 +6,7 @@ ATTENTION_DEBUG = False
 
 
 class Attention(nn.Module):
-    def __init__(self, state_dim, input_dim, output_dim, block_size=50):
+    def __init__(self, state_dim, input_dim, output_dim, block_size=64):
         super(Attention, self).__init__()
         self.state_dim = state_dim
         self.block_size = block_size

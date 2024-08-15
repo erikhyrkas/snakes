@@ -1,4 +1,5 @@
-# YS-LLM 
+# YS-LLM
+
 `Why did it have to be snakes?`
 
 "Why Snakes Large Language Model" is an example LLM that leverages ideas from the Mamba 2 paper for its attention.
@@ -6,23 +7,28 @@
 This LLM is based on my understanding of Mamba 2 and works with CPU or GPU.
 
 ## Dependencies
-The model will work on cpu, but is a little slow. 
+
+The model will work on cpu, but is a little slow.
 
 If you have cuda:
+
 ```
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 ```
 
 If you don't have cuda:
+
 ```
 pip install torch torchvision torchaudio
 ```
 
 ## Generate Data
 
-I used ollama with llama 3.1 to generate training data. Because I don't have a fancy streaming training setup, we are constrained by training data that fits into memory. Fortunately for me, I can fit a lot into memory.
+I used ollama with llama 3.1 to generate training data. Because I don't have a fancy streaming training setup, we are
+constrained by training data that fits into memory. Fortunately for me, I can fit a lot into memory.
 
 You can generate additional data using the command:
+
 ```
 pip install ollama
 
@@ -31,33 +37,28 @@ python data_generator.py
 
 ## Train
 
-Depending on how much GPU you have or whether you are using a CPU, you might want to tweak the context length to fit your hardware. Also, you might simply not want to wait for the time it takes to train a 768 token context.
+Depending on how much GPU you have or whether you are using a CPU, you might want to tweak the training sequence length
+to fit your hardware. Also, you might simply not want to wait for the time it takes to train a 768 token training
+sequence length. Training sequence length is how many tokens are used to train at a time. Fewer means you aren't
+teaching it to understand longer text. There's no set context length at runtime, but your training sequence length will
+impact the runtime performance.
 
-I documented the memory I *observed* being used for a number of settings. Without any model running, I'll often see around 0.6 GB of GPU used. Your vocabulary size will impact this, if you change the tokenizer. I didn't make an effort to be ultimately efficient. Your milage may vary if you have a smaller or larger vocabulary.
+I documented the memory I *observed* being used for a number of settings. Without any model running, I'll often see
+around 0.6 GB of GPU used. Your vocabulary size will impact this, if you change the tokenizer. I didn't make an effort
+to be ultimately efficient. Your milage may vary if you have a smaller or larger vocabulary.
 
-I tested a lot with a context size of 20, and it worked surprisingly well. It runs well even if you have a CPU.
+I tested a lot with a training sequence length of 20, and it worked surprisingly well. It runs well even if you have a
+CPU.
 
-If you are looking to just quickly try out the model without needing it to do much, I'd suggest a batch size of 20 and using a limited number of documents to keep your vocab down.
+If you are looking to quickly try out the model without needing it to do much, I'd suggest a batch size of 64, a
+training sequence length of 20, and using a limited number of documents to keep your vocab down.
 
-I could have tweaked batch size to utilize less memory, but once I had stable training, I was nervous about toying with it.
+Training sequence length and batch size can be changed at the bottom of `train.py`. Vocabulary size depends directly on
+the documents in `.\training_data\`.
 
-Context size and batch size can be changed at the bottom of `train.py`. Vocabulary size depends directly on the documents in `.\training_data\`.  
-
-### Observed GPU Used
-
-Note: These values are from before I changed batching to be more efficient:
-
-| Memory Used | Context Size | Batch Size | Vocabulary Size |
-|-------------|--------------|------------|-----------------|
-| 1.6 GB      | 5            | 64         | 13,148          |
-| 2.0 GB      | 20           | 64         | 13,148          | 
-| 5.0 GB      | 128          | 64         | 13,148          |
-| 9.1 GB      | 256          | 64         | 13,148          |
-| 12.8 GB     | 368          | 64         | 13,148          |
-| 17.4 GB     | 512          | 64         | 13,148          |
-| 22.5 GB     | 768          | 64         | 13,148          |
-
-
+REUSE YOUR TOKENIZER if you stop and restart training. The order files are processed to train the tokenizer will impact
+token indices, and you'll effectively be restarting training from worse than scratch if you don't reuse the tokenizer
+you started with. The training code will do this, but only if you don't delete the tokenizer.pkl file.
 
 Train the model with the command:
 
@@ -65,11 +66,52 @@ Train the model with the command:
 python train.py
 ```
 
-NOTE: the current early-stopping settings way over-fit, but I needed to ensure training works. If I was using a much larger
-training set, I would tweak my early stopping values. Overfitting means that the results are coherent, but that the model isn't versatile. It's effectively memorizing the trianing data.
+NOTE: This example shows a case where I over-fit, but I needed to ensure training worked. If I was using a much
+larger training set, I would tweak my early stopping values. Overfitting means that the results are coherent, but that
+the
+model isn't versatile. It's effectively memorizing the training data.
 
 Example training:
 ![img_1.png](img_1.png)
+
+### Training Observations and Speculation
+
+* Memory Used: I looked at how much GPU was being used at during training and wrote it down.
+    * When making changes to the model design, I knew it would impact the memory usage, so I put ? when I was no longer
+      confident in the number.
+* Training Sequence Length: size of chunks of text that are used to train on.
+    * This is analogous to context size, but I don't limit context size during inference. During inference, your context
+      length is limited by your available memory.
+* Batch Size: A larger batch size (64) seems to really help with numerical stability of the model.
+    * For my vocabulary size, if you can't get the loss down below 0.5, the model will not sound coherent. Batch Size
+      may influence whether you can get there without first bumping into NaNs.
+* Attention Block Size: How many tokens are blocked together for attention.
+    * The bigger the blocks, the greater understanding will go into each of those blocks, but the memory requirements
+      will shoot up.
+    * I had initially picked 50 for no good reason, and switched to 64 in more recent times. My rationale is that maybe
+      it'll help with memory alignment.
+    * I suspect there's value in having a larger attention block size than your training sequence.
+* Vocabulary Size: How many tokens (words, sort of) does the tokenizer know about.
+    * Our tokenizer will handle any input, but since it breaks down unknown words into individual characters, it's not
+      likely to use them intelligently. If it runs across a character it can't handle, it will discard it.
+    * Obviously, you could use a smaller dataset for training. I feel like I'm already using a fairly small training
+      set, but if you are on a CPU, and just playing around, you could just train with a single one of the example
+      files. A smaller vocabulary will reduce memory requirements and training time, but give you worse end results.
+* Parameters: This is total parameters (rather than trainable parameters) because it gives you a better sense of memory
+  needs.
+* Embedding Dimensions: I used 256 for all of my experiments. I suspect that 768 or more would be better, but that would
+  use considerably more memory.
+* State Space Model Dimensions: I used 256. I'm sure more is likely useful, but... memory and money!
+
+| Memory Used | Training Sequence Length | Batch Size | Attention Block Size | Vocabulary Size | Parameters |
+|-------------|--------------------------|------------|----------------------|-----------------|------------|
+| ?.? GB      | 5                        | ?          |                      | 13183           | ?          |
+| ?.? GB      | 20                       | ?          |                      | 13183           | ?          |
+| ?.? GB      | 128                      | ?          |                      | 13183           | ?          |
+| 19.0 GB     | 256                      | 64         | 64                   | 13183           | 23,737,727 |
+| ?.? GB      | 368                      | ?          |                      | 13183           | ?          |
+| 21.5 GB     | 512                      | 16         | 64                   | 13183           | 23,737,727 |
+| ?.? GB      | 768                      | ?          |                      | 13183           | ?          |
 
 ## Run
 
@@ -84,17 +126,16 @@ This enters a cli mode where you give text, and it completes the text. Nothing f
 Example usage:
 ![img.png](img.png)
 
-## How many parameters does the model have?
+## Where is the RoPE?
 
-It depends on your vocab, etc. Assuming you didn't tweak the embedding size or anything else.
+When you look at the simplicity of the model, your first reaction might be, "Erik forgot the positional embeddings!
+Where is RoPE?"
 
-Note: These values are from before I changed batching to be more efficient:
+It turns out that SSMs naturally keep some amount of positional information, so you don't need to do specific positional
+embeddings!
 
-| context size | batch size | vocab size | parameters |
-|--------------|------------|------------|------------|
-| 20           | 64         | 5,474      | 19,782,498 |
-
-
+Maybe our understanding will change in the future, or maybe there's a different way to improve performance, but I found
+that I really didn't need them.
 
 ## Related Details
 
