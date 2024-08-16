@@ -14,7 +14,7 @@ from tokenizer import Tokenizer
 
 
 def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=100, max_grad_norm=1.0,
-                patience=5, accumulation_steps=4):
+                patience=5, accumulation_steps=4, no_validation=False):
     print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device_name}")
@@ -32,6 +32,7 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
 
     print("First epoch starting...")
+    best_loss = float('inf')
     for epoch in range(epochs):
         model.train()
         epoch_loss = 0.0
@@ -73,44 +74,64 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
 
             epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
 
-        # validation loss
-        model.eval()
-        val_loss = 0.0
-        with torch.no_grad():
-            for inputs, targets in val_loader:
-                inputs, targets = inputs.to(device), targets.to(device)
-                if device_name == "cuda":
-                    with torch.cuda.amp.autocast():  # Use autocast for validation as well on GPU
+        if not no_validation:
+            model.eval()
+            val_loss = 0.0
+            with torch.no_grad():
+                for inputs, targets in val_loader:
+                    inputs, targets = inputs.to(device), targets.to(device)
+                    if device_name == "cuda":
+                        with torch.cuda.amp.autocast():  # Use autocast for validation as well on GPU
+                            outputs = model(inputs)
+                            outputs = outputs.view(-1, outputs.size(-1))
+                            targets = targets.view(-1)
+                            loss = criterion(outputs, targets)
+                    else:
                         outputs = model(inputs)
                         outputs = outputs.view(-1, outputs.size(-1))
                         targets = targets.view(-1)
                         loss = criterion(outputs, targets)
-                else:
-                    outputs = model(inputs)
-                    outputs = outputs.view(-1, outputs.size(-1))
-                    targets = targets.view(-1)
-                    loss = criterion(outputs, targets)
 
-                val_loss += loss.item()
+                    val_loss += loss.item()
 
-        val_loss /= len(val_loader)
-        print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss}')
-        scheduler.step()
-        if math.isnan(val_loss) or math.isnan(epoch_loss) or math.isinf(val_loss) or math.isinf(epoch_loss):
-            print("Stopping due to numerical instability.")
-            return False
+            val_loss /= len(val_loader)
+            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss}')
+            scheduler.step()
 
-        early_stopping.check(val_loss)
-        if early_stopping.stop_training:
-            print(f"Early stopping triggered at epoch {epoch + 1}")
-            break
-
-        # Save model checkpoint every 5 epochs
-        if epoch % 5 == 0:
             if math.isnan(val_loss) or math.isnan(epoch_loss) or math.isinf(val_loss) or math.isinf(epoch_loss):
+                print("Stopping due to numerical instability.")
                 return False
-            torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
-            print(f"Checkpoint saved at epoch {epoch + 1} to {base_path}model_checkpoint.bin")
+
+            early_stopping.check(val_loss)
+            if early_stopping.stop_training:
+                print(f"Early stopping triggered at epoch {epoch + 1}")
+                break
+
+            # Save model checkpoint every 5 epochs
+            if epoch_loss < best_loss:
+                best_loss = epoch_loss
+                torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
+                print(f"Checkpoint saved at epoch {epoch + 1} to {base_path}model_checkpoint.bin")
+
+        else:
+            # Monitor training loss for stopping if no validation
+            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}')
+            scheduler.step()
+
+            if math.isnan(epoch_loss) or math.isinf(epoch_loss):
+                print("Stopping due to numerical instability.")
+                return False
+
+            if epoch_loss < best_loss:
+                best_loss = epoch_loss
+                torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
+                print(f"New best model saved at epoch {epoch + 1}")
+
+            early_stopping.check(epoch_loss)
+            if early_stopping.stop_training:
+                print(f"Early stopping triggered at epoch {epoch + 1}")
+                break
+
     return True
 
 
@@ -168,7 +189,7 @@ def split_dataset(dataset, val_split=0.2):
 
 
 def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience=5, model_save_path="model.bin",
-             tokenizer_save_path="tokenizer.pkl"):
+             tokenizer_save_path="tokenizer.pkl", no_validation=False):
     tokenizer, train_loader, val_loader, number_of_samples = build_tokenizer_and_load_tokens(training_sequence_length,
                                                                                              batch_size,
                                                                                              tokenizer_save_path)
@@ -195,7 +216,7 @@ def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience
     criterion = nn.CrossEntropyLoss()
 
     model_trained = train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs,
-                                patience=patience)
+                                patience=patience, no_validation=no_validation)
     if model_trained:
         print("Saving model...")
         torch.save(model.state_dict(), model_save_path)
@@ -205,14 +226,18 @@ def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience
         print(f"Vocabulary size: {vocab_size}")
 
 
-def build_tokenizer_and_load_tokens(training_sequence_length, batch_size, tokenizer_save_path):
+def build_tokenizer_and_load_tokens(training_sequence_length, batch_size, tokenizer_save_path, no_validation=False):
     print("Loading and tokenizing training data...")
     training_file_names = get_training_file_names()
     # Split file names for training and validation
     random.shuffle(training_file_names)
-    split_index = int(0.8 * len(training_file_names))
-    train_files = training_file_names[:split_index]
-    val_files = training_file_names[split_index:]
+    if no_validation:
+        train_files = training_file_names
+        val_files = []
+    else:
+        split_index = int(0.8 * len(training_file_names))
+        train_files = training_file_names[:split_index]
+        val_files = training_file_names[split_index:]
 
     # Initialize the tokenizer
     tokenizer = Tokenizer()
@@ -230,13 +255,15 @@ def build_tokenizer_and_load_tokens(training_sequence_length, batch_size, tokeni
         # Save the tokenizer with the built vocabulary
         tokenizer.save(tokenizer_save_path)
 
-    # Create the TextDataset using file names, allowing on-the-fly loading
-    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length)
-    val_dataset = TextDataset(val_files, tokenizer, training_sequence_length)
-
     # DataLoader for batching (shuffle is done within the TextDataset)
+    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
-    val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
+
+    if no_validation:
+        val_loader = None
+    else:
+        val_dataset = TextDataset(val_files, tokenizer, training_sequence_length)
+        val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
     number_of_samples = len(train_dataset)
 
@@ -253,14 +280,15 @@ def get_training_file_names(directory="training_data"):
     return file_names
 
 
-def notebook_do_train():
+def notebook_do_train(no_validation=False):
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
     tokenizer_path = f"{base_path}tokenizer.pkl"
-    do_train(training_sequence_length=128, batch_size=64,
+    do_train(training_sequence_length=120, batch_size=64,
              max_epochs=400, patience=20,
              model_save_path=model_path,
-             tokenizer_save_path=tokenizer_path)
+             tokenizer_save_path=tokenizer_path,
+             no_validation=no_validation)
 
 
 if __name__ == "__main__":

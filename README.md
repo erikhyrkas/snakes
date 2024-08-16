@@ -1,16 +1,16 @@
-# YS-LLM
+# YS-71M-v0.1
 
 ![img_2.png](img_2.png)
 
-`Why did it have to be snakes?`
+`"Why did it have to be snakes?"`
 
-"Why Snakes Large Language Model" is an example LLM that leverages ideas from the Mamba 2 paper for its attention.
+"Why Snakes" 71 Million is an example LLM that leverages ideas from the Mamba 2 paper for its attention.
 
 This LLM is based on my understanding of Mamba 2 and works with CPU or GPU.
 
 ## Dependencies
 
-The model will work on cpu, but is a little slow.
+The model will train on cpu, but is a little slow.
 
 If you have cuda:
 
@@ -97,13 +97,16 @@ Example training:
       may influence whether you can get there without first bumping into NaNs.
 * Attention Block Size: How many tokens are blocked together for attention.
     * The bigger the blocks, the greater understanding will go into each of those blocks, but the memory requirements
-      will shoot up.
-    * I had initially picked 50 for no good reason, and switched to 64 in more recent times. My rationale is that maybe
-      it'll help with memory alignment.
-    * I suspect there's value in having a larger attention block size than your training sequence.
+      will shoot up. Smaller blocks should do a better job of being coherent within a given sentence, but some of that
+      coherence will be lost when transferring knowledge to the next block.
+    * Basically, I think the bigger the block the better, but only if you have a large enough state dimension to hold
+      the knowledge. My state dim is rather small, so I've started experimenting with smaller state blocks.
+    * I had initially picked 50 for no good reason, and switched to 64 and then 32 and then 16. My rationale for powers
+      of two is that maybe it'll help with memory alignment.
+    * I suspect there's value in having a larger training sequence length than attention block size.
 * Vocabulary Size: How many tokens (words, sort of) does the tokenizer know about.
     * Our tokenizer will handle any input, but since it breaks down unknown words into individual characters, it's not
-      likely to use them intelligently. If it runs across a character it can't handle, it will discard it.
+      likely to use them intelligently. If it runs across a character it can't handle, it will discard it. 
     * Obviously, you could use a smaller dataset for training. I feel like I'm already using a fairly small training
       set, but if you are on a CPU, and just playing around, you could just train with a single one of the example
       files. A smaller vocabulary will reduce memory requirements and training time, but give you worse end results.
@@ -117,6 +120,7 @@ Example training:
 | Memory Used | Training Sequence Length | Batch Size | Attention Block Size | Vocabulary Size | Embedding Size | SSD Size | Output Size | Parameters |
 |-------------|--------------------------|------------|----------------------|-----------------|----------------|----------|-------------|------------|
 | 21.5 GB     | 128                      | 64         | 64                   | 13183           | 368            | 368      | 368         | 59,959,647 |
+| 21.9 GB     | 128                      | 64         | 16                   | 28590           | 368            | 368      | 368         | 71,314,606 |
 | 19.0 GB     | 256                      | 64         | 64                   | 13183           | 256            | 256      | 256         | 23,737,727 |
 | 21.5 GB     | 512                      | 16         | 64                   | 13183           | 256            | 256      | 256         | 23,737,727 |
 

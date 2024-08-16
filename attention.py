@@ -6,7 +6,7 @@ ATTENTION_DEBUG = False
 
 
 class Attention(nn.Module):
-    def __init__(self, state_dim, input_dim, output_dim, block_size=64, dropout_rate=0.1):
+    def __init__(self, state_dim, input_dim, output_dim, block_size=16, dropout_rate=0.1):
         super(Attention, self).__init__()
         self.state_dim = state_dim
         self.block_size = block_size
@@ -16,7 +16,7 @@ class Attention(nn.Module):
         self.S = nn.Parameter(torch.eye(output_dim, input_dim) * 0.1 + 0.01)
         self.layer_norm = nn.LayerNorm(state_dim)
         self.input_dropout = nn.Dropout(p=dropout_rate)
-        # self.attn_dropout = nn.Dropout(p=dropout_rate)
+        # self.attn_dropout = nn.Dropout(p=dropout_rate)  # see note below
         self.output_dropout = nn.Dropout(p=dropout_rate)
 
     def forward(self, x):
