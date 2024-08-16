@@ -133,9 +133,10 @@ def write_scripts(prompts: list, base_file_name, file_count):
     output_file = f'./training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for prompt in prompts:
-            response = ollama.generate('llama3.1', prompt).strip()
+            response = ollama.generate('llama3.1', prompt)
+            script = response['response'].strip()
             file.write(
-                f"{prompt}<start>{response}\n<end>\n\n"
+                f"{prompt}<start>{script}\n<end>\n\n"
             )
         file.flush()
 
