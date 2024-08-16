@@ -254,7 +254,7 @@ For further information on Russia, please visit:
 Note: This article provides a basic overview of Russia's history, government, economy, and culture. For more detailed information, please refer to the references provided.
 <end>
 
-Write a wiki article about United States.<start>**United States of America**
+Write a wiki article about the United States.<start>**United States of America**
 
 The United States is a country in North America. It is made up of 50 states.
 
@@ -681,7 +681,7 @@ If you are in an area that has had an earthquake:
 To reduce damage from earthquakes:
 
 1. **Make buildings strong**: Buildings should be designed to withstand earthquakes.
-2. **Have a emergency plan**: Know what to do in case of an earthquake.
+2. **Have an emergency plan**: Know what to do in case of an earthquake.
 3. **Practice earthquake drills**: Regularly practice how to stay safe during an earthquake.
 
 By understanding earthquakes and taking steps to prepare, you can help keep yourself and others safe!

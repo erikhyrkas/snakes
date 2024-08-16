@@ -6,7 +6,7 @@ ATTENTION_DEBUG = False
 
 
 class Attention(nn.Module):
-    def __init__(self, state_dim, input_dim, output_dim, block_size=64):
+    def __init__(self, state_dim, input_dim, output_dim, block_size=64, dropout_rate=0.1):
         super(Attention, self).__init__()
         self.state_dim = state_dim
         self.block_size = block_size
@@ -15,12 +15,17 @@ class Attention(nn.Module):
         self.R = nn.Parameter(torch.eye(output_dim, state_dim) * 0.1 + 0.01)
         self.S = nn.Parameter(torch.eye(output_dim, input_dim) * 0.1 + 0.01)
         self.layer_norm = nn.LayerNorm(state_dim)
+        self.input_dropout = nn.Dropout(p=dropout_rate)
+        # self.attn_dropout = nn.Dropout(p=dropout_rate)
+        self.output_dropout = nn.Dropout(p=dropout_rate)
 
     def forward(self, x):
         device = x.device
         batch_size, sequence_length, input_dim = x.shape
         outputs = []
         state = torch.zeros(batch_size, self.state_dim, device=device)
+
+        x = self.input_dropout(x)
 
         p_expanded = self.P.unsqueeze(0)
         q_expanded = self.Q.expand(batch_size, -1, -1)
@@ -37,23 +42,43 @@ class Attention(nn.Module):
                 state = torch.einsum('bij,bijk->bk', state_quad, p_expanded) + \
                         torch.matmul(q_expanded, input_t).squeeze(-1)
 
-                # Apply layer normalization
                 state = self.layer_norm(state)
+
+                # Adding dropout to the attention introduced numerical stability.
+                # maybe if I reduced the dropout rate or experimented more, I could get this
+                # to work.
+                # state = self.attn_dropout(state)
 
                 output_t = torch.matmul(self.R, state.unsqueeze(-1)).squeeze(-1) + \
                            torch.matmul(s_expanded, input_t).squeeze(-1)
                 outputs.append(output_t.unsqueeze(1))
 
-            if ATTENTION_DEBUG and torch.isnan(state).any():
-                print(f"NaN detected at step {start}-{end} in state.")
-                raise ValueError("NaN detected in state after block processing")
+            if ATTENTION_DEBUG:
+                if torch.isnan(state).any():
+                    print(f"NaN detected at step {start}-{end} in state.")
+                    raise ValueError("NaN detected in state after block processing")
+
+                state_norm = torch.norm(state, p=2, dim=-1)
+                if torch.any(state_norm > 1e5):
+                    print(f"Exploding state detected at step {start}-{end} with norm: {state_norm.max().item()}")
+                elif torch.any(state_norm < 1e-5):
+                    print(f"Vanishing state detected at step {start}-{end} with norm: {state_norm.min().item()}")
 
             state = state.detach()
 
         final_output = torch.cat(outputs, dim=1)
 
-        if ATTENTION_DEBUG and torch.isnan(final_output).any():
-            raise ValueError("NaN detected in final output")
+        final_output = self.output_dropout(final_output)
+
+        if ATTENTION_DEBUG:
+            if torch.isnan(final_output).any():
+                raise ValueError("NaN detected in final output")
+
+            final_output_norm = torch.norm(final_output, p=2, dim=-1)
+            if torch.any(final_output_norm > 1e5):
+                print(f"Exploding final output detected with norm: {final_output_norm.max().item()}")
+            elif torch.any(final_output_norm < 1e-5):
+                print(f"Vanishing final output detected with norm: {final_output_norm.min().item()}")
 
         return final_output
 

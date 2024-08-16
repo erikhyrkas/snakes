@@ -650,7 +650,7 @@ Many people try to climb Mount Everest every year. Climbers use special equipmen
 * BBC News: Mount Everest facts
 <end>
 
-Write a wiki article about United Kingdom.<start>**United Kingdom**
+Write a wiki article about the United Kingdom.<start>**United Kingdom**
 
 The United Kingdom (UK) is a country located in Europe.
 

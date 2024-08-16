@@ -203,8 +203,8 @@ Cattle are large, hooved mammals that people use for food, milk, and work.
 
 There are many types of cattle. Some examples include:
 
-* **Cow**: A female cattle used for milk or meat.
-* **Bull**: A male cattle used for breeding.
+* **Cow**: Female cattle used for milk or meat.
+* **Bull**: Male cattle used for breeding.
 * **Calves**: Baby cattle.
 
 **Characteristics**
@@ -320,7 +320,7 @@ Rhode Island is a popular tourist destination due to its beautiful beaches, hist
 Rhode Island has a strong education system with several top-ranked universities, including Brown University and Rhode Island College.
 <end>
 
-Write a wiki article about Atlantic Ocean.<start>**Atlantic Ocean**
+Write a wiki article about the Atlantic Ocean.<start>**Atlantic Ocean**
 
 The Atlantic Ocean is one of the world's five oceans. It covers a very large area of our planet.
 

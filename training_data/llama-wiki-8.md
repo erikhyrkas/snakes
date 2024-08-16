@@ -525,7 +525,7 @@ Octopuses are highly intelligent animals. They have been observed solving puzzle
 The octopus is a fascinating and unique creature that continues to intrigue scientists and animal lovers alike. Its intelligence, adaptability, and remarkable appearance make it one of the most interesting animals in the ocean.
 <end>
 
-Write a wiki article about Amazon River.<start>**Amazon River**
+Write a wiki article about the Amazon River.<start>**Amazon River**
 
 The Amazon River is the largest river in the world by discharge volume. It is located in South America and flows through seven countries: Brazil, Colombia, Peru, Ecuador, Venezuela, Bolivia, and Guyana.
 
@@ -730,7 +730,7 @@ Spiders can live almost anywhere, including houses, gardens, forests, and even d
 Spiders are fascinating creatures that play an important role in the ecosystem. They help to keep insect populations under control, which is good for gardens and crops. With their unique bodies and special webs, spiders have adapted to living in many different environments around the world.
 <end>
 
-Write a wiki article about Himalayas.<start>**The Himalayas**
+Write a wiki article about the Himalayas.<start>**The Himalayas**
 
 The Himalayas is a big mountain range in Asia. It is one of the most famous mountain ranges in the world.
 

@@ -282,7 +282,7 @@ For further reading, see:
 Note: This article is a simplified and condensed version of more comprehensive information. For detailed and accurate information about Australia, please refer to reliable sources such as the Australian Government Website or reputable online encyclopedias like Wikipedia.
 <end>
 
-Write a wiki article about Nile.<start>**Nile River**
+Write a wiki article about the Nile.<start>**Nile River**
 
 The Nile is one of the longest rivers in the world. It flows through Egypt and Sudan.
 

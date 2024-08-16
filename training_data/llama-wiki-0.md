@@ -548,7 +548,7 @@ The Alpha Centauri system consists of three stars:
 
 **Observation**
 
-Alpha Centauri can be seen with binoculars or a small telescope. On a clear night, look for the constellation of Centaurus in the southern sky and you might spot Alpha Centauri shining brightly.
+Alpha Centauri can be seen with binoculars or a small telescope. On a clear night, look for the constellation of Centaurus in the southern sky, and you might spot Alpha Centauri shining brightly.
 <end>
 
 Write a wiki article about Long Island.<start>**Long Island**

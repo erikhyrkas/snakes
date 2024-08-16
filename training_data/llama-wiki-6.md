@@ -124,7 +124,7 @@ Note: This article provides a basic overview of North Korea. For more in-depth i
 
 Write a wiki article about Dubai.<start>**Dubai**
 
-Dubai is a city located in the country of United Arab Emirates (UAE). It is a popular tourist destination and a major commercial hub.
+Dubai is a city located in the country of the United Arab Emirates (UAE). It is a popular tourist destination and a major commercial hub.
 
 **Location**
 

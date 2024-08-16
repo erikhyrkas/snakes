@@ -37,6 +37,15 @@ pip install ollama
 python data_generator.py
 ```
 
+NOTE: I did very minimal curation on the data after generation. I relied mostly on some search and replaces and the
+grammar checker built into PyCharm. I didn't scan for offensive material or inaccuracies and entirely relied on the
+Llama 3.1's guardrails to not be offensive. I curated the list of english words, wiki topics, and dates, but I'm sure
+that I missed important items. I'm human and had limited time. I used a popular chatbot to get lists and then manually
+filtered them down, but there were a few thousand things to look at. I generally avoided politics and religion, but it
+would not shock me if some crept in. I also attempted to balance identity and heritage, but I'm sure that my own
+background impacted that. I'm simply not aware of all cultures, identities, and backgrounds, and I'm not really
+qualified to balance that data perfectly.
+
 ## Train
 
 Depending on how much GPU you have or whether you are using a CPU, you might want to tweak the training sequence length

@@ -750,7 +750,7 @@ China is a country in East Asia. It has a long history that goes back thousands 
 
 **Geography**
 
-China is the third largest country in the world by land area. It shares borders with 14 countries, including India, Pakistan, Afghanistan, and Russia. The country has a diverse geography, with mountains, rivers, deserts, and forests.
+China is the third-largest country in the world by land area. It shares borders with 14 countries, including India, Pakistan, Afghanistan, and Russia. The country has a diverse geography, with mountains, rivers, deserts, and forests.
 
 **Capital City**
 

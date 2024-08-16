@@ -147,7 +147,7 @@ South African culture is diverse and vibrant. Traditional music, dance, and art 
 South Africa is a popular tourist destination due to its beautiful landscapes, wildlife, and cultural attractions. The famous Kruger National Park is home to many wild animals, including lions and elephants.
 <end>
 
-Write a wiki article about Washington, D.C..<start>**Washington, D.C.**
+Write a wiki article about Washington, D.C.<start>**Washington, D.C.**
 
 **What is Washington, D.C.?**
 
@@ -277,7 +277,7 @@ Crimean culture is a mix of Russian, Ukrainian, and Turkish influences. Many Cri
 This article has been written based on information from reliable sources. If you need more details or would like to contribute to this wiki, please feel free to do so!
 <end>
 
-Write a wiki article about Ganges.<start>**Ganges River**
+Write a wiki article about the Ganges.<start>**Ganges River**
 
 The Ganges River is a major river in India and Bangladesh. It is one of the most sacred rivers in Hinduism.
 

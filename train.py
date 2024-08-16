@@ -190,8 +190,7 @@ def do_train(training_sequence_length=5, batch_size=64, max_epochs=100, patience
         # Add one step for each epoch to cover the last incomplete batch
         total_training_steps += max_epochs
 
-    optimizer = optim.AdamW(model.parameters(), lr=0.0005)
-    # optimizer = optim.Adam(model.parameters(), lr=0.0005, weight_decay=1e-5)
+    optimizer = optim.AdamW(model.parameters(), lr=0.0005, weight_decay=1e-5)
     scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.0005, total_steps=total_training_steps)
     criterion = nn.CrossEntropyLoss()
 
