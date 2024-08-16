@@ -280,8 +280,6 @@ Tonight, I felt free.
 And so I ran on, into the darkness, with only my small pack and my own two feet to guide me. The night air was full of mysteries, but I was ready for whatever lay ahead.
 
 As long as I could keep running.<end>
-Here is a prompt asking for this story:
-
 Write a tale about a small but determined adventurer who uncovers a hidden world beneath the desert sands, filled with ancient secrets and wonders waiting to be discovered.<start>As the sun beat down on his tiny back, Little Man trudged through the endless dunes of sand. He was a 5-year-old man, with a miniature top hat and a determined look on his face.
 
 He had been walking for hours, or at least he thought it was hours – time worked differently in the desert, where the sun seemed to stay in one place forever. Little Man's canteen was almost empty, but he didn't let that stop him. He had to find what lay hidden beneath the sand.
@@ -1852,8 +1850,6 @@ She felt a thrill of anticipation mixed with trepidation. Mars was a hub of huma
 Vex took a deep breath, her mind racing with strategies and contingency plans. She made her decision: tonight, she'd take the first step towards revenge. Tomorrow, the real game would begin.
 
 She donned her suit, checking the seals before strapping herself to the docking airlock. Vex sealed the outer door behind her, feeling a rush of excitement mixed with fear as she descended into the unknown – and into the very heart of vengeance.<end>
-Here is a prompt asking for this story:
-
 Write a haunting tale about a woman who returns to her past, armed with determination and a sense of justice, to confront the malevolent forces that have haunted her family for decades.<start>As she trudged through the dense underbrush, the weight of her creaking back and worn knees seemed to thicken with each step. 57 years on this earth had taken their toll, but Edna had one last reckoning to attend to before she left this life behind.
 
 She had come to these woods 40 years ago, fresh from the horrors of a marriage that had destroyed her spirit. Her husband, Jack, had been a cruel and vicious man who'd made her feel like dirt beneath his feet. The day he'd finally gotten what was coming to him – a car crash on this very road – Edna felt no sorrow. She felt liberation.
@@ -2002,8 +1998,6 @@ Eventually, I found myself standing before a dilapidated warehouse on the outski
 In the heart of the warehouse, a single lightbulb flickered to life above a makeshift desk. Scrawled across its surface was a message in the same handwriting from the notebook: "Welcome home." My heart skipped a beat as I realized that this might be more than just a coincidence – it could be the start of something much bigger.
 
 I stood there, bathed in the faint glow of the lightbulb, feeling the city's secrets begin to unravel before me. This was only the beginning of my journey into the unknown, where discovery would lead me down winding paths and hidden passageways. The notebook seemed to be whispering a single phrase over and over – "You're not alone" – as I took my first steps toward uncovering the truth that lay just beyond the edge of this worn-out city.<end>
-Here is a prompt asking for this story:
-
 Write a story about an 11-year-old boy named Kael who discovers a mysterious device in an abandoned clockwork shop next door to his apartment building, and as soon as he touches it, a stone door hidden behind the device swings open, revealing a hidden world beyond.<start>The sun was setting over the city, casting a warm orange glow over the crowded streets. Kael, an 11-year-old man with messy brown hair and bright green eyes, navigated through the throngs of people on his way home from the market.
 
 As he walked, he couldn't shake the feeling that something was off. Not just the usual chaos of the city, but a specific sensation that had been building all day. It was like a buzzing in the air, or a whisper in his ear that only he could hear.
@@ -2290,8 +2284,6 @@ And then – just ahead of him – the light from his flashlight illuminated som
 "WELCOME TO THE ESCAPE ROUTE. DO NOT REMOVE YOUR PACK. THEY ARE WAITING FOR YOU."
 
 A low growl rumbled deep within Kael's chest as he realized the horrifying truth: they hadn't escaped anything at all...<end>
-Here is a prompt asking for this story:
-
 Write a story about Zephyr, a young adult who seeks revenge against Ryder Pierce, the person who humiliated his mother five years ago, and sets out on a mission to uncover what Ryder has been up to since their high school days.<start>I stepped off the crowded bus and onto the sweltering sidewalk, the heat of the summer evening making my sweat-drenched t-shirt cling to my skin. My name is Zephyr, by the way – not that it matters much in this city, where nobody really knows or cares about anything.
 
 As I made my way through the throngs of people, my eyes scanned the familiar streets of downtown, searching for something – anything – to take my mind off the itch that had been festering inside me for weeks. It was a feeling I'd grown all too accustomed to in this city, where everyone seemed to have an agenda and nobody really cared about anyone else's feelings.

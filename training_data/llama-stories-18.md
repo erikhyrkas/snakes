@@ -655,8 +655,6 @@ Azrael raised their hands, and the air around them began to ripple with heat. Th
 The sky above darkened, like a storm brewing on the horizon. The air grew thick with an otherworldly energy as Azrael's eyes blazed with a fire that had nothing to do with warmth or love – but with vengeance.
 
 And when it finally rained, the desert itself seemed to shudder in horror at what Azrael had unleashed upon Emily Wilson and her people...<end>
-Here is a prompt for the story:
-
 Write a short story about a 66-year-old resident of a small village who becomes embroiled in a mystery when a 12-year-old girl goes missing, leaving behind only a cryptic note with the word "Lost" on it, and must use their years of experience and knowledge of the community's secrets to help find her.<start>The mist swirled through the village like a damp blanket, shrouding everything in an eerie grey haze. I wrapped my cardigan tighter around me and stepped out into the chill morning air, my eyes scanning the familiar streets for any sign of life.
 
 As a 66-year-old resident of this village, I thought I knew it like the back of my hand. But over the years, things had started to change. People had moved away, new faces had appeared, and the old ways seemed to be slowly disappearing.

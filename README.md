@@ -1,5 +1,7 @@
 # YS-LLM
 
+![img_2.png](img_2.png)
+
 `Why did it have to be snakes?`
 
 "Why Snakes Large Language Model" is an example LLM that leverages ideas from the Mamba 2 paper for its attention.

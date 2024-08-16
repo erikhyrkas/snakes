@@ -258,7 +258,7 @@ That someone was none other than Victor LaGraine - a former associate of Margare
 With each passing day, Jack felt himself becoming younger, more determined than ever before. He was a man on a mission - driven by the love for his late wife and the burning desire for revenge against those who'd wronged him so gravely.
 
 And as the city around him began to stir from its slumber, Jack whispered a quiet promise to himself: "Henry Lee, it's time."<end>
-Here is a prompt for this story:
+
 
 In the harsh desert lands of Azsar's Wastes, a 53-year-old warrior named Kaelin seeks revenge against those responsible for her tribe's massacre 20 years ago. As she stalks through the dunes, driven by a hunger for vengeance that has only grown with time, she is confronted by the son of the warlord who committed the atrocity - and the battle for justice begins.<start>The sun beat down on the dusty horizon, casting a golden glow over the endless dunes of Azsar's Wastes. Kaelin stood tall, her weathered face a map of lines and creases etched by years of withstanding the unforgiving desert sun.
 
@@ -545,7 +545,7 @@ Arin nodded thoughtfully, as if he had expected this response all along. "I see,
 In that moment, Eryndor realized the depth of his friendship with Arin – a bond forged in the fire of shared experience and strengthened by the trials that lay ahead. Together, they would face whatever darkness had begun to creep into their village, side by side like two old friends walking into the unknown.
 
 And so, as the night deepened around them, Eryndor Thorne stood shoulder-to-shoulder with Arin, ready to face whatever challenges lay in store for them – and for Brindlemark.<end>
-Here is a prompt for this story:
+
 
 In the aftermath of a personal tragedy, a man tracks down those responsible 30 years later, determined to exact a brutal revenge on one of their key figures. Will he find closure in his vendetta, or will it consume him entirely?<start>The trees towered above him, their branches creaking ominously in the fading light of day. Kaelin stood still, his eyes fixed on the clearing ahead. He'd been walking for hours, his old joints aching with each step, but he couldn't shake the feeling that he was getting close.
 
@@ -1582,8 +1582,6 @@ The darkness within the woods grew thicker, like a living entity that stirred an
 And yet...they moved forward, driven by the young one's desperation and Elara's own memories of escape. For in these woods, where magic was real and wonder still dwelled – a glimmer of hope remained, as long as there were those willing to grasp it.
 
 Their journey wound on, fueled by determination and a hint of defiance. They were two souls against the darkness, armed with nothing but their will to survive – and the whispers of the trees, which seemed to grow louder with each step they took...<end>
-Here is a prompt for the story:
-
 A 61-year-old non-binary person finds themselves lost in a crowded city after making a mistake on the bus, but a peculiar woman offers them an enigmatic message - "follow" - that sets off a chain of events that challenges Zephyr's sense of safety and control.<start>Zephyr wiped the sweat from their forehead, gazing out at the unfamiliar streets of the city. They had been walking for what felt like hours, but all they knew was that they were nowhere near home.
 
 It started when Zephyr got off the bus a stop too early, distracted by a street performer's juggling act. By the time they realized their mistake, the performer had packed up and disappeared into the crowd. Now, Zephyr found themselves lost in the heart of the city, with no phone signal to call for help.
@@ -2330,8 +2328,6 @@ The sound echoed off the dunes, but there was no response – only an oppressive
 And yet, even as fear and despair threatened to consume her, a spark within her refused to be extinguished. Emily remembered why she'd come out here – to test herself, to prove that she was capable of facing whatever the desert threw at her. She took a deep breath, wiped away her tears, and stood up.
 
 She would find a way out of this wilderness, no matter what it took. Emily squared her shoulders, shouldered her backpack, and set off into the darkness, the stars above her like tiny lanterns guiding her towards an uncertain but inevitable future.<end>
-Here is a prompt for the story:
-
 Write a survival thriller about an elderly woman who finds herself kidnapped and imprisoned in a remote desert cabin, with no explanation or means of communication. As she fights to escape and find her way back to civilization, she must confront the harsh realities of her own mortality and the unforgiving environment around her.<start>The sun beat down on the sand, relentless in its ferocity. Emily huddled behind a dune, her eyes scanning the horizon for any sign of rescue. She was 66 years old and had never felt so alone.
 
 She had been held captive for three days now, with no explanation why or by whom. The only clue was the small cabin she'd found herself in, surrounded by nothing but an endless expanse of sand and rock. There were no windows, just a single metal door with a heavy-looking lock.

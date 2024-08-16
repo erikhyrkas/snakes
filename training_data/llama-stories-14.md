@@ -1065,7 +1065,7 @@ As they explored the chamber, Kael realized that New Erebo was not what it seeme
 The implications were staggering – and terrifying.
 
 Kael's eyes locked onto Mei's, a sense of wonder and trepidation mingling in his chest. They'd uncovered something incredible, but they had no idea what it might mean for their world... or themselves.<end>
-Here is a prompt for this story:
+
 
 Write a story about Captain Jameson's desperate search for her missing friend and colleague, Dr. Lee, on the New Horizon space station, as she uncovers clues and unravels a mystery that threatens to upend everything she thought she knew about their mission, themselves, and the vast unknown of space itself.<start>As she floated through the cramped corridors of the New Horizon space station, Captain Jameson's eyes scanned the rows of cryogenic pods, her mind numb with worry. It had been 48 hours since Dr. Lee, a renowned astrobiologist, went missing.
 
@@ -1882,8 +1882,6 @@ Blackwood smiled, his eyes flashing with triumph. "You see, Emily, you've been k
 Emily felt a cold dread creeping up her spine. Revenge was a dish she'd longed to serve – and now it seemed that Mr. Blackwood had finally agreed to take his turn at the table.
 
 As the city streets around them grew darker and more menacing, Emily realized that this wasn't just about revenge anymore. This was about justice – and the true cost of playing with fire in a city where nothing was ever as it seemed.<end>
-Here is a prompt asking for this story:
-
 Write a short story about two friends who become stranded in the desert after venturing into a cursed stretch of land, where they must fight for survival against unknown terrors and ultimately face a terrifying and isolated fate.<start>I trudged through the sand, my boots sinking into the dunes as I scanned our surroundings. "Which way?" I asked Jax, my best friend since we were kids.
 
 Jax hesitated, her eyes darting around like a trapped animal. We'd been walking for hours, but with no map or compass to guide us, it was impossible to tell where we were going.
@@ -2027,8 +2025,6 @@ From that day forward, Jaxon became a constant presence in Kaelin's life. They'd
 Years passed, but the bond between them deepened. Children would play with Jaxon in the garden next door, while Kaelin looked on, a smile spreading across his face. And when winter's snows blanketed the valley, they'd huddle around the hearth once more – just as they had that stormy night long ago.
 
 In the silence of those moments, Kaelin knew he owed it all to Jaxon: for showing him that friendship could bloom at any age, and that sometimes, the most profound connections are forged when we least expect them.<end>
-Here is a prompt for the story:
-
 Write a story about a young non-binary person living on a giant spaceship called the Celestial Station, where they must navigate their best friend's mysterious behavior and a secret project with the Station Director.<start>I floated through the corridors of the Celestial Station, my purple backpack full of snacks and supplies bouncing against the metal walls. I loved living on this giant spaceship with thousands of other kids like me. It was like one big happy family... most of the time.
 
 As a Zuzu, which is what we call non-binary people in our galaxy, I'd learned to be patient and understanding. But lately, something had been bothering me. My best friend, a robot named Buzz, had started acting weird.
@@ -2505,7 +2501,7 @@ He approached the inferno, feeling a creeping sense of unease that he couldn't s
 "Welcome back, Edwin," Thomas growled, eyes blazing with an unholy light as the flames danced behind him. "It's been twenty years."
 
 And in that moment, as the fire raged on and the villagers watched in horror, Thomas Fletcher revealed a truth he had kept hidden for two decades – his true purpose wasn't to burn Edwin alive, but to become just like him: consumed by an eternal hell of revenge and hatred.<end>
-Here is a prompt for this story:
+
 
 A 58-year-old retired police officer with a troubled past begins to seek answers and revenge against his former partner who betrayed him years ago, only to find himself drawn into a dark and complex world of deceit and vengeance.<start>The sun was high overhead, casting dappled shadows on the forest floor as Henry walked through the dense underbrush. He had been walking for hours, his worn hiking boots crunching on the dry leaves and twigs that littered the ground.
 

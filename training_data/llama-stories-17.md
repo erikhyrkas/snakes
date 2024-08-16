@@ -667,7 +667,7 @@ I tried to shake off the feeling of unease, telling myself it was just my imagin
 And then, as if fate itself had decided to play a cruel joke, the lights went out. The whole village plunged into darkness, and I was left standing alone, wondering if it was just a coincidence - or the start of something much bigger.
 
 The mystery had begun, and I knew one thing for certain: I wouldn't be going anywhere anytime soon.<end>
-Here is a prompt for this story:
+
 
 Write a tale about a non-binary elder who ventures out on a dark and stormy night in search of an unusual relic from a mysterious antique shop, only to uncover secrets that have been hidden for centuries and ultimately unleash a power that threatens to consume them.<start>The streets of Ashwood City were always at their most unforgiving during the dead of night. The flickering streetlights cast long shadows across the pavement, like skeletal fingers reaching out to snatch the unwary. It was a time when even the most stalwart citizens stayed indoors, huddled in the warm glow of their apartments.
 
@@ -1077,7 +1077,7 @@ With newfound purpose, Jack tucked the map into his pocket and took off towards 
 As he walked, Jack realized that getting lost wasn't about finding your way out; it was about finding yourself within the desolation itself. The desert, once a monolith to his fears and doubts, now offered him a chance at redemption.
 
 And so, with each step forward, Jack let go of the need for escape. Instead, he chose to confront the depths of his own lostness – in this unforgiving yet beautiful landscape – and find himself anew.<end>
-Here is a prompt for this story:
+
 
 A 66-year-old widow stumbles upon an old photograph in her friend's window, sparking a chain of events that leads her down a rabbit hole of mystery and curiosity as she uncovers secrets hidden within the village of Littleton-on-the-Hill since World War II.<start>The village of Littleton-on-the-Hill was shrouded in a fine mist, as it often was at this time of year. Emily Wilson, a 66-year-old widow, emerged from her small cottage, cupping her hands around a steaming mug of tea to ward off the chill. She breathed deeply, taking in the scent of damp earth and decaying leaves.
 
@@ -2038,8 +2038,6 @@ Astrid nodded, her eyes shining with understanding. Hulda sat down beside them, 
 "We may not be as spry as we used to be," Elara said, "but our hearts are still young. And that's what matters most – the love and companionship we share with one another."
 
 As the three women sat together on the porch, watching the stars twinkle to life above, they knew that their friendship was a bond that time and distance could not break.<end>
-Here is a prompt asking for this story:
-
 Write about an elderly woman who ventures into the woods after years of inactivity and stumbles upon a mysterious cabin with secrets from the past that she shouldn't have uncovered.<start>As she walked, the crunch of leaves and snapping of twigs beneath her feet were the only sounds that broke the silence of the forest. Helen had lived on these woods' edge all her life, but never ventured far in. At 71, her doctor had insisted it was time to take up walking again, and so she'd laced up her worn sneakers one morning and set out into the trees.
 
 The sunlight filtering through the canopy above cast dappled shadows across the forest floor, making it seem like a place of ancient magic. Helen felt a thrill of excitement, something she hadn't experienced in years. She pushed aside a curtain of tangled vines and stepped into a clearing, her eyes scanning the space for anything out of the ordinary.

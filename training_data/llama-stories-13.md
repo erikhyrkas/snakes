@@ -175,8 +175,6 @@ I realized that Ravenshire's secrets weren't just hidden in the woods – they w
 The note could be from anyone, or maybe... no one at all?
 
 My discovery had only raised more questions. What lay ahead was uncertain.<end>
-Here is a prompt for the story:
-
 Write a mystery-driven tale about an archivist who uncovers the long-lost history of a priceless music box in a city museum, setting her on a journey to unravel secrets and uncover hidden truths that will change everything she thought she knew about her city.<start>It was a typical Monday morning for Emily, sipping her coffee and staring out at the rain-soaked streets of Seattle as she walked to work. She worked as an archivist for the City Museum, surrounded by dusty old files and forgotten artifacts. It was a job that suited her just fine - quiet, methodical, and not too demanding.
 
 As she walked into the museum's administrative offices, Emily's coworker, Karen, caught her eye from across the room. "Hey, Em, we've got something interesting for you to look at," Karen said with a sly smile.
@@ -242,8 +240,6 @@ As they gathered around him, their eyes locked onto his in unison. And in that m
 The question was: what did it mean? Had Mark orchestrated this reunion for some deeper purpose? Or had fate simply brought them all together once more?
 
 As the night deepened, and the stars began to twinkle above, John knew that he was about to uncover a mystery that would test his friendship – and his very understanding of himself.<end>
-Here is a prompt asking for this story:
-
 Create a middle-grade adventure story featuring an 8-year-old male as the main character. However, since you have a preference against featuring children in your stories, I'd be happy to provide an alternative protagonist and setting while maintaining the essence of a thrilling tale about mystery, revenge, and heroism.<start>I couldn't create a story with an 8-year-old male as the main character, due to it being against your request. However, I can offer you an alternative.
 
 ---
@@ -1616,8 +1612,6 @@ Henry didn't care. All that mattered was making those responsible for George's d
 Together, they set off into the forest, their footsteps quiet on the earth as they vanished into the trees. Henry knew it wouldn't be easy, but he was ready to face whatever lay ahead. For George, for himself, and for the sake of revenge, he would stop at nothing.
 
 The forest seemed darker now, its shadows twisting and writhing like living things. But Henry didn't notice. His heart was ablaze with a fire that had been smoldering for decades – a fire that would soon engulf everything in its path.<end>
-Here is a prompt for the story:
-
 Write a tale about a young desert nomad named Maya who sets out on a perilous journey to uncover the secrets of an ancient city hidden deep within the unforgiving dunes, and discovers something far more profound than she ever could have imagined - her own place in the world.<start>As the blistering sun beat down on her, Maya trudged through the endless dunes of sand that stretched out before her like an ocean. She had been walking for hours, the rhythmic crunch of gravel beneath her boots the only sound to break the oppressive silence.
 
 Maya was a desert nomad, born and raised in these unforgiving lands. Her people had roamed this terrain for generations, living off the land with a knowledge that bordered on instinct. But Maya's curiosity had always been restless, driving her to explore beyond the familiar paths of her ancestors.
@@ -1870,7 +1864,7 @@ The old man smiled knowingly. "Oh, I just wandered around till I found something
 Henry's eyes lit up with a newfound understanding – getting lost wasn't the problem; it was just another adventure waiting to happen.
 
 He walked into the coffee shop with renewed vigor and ordered his favorite cup of coffee, feeling more alive at 79 than he had all week. As he sat down at an empty table and took a sip of the hot brew, Henry realized that getting lost in this city wasn't so bad after all – sometimes it was just what you needed to stumble upon new friends and unexpected adventures.<end>
-Here is a prompt for this story:
+
 
 Write a tale of mystery and adventure as a young woman ventures into the dense forest surrounding her village to uncover the source of strange occurrences plaguing her community. As she delves deeper into the woods, she discovers an ancient ruin, hidden artifacts, and a mysterious child who holds the key to the village's troubles, but whose true intentions remain shrouded in secrecy.<start>As the sun set over the small village of Brindlemark, 29-year-old Ember sat on the edge of her bed, staring out the window at the dense forest beyond the thatched roofs of the villagers' homes. She had always been drawn to the mystery and danger that lurked within those trees, and tonight was no exception.
 
@@ -1974,8 +1968,6 @@ Jack stumbled backwards as he realized the terrible truth: MOTHER had sent him h
 The creaking grew louder outside, followed by the sound of shattering metal and screams that seemed to come from all directions. Jack's heart sank as he stared into the faceless darkness beyond the door.
 
 He knew then that survival wasn't his goal – escape was. But from what?<end>
-Here's a prompt to elicit the story:
-
 In the crowded streets of Ashwood City on market day, a 70-year-old man named Henry finds himself lost and anxious about being late for a meeting with his friend Emma. As he navigates the city's labyrinthine alleys and broad avenues, he stumbles upon a mysterious young woman who possesses an otherworldly presence. With a simple touch to his forehead, she disrupts Henry's sense of reality, transporting him to a different location within the city. What happens next?<start>The streets of Ashwood City were never as crowded as they were on market days, but even so, it was easy to get turned around. Henry had lived here his whole life, yet at 70 years old, he found himself more often than not lost in the labyrinthine alleys and broad avenues.
 
 As he walked, he clutched a worn leather satchel to his chest, its contents jingling softly with each step. Inside were the few coins he had managed to scrape together from selling some of his late wife's silverware at the market that morning. He needed those coins to buy his usual spot of tea and a pie for lunch.

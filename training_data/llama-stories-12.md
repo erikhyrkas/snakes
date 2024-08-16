@@ -791,8 +791,6 @@ A holographic display flickered to life in front of her, casting an ethereal glo
 Kaelin studied the display, memorizing every twist and turn as she mentally prepared herself for what lay ahead. The escape would be treacherous, with Council goons patrolling every level and sector. But she was determined – for her own survival, and for the chance to expose the truth about this twisted, walled-in world.
 
 With a deep breath, Kaelin set off once more, following the holographic map as it led her deeper into the heart of New Eden. The city's secrets would be hers soon enough – and with them, perhaps a glimmer of hope for all those trapped within these towering walls.<end>
-Here's a prompt asking for this story:
-
 "Write a story about two childhood friends who must escape from the 'Shadow People', legendary beings said to roam at night in search of children like them, and explore the themes of fear, friendship, and facing one's fears."<start>I huddled closer to Pippin, my best friend, as we lay in the hayloft above our homes. Our village was dark and quiet tonight, the moon hidden behind thick grey clouds. I shivered, despite the heavy woolen blankets wrapped around me.
 
 "It's just your imagination," Pippin whispered, their voice barely audible over the wind outside.
@@ -865,8 +863,6 @@ Kenji took a sip of the hot broth, letting its rich flavor transport him back to
 He remembered the countless hours spent exploring the city with his friends - not just as individual wanderers, but as a collective force that could unravel even the most obscure secrets. With renewed purpose, Kenji set off into the rain-soaked streets once more, this time with a sense of adventure and possibility that he hadn't felt in years.
 
 As the night wore on, Kenji's footsteps seemed to echo through the city's labyrinthine streets - a lone traveler seeking connection with his own past, but also stumbling upon something far greater: the thrill of rediscovery.<end>
-Here is a prompt for the story:
-
 Write a story about a routine day on the Celestial Horizon space station that takes a surprising turn when a technician discovers an encrypted file from the early days of the station's operation, setting him on a course to uncover a long-buried secret with far-reaching consequences.<start>As he floated through the corridors of the Celestial Horizon, Jack Harris couldn't shake the feeling that something was off. He'd been on this space station for three months now, helping to oversee the renovation and expansion of its living quarters.
 
 Jack's eyes scanned the rows of identical doors as he made his way to the life support room. It was just another day in a sea of beige and steel, but Jack's trained mind detected tiny cracks in the routine. Something had changed.
