@@ -26,8 +26,7 @@ pip install torch torchvision torchaudio
 
 ## Generate Data
 
-I used ollama with llama 3.1 to generate training data. Because I don't have a fancy streaming training setup, we are
-constrained by training data that fits into memory. Fortunately for me, I can fit a lot into memory.
+I used ollama with llama 3.1 to generate training data.
 
 You can generate additional data using the command:
 
