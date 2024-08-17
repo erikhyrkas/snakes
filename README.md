@@ -1,4 +1,4 @@
-# YS-71M-v0.1
+# YS-120M-BASE-v0.1
 
 ![img_2.png](img_2.png)
 
@@ -82,6 +82,7 @@ the
 model isn't versatile. It's effectively memorizing the training data.
 
 Example training:
+
 ![img_1.png](img_1.png)
 
 ### Training Observations and Speculation
@@ -106,7 +107,7 @@ Example training:
     * I suspect there's value in having a larger training sequence length than attention block size.
 * Vocabulary Size: How many tokens (words, sort of) does the tokenizer know about.
     * Our tokenizer will handle any input, but since it breaks down unknown words into individual characters, it's not
-      likely to use them intelligently. If it runs across a character it can't handle, it will discard it. 
+      likely to use them intelligently. If it runs across a character it can't handle, it will discard it.
     * Obviously, you could use a smaller dataset for training. I feel like I'm already using a fairly small training
       set, but if you are on a CPU, and just playing around, you could just train with a single one of the example
       files. A smaller vocabulary will reduce memory requirements and training time, but give you worse end results.
@@ -117,12 +118,23 @@ Example training:
 * State Space Model Dimensions: I used 368. I started with 256, but then found that 368 was better for my vocab size
 * Output size: is how bit the output layer is before logits are calculated
 
-| Memory Used | Training Sequence Length | Batch Size | Attention Block Size | Vocabulary Size | Embedding Size | SSD Size | Output Size | Parameters |
-|-------------|--------------------------|------------|----------------------|-----------------|----------------|----------|-------------|------------|
-| 21.5 GB     | 128                      | 64         | 64                   | 13183           | 368            | 368      | 368         | 59,959,647 |
-| 21.9 GB     | 128                      | 64         | 16                   | 28590           | 368            | 368      | 368         | 71,314,606 |
-| 19.0 GB     | 256                      | 64         | 64                   | 13183           | 256            | 256      | 256         | 23,737,727 |
-| 21.5 GB     | 512                      | 16         | 64                   | 13183           | 256            | 256      | 256         | 23,737,727 |
+| Memory Used | Training Sequence Length | Batch Size | Attention Block Size | Vocabulary Size | Embedding Size | SSD Size | Output Size | Parameters  |
+|-------------|--------------------------|------------|----------------------|-----------------|----------------|----------|-------------|-------------|
+| 19.0 GB     | 256                      | 64         | 64                   | 13,183          | 256            | 256      | 256         | 23,737,727  |
+| 21.5 GB     | 512                      | 16         | 64                   | 13,183          | 256            | 256      | 256         | 23,737,727  |
+| 21.5 GB     | 128                      | 64         | 64                   | 13,183          | 368            | 368      | 368         | 59,959,647  |
+| 21.9 GB     | 128                      | 64         | 16                   | 28,590          | 368            | 368      | 368         | 71,314,606  |
+| 21.6 GB     | 72                       | 64         | 32                   | 33,438          | 448            | 448      | 448         | 120,513,182 |
+| 21.6 GB     | 32                       | 1          | 32                   | 33,438          | 768            | 624      | 768         | 295,915,902 |
+
+If you use more than 21.6, there's a risk during back propagation you'll run out of memory while loading up the data
+set. I've had some lucky runs with more, but I wouldn't count on it. I speculate the difference is that my data loader
+loads random files and if a small file is first, it somehow lets the rest work out. I'm fuzzy on why it doesn't fail
+eventually.
+
+I got training to start running on an L4 TPU with 296 million parameters, but with a batch size of 1, it would likely
+not only be unbearably slow, I imagine that it'd eventually be numerically unstable. Any batch size less than 64 has
+been problematic.
 
 ## Run
 
@@ -135,6 +147,7 @@ python run.py
 This enters a cli mode where you give text, and it completes the text. Nothing fancy.
 
 Example usage:
+
 ![img.png](img.png)
 
 ## Where is the RoPE?

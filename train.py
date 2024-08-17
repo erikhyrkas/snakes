@@ -32,6 +32,7 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
 
     print("First epoch starting...")
+    parameters_shown = False
     best_loss = float('inf')
     for epoch in range(epochs):
         model.train()
@@ -102,17 +103,19 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
                 print("Stopping due to numerical instability.")
                 return False
 
-            early_stopping.check(val_loss)
-            if early_stopping.stop_training:
-                print(f"Early stopping triggered at epoch {epoch + 1}")
-                break
-
-            # Save model checkpoint every 5 epochs
             if epoch_loss < best_loss:
                 best_loss = epoch_loss
                 torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
                 print(f"Checkpoint saved at epoch {epoch + 1} to {base_path}model_checkpoint.bin")
+                if not parameters_shown:
+                    total_params = sum(p.numel() for p in model.parameters())
+                    print(f"Total number of parameters: {total_params}")
+                    parameters_shown = True
 
+            early_stopping.check(val_loss)
+            if early_stopping.stop_training:
+                print(f"Early stopping triggered at epoch {epoch + 1}")
+                break
         else:
             # Monitor training loss for stopping if no validation
             print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}')
@@ -126,6 +129,10 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
                 best_loss = epoch_loss
                 torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
                 print(f"New best model saved at epoch {epoch + 1}")
+                if not parameters_shown:
+                    total_params = sum(p.numel() for p in model.parameters())
+                    print(f"Total number of parameters: {total_params}")
+                    parameters_shown = True
 
             early_stopping.check(epoch_loss)
             if early_stopping.stop_training:
@@ -284,8 +291,8 @@ def notebook_do_train(no_validation=False):
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
     tokenizer_path = f"{base_path}tokenizer.pkl"
-    do_train(training_sequence_length=120, batch_size=64,
-             max_epochs=400, patience=20,
+    do_train(training_sequence_length=72, batch_size=64,
+             max_epochs=400, patience=10,
              model_save_path=model_path,
              tokenizer_save_path=tokenizer_path,
              no_validation=no_validation)
