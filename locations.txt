@@ -1,0 +1,54 @@
+in an airport lounge
+at an amusement park
+in an art gallery
+at a backyard patio
+in a bar
+in a barber shop
+at a beach
+in a bookstore
+in a bus
+at a bus stop
+at a campsite
+in a car
+at a cemetery
+in a coffee shop
+in a conference room
+in a convention center
+in a courthouse lobby
+in a daycare center
+in a dentist's office waiting room
+in a dining room
+in a doctor's office waiting room
+in an elevator
+at a farmer's market
+in a garden
+in a grocery store aisle
+in a gym
+in a hair salon
+in a hallway
+in a hiking trail
+in a hospital room
+in a hotel lobby
+in a hotel room
+in a kitchen
+in a library
+in a living room
+in a movie theater lobby
+in a museum gallery
+in an office
+in a park bench
+in a parkinglot
+in a playground
+in a pub
+in a public square
+in a restaurant
+in a rooftop terrace
+in a school hallway
+in a shopping mall
+in a sports stadium
+in a subway car
+in a theater lobby
+in a train compartment
+at a train station
+at a university campus
+at a wedding reception
