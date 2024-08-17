@@ -156,7 +156,7 @@ def generate_event_prompts():
         prompt = generate_event_prompt(date, description)
         prompts.append(prompt)
 
-        if len(prompts) == 50:
+        if len(prompts) == 52:
             write_scripts(prompts, base_file_name, file_count)
             prompts = []
             file_count += 1
