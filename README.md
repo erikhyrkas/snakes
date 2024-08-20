@@ -45,6 +45,20 @@ would not shock me if some crept in. I also attempted to balance identity and he
 background impacted that. I'm simply not aware of all cultures, identities, and backgrounds, and I'm not really
 qualified to balance that data perfectly.
 
+## Bias, Safety, and guardrails
+
+Because this is a base model, there aren't any guardrails at all. It just completes based on what it is trained on. My 
+example model uses llama 3.1 to generate data, but one of the challenges there is that there is sometimes complete 
+garbage responses. They are wrong or inappropriate. 
+
+What's more llama 3.1's own guardrails prevent it from writing some responses... like reviews for disgusting movies or 
+about a political event. The issue with that our sentiment analysis doesn't understand some emotions like disgust as 
+well, because it hasn't seen as much of that emotion.
+
+I feel like your base model should be fairly raw, even if that means it writes inappropriate things, because that will 
+help it be more successful later when you add guardrails during fine-tuning. It will identify prompts it shouldn't respond to or ways it 
+shouldn't respond.
+
 ## Train
 
 Depending on how much GPU you have or whether you are using a CPU, you might want to tweak the training sequence length
