@@ -296,11 +296,6 @@ Some popular points of interest in Arkansas include:
 * **Hot Springs National Park**: A historic spa town located in the Ouachita Mountains.
 * **Clinton Presidential Library**: Located in Little Rock, this museum showcases the life and presidency of Bill Clinton.
 * **Arkansas River Valley**: A scenic valley that stretches from the Ozark Mountains to the Mississippi River.
-
-**References**
---------------
-
-This article has been written based on publicly available information. If you have any questions or concerns, please contact us.
 <end>
 
 Write a wiki article about Italy.<start>**Italy**
@@ -556,12 +551,6 @@ The future of the universe is not yet known. However, scientists have some ideas
 **Conclusion**
 
 The universe is a vast and complex place. It contains everything we see and don't see. Understanding the universe helps us learn more about our own world and its place in it.
-
-**Sources**
-
-* National Aeronautics and Space Administration (NASA)
-* European Space Agency
-* Other scientific organizations and experts
 <end>
 
 Write a wiki article about Hawaii.<start>**Hawaii**
@@ -643,11 +632,6 @@ Many people try to climb Mount Everest every year. Climbers use special equipmen
 * Mount Everest was named after George Everest, a British surveyor who first measured its height.
 * The mountain's nickname is Chomolungma or Sagarmatha, which means "Goddess of the Sky" in Tibetan and Nepali languages.
 * Many people have died trying to climb Mount Everest. Climbers must be very careful and prepared to attempt this challenging ascent.
-
-**References**
-
-* National Geographic: Mount Everest
-* BBC News: Mount Everest facts
 <end>
 
 Write a wiki article about the United Kingdom.<start>**United Kingdom**
@@ -691,12 +675,6 @@ British culture is known for its diversity and creativity. People from all over 
 * The UK is home to many famous universities.
 * The country has produced some of the world's most famous authors, like J.K. Rowling and J.R.R. Tolkien.
 * The UK is known for its love of tea and football (soccer).
-
-**References**
-
-If you need more information about the United Kingdom, visit a library or search online.
-
-Note: This article is intended to be a basic introduction to the United Kingdom. If you're looking for detailed or advanced information on specific topics related to the UK, please refer to other reliable sources.
 <end>
 
 Write a wiki article about Photosynthesis.<start>**Photosynthesis**
@@ -837,9 +815,5 @@ Neptune was discovered on September 23, 1846, by German astronomer Johann Galle 
 * **Location:** Eighth planet from the Sun
 * **Moons:** 14 known moons
 * **Temperature:** As cold as -353°F (-214°C)
-
-**References**
-
-This article is based on information from NASA and other reliable sources. For more details, please visit [www.nasa.gov](http://www.nasa.gov).
 <end>
 

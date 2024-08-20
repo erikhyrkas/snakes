@@ -37,15 +37,6 @@ Vancouver's economy is based on:
 * **Tourism**: The city attracts many visitors each year, contributing to its economy.
 * **Technology**: Vancouver has a growing tech industry, with companies in software development and e-commerce.
 * **Shipping**: The city's port is an important hub for shipping goods.
-
-**References**
-
-This article was written using information from reliable sources. If you need more details, please refer to these sources:
-
-* City of Vancouver official website
-* Wikipedia articles on Vancouver and British Columbia
-
-Note: This article is intended for general knowledge purposes only. For specific or detailed information, please consult the references provided.
 <end>
 
 Write a wiki article about Cat.<start>**Cat**
@@ -86,10 +77,6 @@ Cats eat meat, such as:
 * Cats have sharp claws that help them climb and defend themselves.
 * They are skilled hunters and can catch small animals.
 * Many people keep cats as pets because they are friendly and fun to be around.
-
-**References**
-
-This article was written to provide basic information about cats. If you want to learn more, please look for additional resources.
 <end>
 
 Write a wiki article about Maine.<start>**Maine**
@@ -271,15 +258,6 @@ Australian culture is diverse and influenced by its indigenous people, as well a
 * 1770: Captain James Cook becomes the first European to visit Australia.
 * 1788: The British establish a penal colony in New South Wales.
 * 1901: Australia becomes an independent nation with the Commonwealth of Australia Act.
-
-**References**
-
-For further reading, see:
-
-* [Australian Government Website](https://www.australia.gov.au/)
-* [Wikipedia's List of Australian-related articles](https://en.wikipedia.org/wiki/Category:Australian_topics)
-
-Note: This article is a simplified and condensed version of more comprehensive information. For detailed and accurate information about Australia, please refer to reliable sources such as the Australian Government Website or reputable online encyclopedias like Wikipedia.
 <end>
 
 Write a wiki article about the Nile.<start>**Nile River**
@@ -392,13 +370,6 @@ The Philippines has a rich cultural heritage. Many people speak multiple languag
 ------------
 
 The Philippines is known for its beautiful beaches, mountains, and islands. Tourists often visit Boracay Island, Mayon Volcano, and the Chocolate Hills of Bohol.
-
-**References**
-
-* [1] World Bank (2020)
-* [2] National Statistics Office (2020)
-
-Note: The references are included to provide credibility and to show that the information is based on reliable sources. However, they have been kept brief to maintain simplicity.
 <end>
 
 Write a wiki article about Elephant.<start>**Elephant**
@@ -437,11 +408,6 @@ The elephant is a large mammal that lives in many parts of the world.
 * Elephants have a highly developed brain and are considered one of the smartest animals on Earth.
 * They can live up to 70 years in the wild, which is unusually long for an animal of their size.
 * Elephants are excellent swimmers and have been known to swim across rivers and lakes.
-
-**References**
-
-* National Geographic
-* World Wildlife Fund
 <end>
 
 Write a wiki article about Saturn.<start>**Saturn**
@@ -553,11 +519,6 @@ Moscow is a major economic hub in Russia. The city has many industries, includin
 **Climate**
 
 Moscow has a humid continental climate. Winters are cold and snowy, while summers are warm and sunny. The average temperature in January is around -10°C (14°F), and in July it's around 18°C (64°F).
-
-**References**
-
-* [1] Wikipedia article on Moscow
-* [2] Official website of the City of Moscow
 <end>
 
 Write a wiki article about Hong Kong.<start>**Hong Kong**
@@ -602,10 +563,6 @@ Hong Kong has an extensive public transportation system, including buses, minibu
 **Cuisine**
 
 The cuisine of Hong Kong is known for its Cantonese-style cooking, with popular dishes such as dim sum, roast goose, and congee. Street food stalls and night markets offer a variety of snacks and desserts.
-
-**References**
-
-This article is based on information from reliable sources, including the Hong Kong Government's website and travel guides.
 <end>
 
 Write a wiki article about South America.<start>**South America**
@@ -729,10 +686,6 @@ Animals play an important role in the natural world. They help to:
 **Conclusion**
 
 Animals are a vital part of our planet's ecosystems. Understanding more about animals can help us appreciate their importance and work towards protecting them.
-
-**References**
-
-This article uses basic vocabulary and simple sentence structures to provide an overview of the concept of animal.
 <end>
 
 Write a wiki article about Pompeii.<start>**Pompeii**
@@ -764,15 +717,6 @@ Today, visitors can walk through parts of Pompeii to see its ruins and artifacts
 * Pompeii is considered one of the best-preserved ancient cities.
 * Archaeologists have found over 1,000 skeletons in the city, which helped them learn more about daily life and death during that time period.
 * The city's famous "frozen" moment has given scientists a unique chance to study how people lived, died, and were preserved by volcanic ash.
-
-**References**
-
-For further reading on Pompeii:
-
-* Consult archaeological reports from the National Archaeological Museum in Naples, Italy
-* Read books on ancient Roman history and archaeology
-
-Note: This article is meant for general readers who want a basic understanding of Pompeii. If you need more detailed information or specific research topics, please consult academic sources.
 <end>
 
 Write a wiki article about Arizona.<start>**Arizona**
@@ -852,9 +796,5 @@ Some dolphin species are endangered due to habitat loss, pollution, and hunting 
 * **Communication**: Dolphins communicate using clicks, whistles, and body language.
 * **Playfulness**: They have been observed playing with seaweed, bubbles, or even other animals.
 * **Friendship**: In some species, dolphins form long-lasting friendships.
-
-**References**
-
-For more information on dolphins, visit [marine mammal websites]
 <end>
 

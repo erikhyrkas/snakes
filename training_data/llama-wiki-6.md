@@ -112,14 +112,6 @@ North Korean culture is influenced by traditional Korean customs and socialist i
 * Official language: Korean
 * Currency: North Korean won (although the US dollar is also widely accepted)
 * Total area: 46,500 square miles (120,000 square kilometers)
-
-**References**
-For further reading on North Korea, consult reputable sources such as:
-
-* The World Factbook by the CIA
-* Wikipedia articles on related topics
-
-Note: This article provides a basic overview of North Korea. For more in-depth information, please consult additional resources.
 <end>
 
 Write a wiki article about Dubai.<start>**Dubai**
@@ -246,12 +238,6 @@ The Grand Canyon National Park was established in 1919. It covers an area of ove
 Visitors should be aware that hiking in the Grand Canyon can be hazardous. They should bring plenty of water and food, and be prepared for extreme weather conditions.
 
 Remember to respect the park's rules and regulations to ensure a safe and enjoyable visit.
-
----
-
-[Reference links]
-
-Note: This article is intended to provide basic information about the Grand Canyon. If you need more detailed or specialized knowledge, please consult additional sources.
 <end>
 
 Write a wiki article about Polar bear.<start>**Polar Bear**
@@ -456,14 +442,6 @@ Katrina led to significant changes in disaster preparedness and response in the 
 * Rainfall: Up to 8 inches (20 cm) in some areas
 * Deaths: Over 1,800
 * Damage: Estimated $125 billion
-
-This article provides a brief overview of Hurricane Katrina. If you want more information, please see the links below.
-
-**External Links**
-
-* [National Hurricane Center]
-* [FEMA]
-* [Hurricane Katrina: A National Historic Landmark]
 <end>
 
 Write a wiki article about Nevada.<start>**Nevada**
@@ -711,13 +689,6 @@ The Earth is about 4.5 billion years old! It was formed from dust and gas in spa
 **Importance**
 
 The Earth is home to millions of species, including humans. We need it for food, water, air, and many other things.
-
-**References**
-
-* National Aeronautics and Space Administration (NASA)
-* United States Geological Survey (USGS)
-
-This article is a basic introduction to the Earth. If you want to learn more, there are many resources available online!
 <end>
 
 Write a wiki article about Asia.<start>**Asia**
@@ -794,15 +765,6 @@ The Sun's light and heat have a big impact on our planet.
 * The Sun is about 4.6 billion years old.
 * It will live for another 5 billion years before running out of fuel and dying.
 * The Sun's light takes around 8 minutes to reach Earth, which means that we see the Sun as it was 8 minutes ago.
-
-**References**
-
-For more information on the Sun, visit:
-
-* National Aeronautics and Space Administration (NASA)
-* European Space Agency (ESA)
-
-This article provides a basic overview of the Sun's location, physical characteristics, and effects on Earth.
 <end>
 
 Write a wiki article about New York.<start>**New York**

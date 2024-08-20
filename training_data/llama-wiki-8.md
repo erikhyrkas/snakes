@@ -268,10 +268,6 @@ Canada is a federal state with three levels of government:
 * Canada has two official national animals: the beaver and the grizzly bear.
 * The longest river in Canada is the Mackenzie River, which flows from Great Slave Lake to the Arctic Ocean.
 * The Canadian flag, also known as the Maple Leaf, was designed by a 15-year-old boy.
-
-**References**
-
-This article has been written using public domain sources.
 <end>
 
 Write a wiki article about Andromeda Galaxy.<start>**Andromeda Galaxy**
@@ -645,10 +641,6 @@ The lion is listed as a vulnerable species by the International Union for Conser
 
 * Lionesses can give birth to up to 6 cubs at one time.
 * A new pride may be formed when a male lion takes over an existing pride or after a group of female lions form their own pride.
-
-**References**
-
-This article has been written based on reliable sources.
 <end>
 
 Write a wiki article about Coronavirus.<start>**Coronavirus**

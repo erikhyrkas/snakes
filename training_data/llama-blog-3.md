@@ -463,12 +463,6 @@ Some people think that all sharks are deadly predators, but this is not true. Mo
 * Sharks have been on our planet for over 400 million years!
 
 In conclusion, sharks are fascinating creatures that deserve our respect and understanding. By learning more about them, we can appreciate these incredible animals and take steps to protect their place in the ocean.
-
-**Sources:**
-
-This blog post was researched using reliable sources such as National Geographic and Ocean Conservancy.
-
-(Note: The vocabulary and grammatical structure used in this blog post are simple and easy to understand, making it accessible to a wide range of readers.)
 <end>
 
 Write a blog post about Minnesota.<start>**Welcome to Minnesota: The North Star State**

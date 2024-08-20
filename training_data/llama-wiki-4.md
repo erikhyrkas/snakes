@@ -31,13 +31,6 @@ Jerusalem is a holy city for three major world religions: Judaism, Christianity,
 * Jerusalem is known as "The Eternal City" because of its long and storied past.
 * The city has been damaged by wars many times throughout history, but each time it has been rebuilt and repaired.
 * Today, Jerusalem is a vibrant, thriving metropolis with modern architecture, parks, and infrastructure.
-
-**References**
-
-For more information about Jerusalem's rich history, culture, and significance, please visit:
-
-* [Israeli Government Website](https://www.gov.il)
-* [UNESCO World Heritage Center](https://whc.unesco.org)
 <end>
 
 Write a wiki article about Poland.<start>**Poland**
@@ -106,11 +99,6 @@ In 2015, a spacecraft called Dawn orbited Ceres for several months, providing th
 * **Water**: Scientists believe that Ceres may have water beneath its surface.
 * **Composition**: Ceres is composed mainly of silicate rocks and organic material.
 * **Naming**: Ceres was named after the Roman goddess of agriculture, who was also a mother figure.
-
-**References**
-
-* National Aeronautics and Space Administration (NASA)
-* European Space Agency (ESA)
 <end>
 
 Write a wiki article about Dodo.<start>**Dodo**
@@ -404,11 +392,6 @@ Alabama played a significant role in American history, including:
 
 *   **Civil War**: The state seceded from the Union and joined the Confederate States.
 *   **Civil Rights Movement**: Alabama was a key location during the Civil Rights Movement, with figures like Martin Luther King Jr. playing important roles.
-
-**References**
---------------
-
-This article has provided basic information about Alabama. For more detailed information, you may want to consult other sources such as official state websites or reputable encyclopedias.
 <end>
 
 Write a wiki article about Monaco.<start>**Monaco**
@@ -534,10 +517,6 @@ Apple offers online services, including:
 **Headquarters**
 
 Apple is headquartered in Cupertino, California. The company operates worldwide, with offices in many countries.
-
-**References**
-
-For more information about Apple, visit their official website at [www.apple.com](http://www.apple.com).
 <end>
 
 Write a wiki article about Potato.<start>**Potato**
@@ -821,7 +800,5 @@ Some bear populations are in danger because of:
 * Bears are excellent swimmers. Some even catch fish!
 * They are good parents. Mother bears take care of their cubs until they grow up.
 * In the wild, bears can live up to 30 years.
-
-Note: This article is meant for a general audience and provides basic information about bears.
 <end>
 

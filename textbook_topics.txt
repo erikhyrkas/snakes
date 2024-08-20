@@ -1,0 +1,58 @@
+Computer Science - "Modern Computing: From Algorithms to Applications"
+Mastering Python: From Basics to Advanced Applications
+Creative Writing - "Crafting Worlds: A Guide to Creative Writing"
+Elementary Mathematics - "Foundations of Math: Exploring Numbers and Shapes"
+Algebra - "Unlocking Algebra: Equations, Graphs, and Beyond"
+Geometry - "Geometric Journeys: Shapes, Proofs, and Constructions"
+Exploring Trigonometry: Functions, Identities, and Applications
+Vector and Matrix Mathematics: Concepts, Applications, and Computations
+Statistical Foundations for Data Science: Theory, Methods, and Applications
+Calculus - "Calculus Unleashed: Limits, Derivatives, and Integrals"
+History - "Echoes of the Past: A Comprehensive Guide to World History"
+Biology - "The Living World: An Exploration of Biology"
+Physics - "The Forces of Nature: A Physics Exploration"
+Chemistry - "The Elements of Change: Understanding Chemistry"
+Astronomy - "Stars and Beyond: Navigating the Cosmos"
+Economics - "The Economy Explained: Principles and Real-World Applications"
+Political Science - "Governance and Power: An Introduction to Political Science"
+Psychology - "Minds in Motion: An Introduction to Psychology"
+Sociology - "Social Fabric: Understanding Societal Structures and Behaviors"
+Environmental Science - "Planet in Focus: Environmental Science and Sustainability"
+Art and Art History - "Visions and Revisions: Navigating Art and Art History"
+Music Theory - "Harmony and Discord: Fundamentals of Music Theory"
+Philosophy - "Thinking Through Time: An Introduction to Philosophy"
+Cooking - "The Science of Flavor: Culinary Techniques and Recipes"
+Ethics in Technology, Medicine, Government, and Business
+The Art of Expression: A Guide to Writing Poems and Songs
+Applied Data Engineering with SQL
+Mythic Tales: A Guide to Mythology
+Strategic Play: A Practical Guide to Game Theory
+Survival Skills: A Practical Guide to Thriving in Wilderness, Desert, Jungle, and Beyond
+Home Care Essentials: A Practical Guide to Home Maintenance
+Road Ready: A Practical Guide to Driving and Car Maintenance
+Airborne: A Practical Guide to Flying and Airplane Maintenance
+Navigating the Waves: A Practical Guide to Water Navigation and Boat Maintenance
+Defend and Conquer: A Practical Guide to Mixed Martial Arts and Self-Defense
+Inner Balance: A Practical Guide to Stress Management, Yoga, and Meditation
+Creative Vision: A Practical Guide to Photography, Painting, Drawing, and Art Theory
+Emergency Response: A Practical Guide to First Aid
+Card Mastery: A Practical Guide to Rules and Strategy for Common Card Games
+Foundations of Law: Understanding Legal Systems and Principles
+Engineering Fundamentals: Bridging Theory and Practice
+Leading Success: A Guide to Business Management and Leadership
+Cultures of the World: A Guide to Anthropology and Global Diversity
+Medical Insights: A Practical Guide to Health and Medicine
+Ethics in Science: Navigating the Moral Landscape of Innovation
+Designing Spaces: The Art and Science of Architecture and Urban Planning
+Global Dynamics: A Guide to International Relations and Geopolitics
+Sustaining the Earth: A Practical Guide to Agriculture and Food Production
+Mind and Balance: A Comprehensive Guide to Psychiatry and Mental Health
+The Essentials of Nutrition: A Comprehensive Guide to Diet and Health
+The Path to Longevity: A Comprehensive Guide to Lifelong Health and Well-Being
+The Fitness Blueprint: A Comprehensive Guide to Physical Health and Performance
+The World of Sports: A Comprehensive Guide to Popular Sports
+Understanding Public Utilities and Services: A Comprehensive Guide
+The Art of War: A Comprehensive History of Warfare, Strategies, Tools, Weapons, and Technologies
+Designing Digital Worlds: A Comprehensive Guide to Computer Game Design and Theory
+Crafting Worlds: A Comprehensive Guide to Tabletop Game Design and Theory
+Mastering Chess: A Comprehensive Guide to Strategy, Tactics, and History

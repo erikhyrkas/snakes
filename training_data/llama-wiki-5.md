@@ -87,13 +87,6 @@ Pakistan's economy is growing slowly. The main industries are textiles, agricult
 **Government**
 
 Pakistan is a federal republic with a president as its head of state. The government is divided into different levels: federal, provincial, and local.
-
-**References**
-
-* Pakistan.gov.pk (official website)
-* Britannica.com (encyclopedia article)
-
-Note: This article is a simplified version for clarity and ease of understanding.
 <end>
 
 Write a wiki article about Snake.<start>**Snake**
@@ -129,8 +122,6 @@ Snakes live in many different types of places, including:
 * Snakes shed their skin as they grow. This is called molting.
 * Some snakes can swim and are found in the water.
 * Snakes have excellent hearing and can hear sounds that humans cannot.
-
-Note: This article is written in a simple style to make it easy for readers of all ages to understand. The vocabulary and sentence structure are designed to be clear and concise, making it perfect for a beginner's wiki article.
 <end>
 
 Write a wiki article about Chicken.<start>**Chicken**
@@ -211,12 +202,6 @@ Mexico is an upper-middle-income economy, driven primarily by manufacturing, min
 ------------
 
 Mexico is a popular tourist destination, known for its beautiful beaches, ancient Mayan and Aztec ruins, vibrant culture, and diverse wildlife.
-
-**References**
-
-* CIA World Factbook: Mexico
-* United Nations Development Programme (UNDP): Human Development Index (HDI)
-* Mexican Ministry of Foreign Affairs: About Mexico
 <end>
 
 Write a wiki article about Berlin.<start>**Berlin**
@@ -326,12 +311,6 @@ Evolution is supported by many scientific discoveries:
 **Conclusion**
 
 Evolution is an essential concept in biology that explains how life on Earth has changed over time. By understanding evolution, we can better appreciate the diversity of life and our place within it.
-
-**References**
-
-* National Geographic: Evolution
-* American Museum of Natural History: What is Evolution?
-* Encyclopedia Britannica: Evolution
 <end>
 
 Write a wiki article about Atlanta.<start>**Atlanta**
@@ -456,13 +435,6 @@ The Moon takes 27.3 days to orbit around Earth. During its journey, it goes thro
 **Getting There**
 
 Humans first visited the Moon in 1969. Astronauts have walked on the Moon's surface and collected samples of rocks and dust.
-
-**Useful Links**
-
-* NASA's Moon page: [insert link]
-* Moon facts from Space.com: [insert link]
-
-This article is a basic introduction to the Moon. For more detailed information, see the links above!
 <end>
 
 Write a wiki article about Dark matter.<start>**Dark Matter**
@@ -528,13 +500,6 @@ Studying dark energy is crucial for understanding how the universe came to be th
 
 * **Adam Riess**, Saul Perlmutter, and Brian Schmidt were awarded the Nobel Prize in Physics in 2011 for their contributions to understanding dark energy.
 * **Saul Perlmutter** is a leading researcher who has made significant contributions to our understanding of dark energy.
-
-**References**
-
-* **Perlmutter et al. (1999)**: A measurement of the cosmological constant and dark energy from supernovae observations.
-* **Riess et al. (2004)**: A redshift-independent determination of Hubble's constant using type Ia supernovae as standard candles.
-
-This article aims to provide a basic understanding of dark energy, its properties, and the ongoing research efforts in this field.
 <end>
 
 Write a wiki article about Wisconsin.<start>**Wisconsin**
@@ -701,13 +666,6 @@ The economy of Maryland is diverse, with major industries in healthcare, biotech
 * **Francis Scott Key**: A lawyer who wrote "The Star-Spangled Banner," the national anthem of the United States.
 * **Thurgood Marshall**: The first African American to serve on the Supreme Court.
 * **Eddie Murphy**: A famous comedian and actor who was born in Brooklyn, New York, but grew up in Roosevelt, Maryland.
-
-**References**
-
-* [1] Wikipedia article on Maryland (in English)
-* [2] Official website of the State of Maryland
-
-Note: The references provided are for educational purposes only.
 <end>
 
 Write a wiki article about Jaguar.<start>**Jaguar**
@@ -786,13 +744,6 @@ The official language of China is Mandarin Chinese. Many other languages are als
 * The country has a population of over 1.4 billion people.
 * China is famous for its pandas, giant bears that are native to the country.
 * The country's cuisine includes many popular dishes like noodles, dumplings, and stir-fries.
-
-**References**
-
-For more information about China, please visit:
-
-* [National Geographic: China](https://www.nationalgeographic.org/encyclopedia/china/)
-* [Wikipedia: China](https://en.wikipedia.org/wiki/China)
 <end>
 
 Write a wiki article about Netherlands.<start>**Netherlands**

@@ -1,1 +1,4 @@
 .idea/
+fine_tuning
+tokenizer.pkl
+model.bin

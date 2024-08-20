@@ -75,8 +75,6 @@ Earth is home to many living things, including us! We need to take care of our p
 **Conclusion**
 
 In conclusion, Earth is an amazing planet with incredible features. By learning more about our home, we can appreciate its value and work together to protect it for future generations. Take care of our planet – it's the only one we have!
-
-(Note: This blog post uses simple vocabulary and grammatical structures to provide essential information about Earth in a clear and legible manner.)
 <end>
 
 Write a blog post about Dark energy.<start>**The Mystery of Dark Energy: What We Know So Far**

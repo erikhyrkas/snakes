@@ -134,3 +134,6 @@ def textbook_generator():
 
 if __name__ == '__main__':
     textbook_generator()
+    print('Important! Make sure to remove any "References", "Sources", and "Links" sections '
+          'in the textbooks, since they are unlikely to be real. There may also be text that start with "Note:" that '
+          'you need to remove.')

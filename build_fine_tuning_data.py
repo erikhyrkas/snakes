@@ -10,14 +10,13 @@ def write_records(records, target_folder, items_per_file, tokenizer):
     # Sort based on the number of tokens
     token_lengths.sort(key=lambda x: x[1])
 
-    # Write to files in batches
-    queue = deque(token_lengths)  # Now queue holds tuples of (record, length)
+    queue = deque(token_lengths)
     file_index = 0
     while queue:
         with open(os.path.join(target_folder, f"batch_{file_index}.txt"), 'w', encoding='utf-8') as file:
             for _ in range(min(items_per_file, len(queue))):
-                record, _ = queue.popleft()  # We don't need the length anymore
-                file.write(record + '\n')  # Each record already includes <end>
+                record, _ = queue.popleft()
+                file.write(record + '\n')
         file_index += 1
 
 

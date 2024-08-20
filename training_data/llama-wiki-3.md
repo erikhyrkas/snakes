@@ -243,15 +243,6 @@ Russia has a long and complex history that dates back to the 9th century. It was
 * 1547: Ivan IV was crowned the first Tsar of Russia.
 * 1917: The Russian Revolution led to the overthrow of the monarchy and the establishment of the Soviet Union.
 * 1991: The Soviet Union dissolved, and Russia became an independent country.
-
-**References**
-
-For further information on Russia, please visit:
-
-* [Russian Ministry of Foreign Affairs](https://www.mid.ru/en/foreign_policy)
-* [World Bank - Russia Country Page](https://www.worldbank.org/en/country/russia)
-
-Note: This article provides a basic overview of Russia's history, government, economy, and culture. For more detailed information, please refer to the references provided.
 <end>
 
 Write a wiki article about the United States.<start>**United States of America**
@@ -429,14 +420,6 @@ New Mexico attracts tourists for its rich cultural heritage and natural beauty. 
 ------------
 
 New Mexico was the first part of the USA to be settled by Europeans. In 1540, Spanish explorer Francisco Vásquez de Coronado arrived in the state. New Mexico was a Spanish colony until it became part of Mexico in 1821 and then joined the United States in 1848.
-
-**References**
------------------
-
-*   [New Mexico Tourism Department](https://www.newmexico.org/)
-*   [US Census Bureau](https://www.census.gov/)
-
-Note: The information provided is a simplified version and might not contain all details.
 <end>
 
 Write a wiki article about Iran.<start>**Iran**
@@ -586,10 +569,6 @@ Jupiter has been known to humans since ancient times. It was first recorded by t
 
 * Jupiter's Great Red Spot, a giant storm on the planet, has been raging for over 300 years!
 * Jupiter is so massive that it could swallow all the other planets in our solar system and still have room to spare!
-
-**References**
-
-For more information about Jupiter, visit [NASA] (https://www.nasa.gov) or [Wikipedia's list of Jupiter-related articles](https://en.wikipedia.org/wiki/Category:Jupiter).
 <end>
 
 Write a wiki article about Maize.<start>**Maize**
@@ -757,15 +736,6 @@ Some popular places to visit in France include:
 *  France is home to the famous cheese called Camembert.
 *  The country has a long tradition of producing fine wines, including champagne and Bordeaux wine.
 *  France is one of the most visited countries in the world, with over 89 million tourists each year.
-
-**References**
----------------
-
-This article uses information from various sources, including:
-
-*  Wikipedia
-*  Encyclopedia Britannica
-*  French government websites
 <end>
 
 Write a wiki article about Georgia.<start>**Georgia**

@@ -23,11 +23,6 @@ In 2006, the International Astronomical Union (IAU) reclassified Pluto from a pl
 * Pluto is no longer considered one of the nine planets in our solar system.
 * It takes Pluto 6.4 Earth days to rotate once on its axis.
 * The surface temperature of Pluto can drop to as low as -233°C (-391°F) at night, making it one of the coldest places in the solar system.
-
-**References**
-
-* International Astronomical Union (IAU)
-* NASA's Solar System Exploration website
 <end>
 
 Write a wiki article about Idaho.<start>**Idaho**
@@ -143,12 +138,6 @@ Mars has been explored by many spacecraft since the 1960s. NASA's Curiosity rove
 * Mars is named after the Roman god of war.
 * The Martian day (or "sol") is 24 hours and 37 minutes long, which is very close to an Earth day.
 * Scientists believe that Mars may have had liquid water on its surface in the past, which could have supported life.
-
-**References**
-
-* NASA's Mars Exploration Program
-* National Geographic: Mars
-* Wikipedia: Mars
 <end>
 
 Write a wiki article about Michigan.<start>**Michigan**
@@ -187,16 +176,6 @@ As of 2022, the estimated population of Michigan is approximately 10 million peo
 * **Mitten State**: Michigan is nicknamed "The Mitten" due to its shape.
 * **Fruitful State**: Michigan grows a variety of fruits, such as cherries and blueberries.
 * **Natural Beauty**: Michigan has over 1,400 miles (2,250 km) of shoreline along the Great Lakes.
-
-**References**
-
-This article is based on information from reliable sources, including the U.S. Census Bureau, Wikipedia articles about Michigan's cities and landmarks, and official state government websites.
-
----
-
-[Last updated: **DATE**]
-
-Note: This wiki article provides a simple overview of Michigan, focusing on essential information and clarity. It is not intended to be comprehensive or exhaustive, but rather a starting point for further exploration and learning.
 <end>
 
 Write a wiki article about Singapore.<start>**Singapore**
@@ -687,14 +666,6 @@ The first inhabitants of Brazil were indigenous peoples. In 1500, Portuguese exp
 * The official currency of Brazil is the real (R$).
 * The national symbol of Brazil is the emerald dove.
 * The main holiday in Brazil is Carnaval.
-
-**References**
----------------
-
-For more information about Brazil, see:
-
-* [Brazilian government website](https://www.gov.br/)
-* [Wikipedia: Brazil](https://en.wikipedia.org/wiki/Brazil)
 <end>
 
 Write a wiki article about Climate change.<start>**Climate Change**
@@ -734,13 +705,6 @@ To mitigate climate change:
 * **Reduce greenhouse gas emissions**: Transition to renewable energy sources like solar and wind power.
 * **Increase energy efficiency**: Improve insulation in buildings and use more efficient appliances.
 * **Protect and restore forests**: Preserve and re-grow trees to absorb carbon dioxide from the atmosphere.
-
-**References**
-
-* Intergovernmental Panel on Climate Change (IPCC)
-* National Aeronautics and Space Administration (NASA)
-
-Note: This article is a simplified version of climate change, avoiding complex scientific jargon and focusing on clear explanations.
 <end>
 
 Write a wiki article about Palau.<start>**Palau**
@@ -831,10 +795,6 @@ These features make West Virginia a popular destination for outdoor activities l
 **Education**
 
 The state has several institutions of higher education, including West Virginia University and Marshall University.
-
-**References**
-
-This article provides basic information about the state of West Virginia. For more detailed information, please see external sources such as Wikipedia articles on specific topics or government websites.
 <end>
 
 Write a wiki article about San Francisco.<start>**San Francisco**
@@ -884,11 +844,5 @@ San Francisco has several top-ranked universities, including:
 
 * **University of San Francisco**: A private Jesuit university.
 * **San Francisco State University**: A public research university.
-
-**References**
-
-For more information about San Francisco, please visit the city's official website: [www.sf.gov](http://www.sf.gov).
-
-Note: This article provides a basic overview of San Francisco. For more detailed and up-to-date information, readers are encouraged to consult other sources.
 <end>
 

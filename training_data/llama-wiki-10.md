@@ -64,11 +64,6 @@ Halley's Comet appears as a small, fuzzy ball with a bright tail of gas and dust
 * Halley's Comet is one of the most famous comets in history.
 * The comet has a nucleus (central body) that is only about 5 miles (8 kilometers) long and 2.5 miles (4 kilometers) wide.
 * Comets are thought to be remnants from the early days of our solar system.
-
-**References**
-
-* [1] "Halley's Comet". Encyclopedia Britannica, 2022.
-* [2] "Comets". NASA, 2022.
 <end>
 
 Write a wiki article about Los Angeles.<start>**Los Angeles**
@@ -135,10 +130,6 @@ Some of the main cities in Utah are:
 Utah is known as the "Beehive State" because of a bee on its state flag. The state's nickname comes from a beehive, which symbolizes industry and community.
 
 Overall, Utah is a beautiful state with natural wonders, rich history, and growing economy.
-
----
-
-Note: This article aims to provide basic information about Utah in simple language, avoiding complex vocabulary or detailed analysis.
 <end>
 
 Write a wiki article about Singapore.<start>**Singapore**
@@ -185,14 +176,6 @@ Singapore is a popular tourist destination due to its cleanliness, safety, and m
 * **1963**: Singapore merged with Malaysia to form a single country.
 * **1965**: Singapore separated from Malaysia and became an independent country.
 * **1990**: Singapore hosted the Southeast Asian Games, one of the largest multi-sport events in the region.
-
-**References**
---------------
-
-1. National Library Board (Singapore). _A Brief History of Singapore_.
-2. Ministry of Culture, Community and Youth (Singapore). _About Singapore_.
-
-This article provides basic information about Singapore's location, history, geography, language, economy, tourism, and important dates.
 <end>
 
 Write a wiki article about Cattle.<start>**Cattle**
@@ -354,15 +337,6 @@ Some interesting facts about the Atlantic Ocean include:
 
 * It's home to the Mid-Atlantic Ridge, a vast mountain range that runs down the center of the ocean.
 * The oldest shipwreck discovered in the Atlantic was the 16th-century Spanish galleon, Nuestra Señora de las Mercedes.
-
-**References**
-
-For more information about the Atlantic Ocean, see:
-
-* National Geographic: "The Atlantic Ocean"
-* World Book Encyclopedia: "Oceans"
-
-Note: This article is written for general readers and is intended to provide a basic understanding of the Atlantic Ocean. If you need more detailed or specialized information, please consult additional sources.
 <end>
 
 Write a wiki article about Dog.<start>**Dog**
@@ -400,12 +374,6 @@ If you have a dog, you need to take care of it. This includes:
 * **Playing with them often**
 
 Remember, dogs are very special animals that deserve love and care.
-
-**References**
-
-* American Kennel Club (AKC)
-* Humane Society
-* PetMD
 <end>
 
 Write a wiki article about Indonesia.<start>**Indonesia**
@@ -507,12 +475,6 @@ Some popular tourist attractions in Montana include:
 * **Glacier National Park**: A beautiful national park with stunning mountain scenery and pristine lakes.
 * **Yellowstone National Park**: While not entirely located within Montana, a significant portion of the park lies within the state's borders.
 * **Little Bighorn Battlefield**: The site of a famous battle between the U.S. Army and Native American tribes in 1876.
-
-**References**
-
-This article uses information from reliable sources, including official government websites and reputable travel guides.
-
-Note: This is a simplified wiki article, focused on clarity and essential information. It does not cover every aspect of Montana's history, politics, or culture, but provides a general overview of the state's geography, climate, economy, and popular attractions.
 <end>
 
 Write a wiki article about Seattle.<start>**Seattle**
@@ -550,13 +512,6 @@ As of 2020, Seattle's population was approximately 730,000 people. The city has 
 ------------
 
 Seattle was founded in 1851 as a small settlement. The city grew rapidly during the late 19th century due to its role in the logging industry. Today, Seattle is a thriving city known for its vibrant culture, beautiful scenery, and innovative economy.
-
-**References**
-
-* [Official City Website](https://www.seattle.gov/)
-* [Seattle Tourism Board](https://visitseattle.net/)
-
-This article provides basic information about Seattle, including its location, climate, points of interest, economy, demographics, and history.
 <end>
 
 Write a wiki article about New York City.<start>**New York City**

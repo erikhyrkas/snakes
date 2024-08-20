@@ -133,10 +133,6 @@ The economy of South Dakota is primarily driven by agriculture, tourism, and gov
 **History**
 
 South Dakota was admitted to the United States as the 40th state on November 2, 1889.
-
-**References**
-
-This article uses information from reliable sources such as Wikipedia, Britannica, and official government websites.
 <end>
 
 Write a wiki article about Solar eclipse.<start>**Solar Eclipse**
@@ -211,17 +207,6 @@ Turmeric contains a compound called curcumin, which has anti-inflammatory proper
 
 Turmeric is a versatile spice with a rich history of use in food and medicine. Its health benefits are promising, but it's essential to exercise caution when consuming or using turmeric products.
 
-References:
-
-* American Botanical Council (2022)
-* National Institutes of Health (NIH) - Office of Dietary Supplements (2019)
-
-**External Links**
-
-* [Turmeric as a spice](https://www.example.com/turmeric-spice)
-* [Curcumin benefits](https://www.example.com/curcumin-benefits)
-
-Note: The references and external links are just examples, please replace them with real sources.
 <end>
 
 Write a wiki article about Louisiana.<start>**Louisiana**
@@ -355,8 +340,6 @@ A cougar is a large wild cat that lives in the Americas.
 * Cougars can run at speeds of up to 40 miles per hour (64 kilometers per hour).
 * They have excellent night vision due to a reflective layer in the back of their eyes called the tapetum lucidum.
 * Cougars are also known for their ability to jump long distances, with some recorded jumps reaching up to 45 feet (14 meters).
-
-Note: This article is written at a simple level, using basic vocabulary and sentence structures.
 <end>
 
 Write a wiki article about Antarctica.<start>**Antarctica**
@@ -790,10 +773,6 @@ European culture is known for its diversity, with many different traditions, cus
 ----------
 
 Europe is a unique and fascinating continent, with its own history, culture, and geography. Its diversity, complexity, and importance in world affairs make it an interesting topic for study and exploration.
-
-**References**
-
-(Note: This article provides a basic overview of Europe. For more detailed information, please consult specialized sources such as the CIA World Factbook or National Geographic.)
 <end>
 
 Write a wiki article about Texas.<start>**Texas**

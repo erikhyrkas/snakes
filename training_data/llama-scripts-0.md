@@ -1098,8 +1098,6 @@ Host: "In conclusion, the rise of the Cretaceous period was an extraordinary eve
 Host: "Thanks for joining me on this journey through time! If you liked this video, be sure to like and subscribe for more content on paleontology and natural history. And remember - Earth's history is a never-ending story of discovery and wonder!"
 
 [Closing shot with a call-to-action to visit the channel or website]
-
-Note: The script can be modified to fit your specific style and tone, and you may want to add visuals or animations to make it more engaging for viewers.
 <end>
 
 Write a script for a YouTube video that discusses the event: 'Cretaceous-Paleogene extinction event (dinosaurs' extinction)' that occurred around 65 million years ago. Explain why it was significant, its impact, and how it fits into the broader timeline of history.<start>Here's a script for a YouTube video on the Cretaceous-Paleogene extinction event:
@@ -1279,8 +1277,6 @@ In conclusion, the global financial crisis of 2008 was a watershed moment in mod
 (12:00 - 13:00)
 
 Thanks for watching this video on the global financial crisis of 2008! If you'd like to learn more about this topic or economics in general, please subscribe to our channel and hit the notification bell. We'll be back with another video soon!
-
-Note: This script is just a rough outline, and you can add more details, examples, or visual aids as per your requirement.
 <end>
 
 Write a script for a YouTube video that discusses the event: 'Development of complex language and culture' that occurred around 50,000 years ago. Explain why it was significant, its impact, and how it fits into the broader timeline of history.<start>Here's a script for a YouTube video on the development of complex language and culture around 50,000 years ago:
@@ -2402,8 +2398,6 @@ Host: "Thanks for watching [channel name]! If you liked this video, be sure to l
 **End Screen**
 
 [End screen with a call-to-action, such as a link to another related video or a request to join the channel's community]
-
-Note: This script is just a sample, and you can modify it according to your style and preferences.
 <end>
 
 Write a script for a YouTube video that discusses the event: 'Birth of Buddha' that occurred around 500 BC. Explain why it was significant, its impact, and how it fits into the broader timeline of history.<start>Here's a script for a YouTube video on the "Birth of Buddha":
@@ -2516,8 +2510,6 @@ Host: "Now, let's put this event into perspective. The Triassic-Jurassic extinct
 Host: "And that's it for today's episode! The Triassic-Jurassic extinction event may seem like a footnote in Earth's history, but its impact was profound. It reminds us that life on our planet is constantly changing and evolving, shaped by forces beyond our control. Thanks for watching 'Fossil Frenzy'!"
 
 [Outro music plays as the video ends]
-
-Note: The script can be modified to fit your specific style and tone. You may also want to add more visuals or animations to enhance the explanation.
 <end>
 
 Write a script for a YouTube video that discusses the event: 'Publication of Newton's *Principia Mathematica*' that occurred around 1687 AD. Explain why it was significant, its impact, and how it fits into the broader timeline of history.<start>Here is a script for a YouTube video about the publication of Newton's Principia Mathematica:
