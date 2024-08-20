@@ -1,3 +1,4 @@
+import os
 import random
 
 from ollama import generate
@@ -62,6 +63,10 @@ def generate_prompt(subject, review, emotion):
 def sentiment_generator():
     sentiments = []
     for i in range(20):
+        output_file = f'./training_data/llama-sentiment-{i}.md'
+        if os.path.exists(output_file):
+            print(f"Skipping existing file: {output_file}")
+            continue
         for category, emo_list in emotions.items():
             for emotion in emo_list:
                 for subject in subjects:
@@ -69,10 +74,11 @@ def sentiment_generator():
                     new_prompt = generate_prompt(subject, review, emotion)
                     print(f"{emotion} {subject}:\n{review}\n{new_prompt}")
                     sentiments.append(new_prompt)
-        output_file = f'./training_data/llama-sentiment-{i}.md'
         with open(output_file, 'w', encoding="utf-8") as file:
             file.writelines(sentiments)
 
 
 if __name__ == '__main__':
     sentiment_generator()
+    print("Important, look over the output for words/phases like 'real events', 'entertainment', "
+          "'cannot', 'can't', or 'real' because there may be some extra wording you don't want.")
