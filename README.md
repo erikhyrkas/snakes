@@ -91,11 +91,21 @@ Example training:
     * When making changes to the model design, I knew it would impact the memory usage, so I put ? when I was no longer
       confident in the number.
 * Training Sequence Length: size of chunks of text that are used to train on.
-    * This is analogous to context size, but I don't limit context size during inference. During inference, your context
+    * This is analogous to context size, but it won't limit context size during inference. During inference, your context
       length is limited by your available memory.
+    * Despite an infinite context length, if you use a short training sequence length, then the model doesn't learn 
+      how to reliably write longer responses. I don't know what is the optimally long training sequence to 
+      work in most situations, but for v0.1, I opted for 3x the attention block size (96.) My rationale was 
+      that it would at least teach it how to transfer knowledge between block sa little and that fit within 
+      the memory that I had available. 
 * Batch Size: A larger batch size (64) seems to really help with numerical stability of the model.
     * For my vocabulary size, if you can't get the loss down below 0.5, the model will not sound coherent. Batch Size
       may influence whether you can get there without first bumping into NaNs.
+    * I found that I could use larger batch sizes and shorter training sequences to do initial training and get it down 
+      to well below a loss of 1.0, then switch to a smaller batch and longer sequence length, and then repeat as needed.
+    * I would pick my initial training sequence length to be equal to my attention block size, and then find the batch 
+      size that fit in memory, then after training to near 0.5, switch to 2x the attention block and adjust the batch 
+      size down until it fits, then 3x the attention block size... and you see the pattern.
 * Attention Block Size: How many tokens are blocked together for attention.
     * The bigger the blocks, the greater understanding will go into each of those blocks, but the memory requirements
       will shoot up. Smaller blocks should do a better job of being coherent within a given sentence, but some of that
@@ -125,6 +135,7 @@ Example training:
 | 21.5 GB     | 128                      | 64         | 64                   | 13,183          | 368            | 368      | 368         | 59,959,647  |
 | 21.9 GB     | 128                      | 64         | 16                   | 28,590          | 368            | 368      | 368         | 71,314,606  |
 | 21.6 GB     | 72                       | 64         | 32                   | 33,438          | 448            | 448      | 448         | 120,513,182 |
+| 21.8 GB     | 96                       | 20         | 32                   | 33,438          | 448            | 448      | 448         | 120,513,182 |
 | 21.6 GB     | 32                       | 1          | 32                   | 33,438          | 768            | 624      | 768         | 295,915,902 |
 
 If you use more than 21.6, there's a risk during back propagation you'll run out of memory while loading up the data
