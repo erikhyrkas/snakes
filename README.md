@@ -47,7 +47,7 @@ background impacted that. I'm simply not aware of all cultures, identities, and 
 qualified to balance that data perfectly.
 
 Words that I frequently searched for:
-* `note:` (llama 3.1 likes to add notes back to user within the content that doesn't belong.)
+* `note:` (llama 3.1 likes to add notes that don't belong in the content back to user within the content.)
 * `**note**`
 * `cannot` (llama 3.1 will refuse to generate some content -- usually 'horror', 'political event', or 'disgust')
 * `references:` (llama 3.1 will create links to things that don't seem to exist.)
