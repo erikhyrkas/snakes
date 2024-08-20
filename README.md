@@ -24,9 +24,10 @@ If you don't have cuda:
 pip install torch torchvision torchaudio
 ```
 
-## Generate Data
+## Synthetic Data
 
-I used ollama with llama 3.1 to generate training data.
+I used ollama with llama 3.1 to generate training data. And I provided it as an example, but if 
+you were to use this code, I'd highly encourage you to build the data that works for you.
 
 You can generate additional data using the command:
 
@@ -44,6 +45,21 @@ filtered them down, but there were a few thousand things to look at. I generally
 would not shock me if some crept in. I also attempted to balance identity and heritage, but I'm sure that my own
 background impacted that. I'm simply not aware of all cultures, identities, and backgrounds, and I'm not really
 qualified to balance that data perfectly.
+
+Words that I frequently searched for:
+* `note:` (llama 3.1 likes to add notes back to user within the content that doesn't belong.)
+* `**note**`
+* `cannot` (llama 3.1 will refuse to generate some content -- usually 'horror', 'political event', or 'disgust')
+* `references:` (llama 3.1 will create links to things that don't seem to exist.)
+* `**references**`
+* `sources`
+* `**sources**`
+* `links`
+* `citation`
+* `real` (llama 3.1 will sometimes refuse to write about an event if it thinks it is real -- which might be funny because this is all synthetic data, but these are usually political scenes, which makes it much more sad to me. The search for 'cannot' may be enough.)
+
+Regex patterns: 
+* `\[.*\]`  (generated MD links)
 
 ## Bias, Safety, and guardrails
 
