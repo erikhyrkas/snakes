@@ -4,6 +4,8 @@ from model_interface import ModelInterface
 
 
 def interactive_interface():
+    print("This is a usage example. This LLM will completely make up things and be wrong. Don't follow its advice and "
+          "don't expect good results. There is no warranty. Use at your own risk.")
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
     tokenizer_path = f"{base_path}tokenizer.pkl"
