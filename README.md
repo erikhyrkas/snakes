@@ -49,7 +49,11 @@ qualified to balance that data perfectly.
 Words that I frequently searched for:
 * `note:` (llama 3.1 likes to add notes that don't belong in the content back to user within the content.)
 * `**note**`
-* `cannot` (llama 3.1 will refuse to generate some content -- usually 'horror', 'political event', or 'disgust')
+* `cannot` (llama 3.1 will refuse to generate some content -- usually 'horror', 'political event', 'fear', 'shame', 'greed', or 'disgust')
+* `can't write`
+* `can't help`
+* `can't generate`
+* `I'm an AI`
 * `references:` (llama 3.1 will create links to things that don't seem to exist.)
 * `**references**`
 * `sources`
@@ -57,6 +61,9 @@ Words that I frequently searched for:
 * `links`
 * `citation`
 * `real` (llama 3.1 will sometimes refuse to write about an event if it thinks it is real -- which might be funny because this is all synthetic data, but these are usually political scenes, which makes it much more sad to me. The search for 'cannot' may be enough.)
+* `http://`
+* `https://`
+* `www.`
 
 Regex patterns: 
 * `\[.*\]`  (generated MD links)
