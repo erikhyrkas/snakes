@@ -1,5 +1,6 @@
-import re
 import pickle
+import re
+from time import sleep
 
 DEBUG_TOKENIZER = False
 
@@ -14,6 +15,10 @@ class Tokenizer:
 
     def _add_to_vocab(self, word):
         if word not in self.word_to_index:
+            # if self.current_index > 2147483647:
+            #     # skip the word because we use an int to hold tokens. This word will need to be individual characters.
+            #     # i tried to use a uint16 with a max value of 65535, but cuda was upset
+            #     return
             self.index_to_word[self.current_index] = word
             self.word_to_index[word] = self.current_index
             self.current_index += 1
@@ -91,7 +96,8 @@ class Tokenizer:
             if not token:
                 continue
             if DEBUG_TOKENIZER:
-                print(f"Processing token: {token}")  # Debugging statement
+                print(f"Processing token: {token}")
+            sleep(0)
             if '\n' in token:
                 result.append('<newline>')
             elif token.isspace():
@@ -112,7 +118,7 @@ class Tokenizer:
                 result.append(token)
 
         if DEBUG_TOKENIZER:
-            print(f"Final token list: {result}")  # Debugging statement
+            print(f"Final token list: {result}")
         return result
 
     def tokenize(self, text):
@@ -121,6 +127,7 @@ class Tokenizer:
         tokens = []
         words = self.to_words(text)
         for word in words:
+            sleep(0)
             if word in self.word_to_index:
                 tokens.append(self.word_to_index[word])
             else:

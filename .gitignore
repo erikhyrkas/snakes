@@ -2,3 +2,4 @@
 fine_tuning
 tokenizer.pkl
 model.bin
+/model_checkpoint.bin
