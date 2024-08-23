@@ -1,4 +1,6 @@
 import random
+from functools import lru_cache
+
 from torch.utils.data import IterableDataset
 import torch
 
@@ -29,11 +31,16 @@ class TextDataset(IterableDataset):
         if self._length is None:
             count = 0
             for file in self.files:
-                with open(file, 'r', encoding='utf-8') as f:
-                    text = f.read()
-                tokens = self.tokenizer.tokenize(text)
-                # Calculate complete sequences only
-                complete_batches = len(tokens) // self.training_sequence_length
-                count += complete_batches
+                count = self.file_to_tensors(count, file)
             self._length = count
         return self._length
+
+    @lru_cache(maxsize=None)
+    def file_to_tensors(self, count, file):
+        with open(file, 'r', encoding='utf-8') as f:
+            text = f.read()
+        tokens = self.tokenizer.tokenize(text)
+        # Calculate complete sequences only
+        complete_batches = len(tokens) // self.training_sequence_length
+        count += complete_batches
+        return count
