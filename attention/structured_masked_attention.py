@@ -64,7 +64,7 @@ class StructuredMaskedAttention(nn.Module):
             intermediate_result = torch.einsum('bhik,hkj->bhij', h_block, self.A)
 
             # Apply structured masked attention
-            structured_mask = self.structured_matrix.apply_mask(intermediate_result)
+            structured_mask = self.structured_matrix.apply_mask_4d(intermediate_result)
             y_block = torch.einsum('bhij,hjk->bhik', structured_mask, C_transpose)
 
             y_block = self.dropout(y_block)

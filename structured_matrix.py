@@ -31,7 +31,7 @@ class StructuredMatrix:
         matrix = torch.tensor([first_col.roll(i) for i in range(self.size)])
         return matrix
 
-    def apply_mask(self, attention_scores):
+    def apply_mask_4d(self, attention_scores):
         """
         Apply the structured matrix as a mask to the attention scores (4D tensor).
         """
