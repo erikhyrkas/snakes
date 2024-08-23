@@ -3,3 +3,6 @@ fine_tuning
 tokenizer.pkl
 model.bin
 /model_checkpoint.bin
+/scheduler_checkpoint.bin
+/optimizer_checkpoint.bin
+/cache_dir

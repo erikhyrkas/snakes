@@ -10,7 +10,7 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
     * State Space Duality -- Balances linear and quadratic SSMs for efficiency vs. quality flexibility.
     * Structured Processing for Quadratic SSMs -- Applies structured methods to efficiently manage quadratic operations.
     * Block Decomposition of Semiseparable Matrices -- Optimizes memory usage by breaking down large matrices.
-    * Mandatory Layer Normalization -- Stabilizes outputs across sequential and attention layers.
+    * Layer Normalization -- Stabilizes outputs across sequential and attention layers.
     * Memory and Numerical Stability -- Uses small random initialization with added constants to ensure stability.
     * Dropout Regularization -- Prevents overfitting, particularly important in sequential models with SSMs.
 
@@ -30,111 +30,117 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         self.dropout = dropout
         self.block_size = block_size
 
-        # Initialize attention matrices specifically for SSM
-        self.W_q = nn.Parameter((torch.rand(input_dim, state_dim) * 0.1) + 0.001)
-        self.W_k = nn.Parameter((torch.rand(input_dim, state_dim) * 0.1) + 0.001)
-        self.W_v = nn.Parameter((torch.rand(input_dim, state_dim) * 0.1) + 0.001)
-        self.W_o = nn.Parameter((torch.rand(state_dim, output_dim) * 0.1) + 0.001)
+        # Initialize attention matrices with Xavier uniform
+        self.W_q = nn.Parameter(torch.empty(input_dim, state_dim))
+        nn.init.xavier_uniform_(self.W_q)
+        self.W_k = nn.Parameter(torch.empty(input_dim, state_dim))
+        nn.init.xavier_uniform_(self.W_k)
+        self.W_v = nn.Parameter(torch.empty(input_dim, state_dim))
+        nn.init.xavier_uniform_(self.W_v)
+        self.W_o = nn.Parameter(torch.empty(state_dim, output_dim))
+        nn.init.xavier_uniform_(self.W_o)
 
-        # Initialize SSM-specific matrices
-        self.SSM_A = nn.Parameter((torch.rand(state_dim, state_dim) * 0.1) + 0.001)
-        self.SSM_B = nn.Parameter((torch.rand(state_dim, input_dim) * 0.1) + 0.001)
-        self.SSM_C = nn.Parameter((torch.rand(output_dim, state_dim) * 0.1) + 0.001)
+        # Initialize semiseparable matrices directly in this class
+        self.SSM_A = nn.Parameter(torch.tril(torch.randn(state_dim, state_dim) * 0.001))  # Increased scale slightly
+        self.SSM_B = nn.Parameter(torch.tril(torch.randn(state_dim, input_dim) * 0.001))
+        self.SSM_C = nn.Parameter(torch.tril(torch.randn(output_dim, state_dim) * 0.001))
+
+        # Learnable dynamic weight
+        self.dynamic_weight = nn.Parameter(torch.tensor(0.5))  # Initialized at 0.5 (neutral)
 
         # Dropout layer for regularization
         self.dropout_layer = nn.Dropout(dropout)
 
+        # Layer normalization layers with increased epsilon
+        self.layer_norm = nn.LayerNorm(self.state_dim, eps=1e-5)
+
     def forward(self, x):
-        assert x.dim() == 3, f"Expected input tensor to have 3 dimensions, but got {x.dim()}"
+        device = x.device  # Get the device of the input tensor
+
+        # Move LayerNorm and dynamic weight to the same device as the input tensor
+        self.layer_norm = self.layer_norm.to(device)
+        self.dynamic_weight = self.dynamic_weight.to(device)
+
         batch_size, seq_len, _ = x.size()
 
-        # Compute queries, keys, and values using corrected einsum notation
-        # Expected shapes: x: (batch_size, seq_len, input_dim)
-        # Result shapes: q, k, v: (batch_size, seq_len, state_dim)
+        # Compute queries, keys, and values using einsum notation
         q = torch.einsum('bsi,id->bsd', x, self.W_q)
         k = torch.einsum('bsi,id->bsd', x, self.W_k)
         v = torch.einsum('bsi,id->bsd', x, self.W_v)
 
-        assert q.shape == (batch_size, seq_len, self.state_dim), f"Expected shape {(batch_size, seq_len, self.state_dim)}, but got {q.shape}"
-        assert k.shape == (batch_size, seq_len, self.state_dim), f"Expected shape {(batch_size, seq_len, self.state_dim)}, but got {k.shape}"
-        assert v.shape == (batch_size, seq_len, self.state_dim), f"Expected shape {(batch_size, seq_len, self.state_dim)}, but got {v.shape}"
+        dynamic_weight_clamped = torch.sigmoid(self.dynamic_weight)  # Ensure the weight stays within [0, 1]
 
-        # Determine if we should use linear or quadratic SSM based on sequence length
-        if seq_len <= self.sequence_length_threshold:
-            ssm_output = self.apply_linear_ssm(q, k, v)
+        if seq_len <= self.sequence_length_threshold and dynamic_weight_clamped > 0.75:
+            # Only perform quadratic calculation
+            ssm_output = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
+                                                                                            self.SSM_B) + self.quadratic_transform(
+                v, self.SSM_C)
+            ssm_output = self.layer_norm(ssm_output)
+        elif seq_len > self.sequence_length_threshold or dynamic_weight_clamped < 0.25:
+            # Only perform linear calculation
+            ssm_output = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
+                                                                                      self.SSM_B) + self.linear_transform(
+                v, self.SSM_C)
+            ssm_output = self.layer_norm(ssm_output)
         else:
-            ssm_output = self.apply_quadratic_ssm(q, k, v)
+            # Weighted blend between linear and quadratic transforms
+            ssm_linear = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
+                                                                                      self.SSM_B) + self.linear_transform(
+                v, self.SSM_C)
+            ssm_linear = self.layer_norm(ssm_linear)
 
-        # Apply dropout to SSM output
+            ssm_quadratic = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
+                                                                                               self.SSM_B) + self.quadratic_transform(
+                v, self.SSM_C)
+            ssm_quadratic = self.layer_norm(ssm_quadratic)
+
+            ssm_output = dynamic_weight_clamped * ssm_quadratic + (1 - dynamic_weight_clamped) * ssm_linear
+
+        # Add residual connection to help with stability
+        ssm_output += x
+
+        # Apply dropout and final transformation
         ssm_output = self.dropout_layer(ssm_output)
-
-        # Final linear transformation using corrected einsum notation
-        # Expected shape: ssm_output: (batch_size, seq_len, state_dim)
-        # Result shape: output: (batch_size, seq_len, output_dim)
         output = torch.einsum('bsd,do->bso', ssm_output, self.W_o)
 
-        assert output.shape == (batch_size, seq_len, self.output_dim), f"Expected shape {(batch_size, seq_len, self.output_dim)}, but got {output.shape}"
+        # Check for numerical stability
+        # if torch.any(torch.isnan(ssm_output)) or torch.any(torch.isinf(ssm_output)):
+        #     print("Numerical instability detected.")
 
         return output
 
-    def apply_linear_ssm(self, q, k, v):
-        # Stack q, k, v along a new dimension
-        # Shape after stacking: (3, batch_size, seq_len, state_dim)
-        qkv_stack = torch.stack([q, k, v], dim=0)
+    def block_decomposition(self, x, matrix):
+        """
+        Apply block decomposition to matrix operations for better memory efficiency.
+        """
+        output = torch.zeros_like(x)
+        num_blocks = x.size(-1) // self.block_size
 
-        # Stack SSM_A, SSM_B, SSM_C along a new dimension
-        # Shape after stacking: (3, state_dim, state_dim)
-        SSM_stack = torch.stack([self.SSM_A, self.SSM_B, self.SSM_C], dim=0)
+        for i in range(num_blocks):
+            start = i * self.block_size
+            end = start + self.block_size
+            output[..., start:end] = torch.einsum('bsi,ij->bsj', x[..., start:end], matrix[start:end, start:end])
 
-        # Perform a single batched einsum operation
-        # Corrected einsum notation to handle broadcasting properly
-        # Result shape: (3, batch_size, seq_len, state_dim)
-        ssm_stack = torch.einsum('abcd,ade->abce', qkv_stack, SSM_stack)
+        return output
 
-        # Sum the results across the first dimension (3) to combine ssm_q, ssm_k, ssm_v
-        # Final result shape: (batch_size, seq_len, state_dim)
-        ssm_output = ssm_stack.sum(dim=0)
+    def linear_transform(self, x, matrix):
+        """
+        Apply the linear (recurrent) form of the transformation using block decomposition.
+        """
+        return self.block_decomposition(x, matrix)
 
-        assert ssm_output.shape == q.shape, f"Expected shape {q.shape}, but got {ssm_output.shape}"
+    def quadratic_transform(self, x, matrix):
+        """
+        Apply the quadratic (attention-like) form of the transformation using block decomposition.
+        This uses the structured matrix in a way similar to attention mechanisms.
+        """
+        output = torch.zeros_like(x)
+        num_blocks = x.size(-1) // self.block_size
 
-        return ssm_output
+        for i in range(num_blocks):
+            start = i * self.block_size
+            end = start + self.block_size
+            output[..., start:end] = torch.einsum('bsi,ij,bsk->bsj', x[..., start:end], matrix[start:end, start:end],
+                                                  x[..., start:end]) * 0.1
 
-    def apply_quadratic_ssm(self, q, k, v):
-        # Stack q, k, v along a new dimension
-        # Shape after stacking: (3, batch_size, seq_len, state_dim)
-        qkv_stack = torch.stack([q, k, v], dim=0)
-
-        # Stack SSM_A, SSM_B, SSM_C along a new dimension
-        # Shape after stacking: (3, state_dim, state_dim)
-        SSM_stack = torch.stack([self.SSM_A, self.SSM_B, self.SSM_C], dim=0)
-
-        # Perform structured processing on the stacked tensors
-        # Use a loop to handle block processing within structured_processing
-        ssm_stack = torch.zeros_like(qkv_stack)
-
-        for i in range(3):  # Loop over the stacked dimension (q, k, v)
-            ssm_stack[i] = self.structured_processing(qkv_stack[i], SSM_stack[i])
-
-        # Sum the results across the first dimension (3) to combine ssm_q, ssm_k, ssm_v
-        ssm_output = ssm_stack.sum(dim=0)
-
-        assert ssm_output.shape == q.shape, f"Expected shape {q.shape}, but got {ssm_output.shape}"
-
-        return ssm_output
-
-    def structured_processing(self, x, matrix):
-        # Expected shapes: x: (batch_size, seq_len, state_dim), matrix: (state_dim, state_dim)
-        # Result shape: structured_output: (batch_size, seq_len, state_dim)
-
-        block_size = self.block_size
-        seq_len = x.size(1)
-        structured_output = torch.zeros_like(x)
-
-        for i in range(0, seq_len, block_size):
-            block = x[:, i:i + block_size]
-            # Replacing matmul with einsum for block processing
-            structured_output[:, i:i + block_size] = torch.einsum('bsd,dd->bsd', block, matrix)
-
-        assert structured_output.shape == x.shape, f"Expected shape {x.shape}, but got {structured_output.shape}"
-
-        return structured_output
+        return output

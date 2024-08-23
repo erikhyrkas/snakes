@@ -18,7 +18,7 @@ class StructuredMatrix:
         Initialize a semiseparable matrix.
         This is typically a lower triangular or upper triangular matrix for efficient linear transforms.
         """
-        matrix = torch.tril(torch.randn(self.size, self.size))  # Using lower triangular matrix
+        matrix = torch.tril(torch.randn(self.size, self.size) * 0.0001)  # Using lower triangular matrix
         return matrix
 
     def _initialize_toeplitz(self):
@@ -85,4 +85,5 @@ class StructuredMatrix:
         This uses the structured matrix in a way similar to attention mechanisms.
         """
         self.matrix = self.matrix.to(x.device)
-        return torch.einsum('bsi,ijk,bsk->bsj', x, self.matrix, x)
+        # Adjust the einsum notation to reflect the correct dimensionality
+        return torch.einsum('bsi,ij,bsk->bsj', x, self.matrix, x) * 0.1

@@ -14,7 +14,16 @@ from text_dataset import TextDataset
 from tokenizer import Tokenizer
 
 
-def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=100, max_grad_norm=1.0,
+def get_dynamic_batch_size(max_batch_size, sequence_length):
+    return max(1, max_batch_size // (sequence_length // 32))
+
+
+def get_dynamic_sequence_length(max_sequence_length):
+    return random.randint(32, max_sequence_length)
+
+
+def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optimizer, criterion, scheduler, epochs=100,
+                max_grad_norm=1.0,
                 patience=5, accumulation_steps=4):
     print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
@@ -68,6 +77,8 @@ def train_model(model, train_loader, val_loader, optimizer, criterion, scheduler
         if loss_to_check < best_loss:
             best_loss = loss_to_check
             torch.save(model.state_dict(), f"{base_path}model_checkpoint.bin")
+            torch.save(optimizer.state_dict(), f'{base_path}optimizer_checkpoint.bin')
+            torch.save(scheduler.state_dict(), f'{base_path}scheduler_checkpoint.bin')
             print(f"New best model saved at epoch {epoch + 1}")
 
         early_stopping.check(loss_to_check)
@@ -177,7 +188,8 @@ def get_training_file_names(directory="training_data"):
 def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs, training_folder="training_data",
                      patience=10,
                      use_validation_split=True):
-    print(f"LR: {learning_rate} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
+    print(
+        f"LR: {learning_rate} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
 
@@ -195,17 +207,17 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
         val_files = []
 
     # DataLoader for batching (shuffle is done within the TextDataset)
-    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length)
+    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length, batch_size)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
 
     if use_validation_split:
         val_loader = None
     else:
-        val_dataset = TextDataset(val_files, tokenizer, training_sequence_length)
+        val_dataset = TextDataset(val_files, tokenizer, training_sequence_length, batch_size)
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
     number_of_samples = len(train_dataset)
-    print(f"Number of training samples: {number_of_samples}")
+    print(f"Number of training samples: {number_of_samples} for sequence length: {training_sequence_length}")
 
     vocab_size = tokenizer.vocab_size()
     print(f"Vocabulary size: {vocab_size}")
@@ -226,6 +238,17 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=1e-5)
     scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.0005, total_steps=total_training_steps)
     criterion = nn.CrossEntropyLoss()
+
+    if os.path.exists(f'{base_path}optimizer_checkpoint.bin'):
+        optimizer.load_state_dict(torch.load(f'{base_path}optimizer_checkpoint.bin'))
+        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        # Ensure all optimizer states are on the correct device
+        for state in optimizer.state.values():
+            for k, v in state.items():
+                if isinstance(v, torch.Tensor):
+                    state[k] = v.to(device)
+    if os.path.exists(f'{base_path}scheduler_checkpoint.bin'):
+        scheduler.load_state_dict(torch.load(f'{base_path}scheduler_checkpoint.bin'))
 
     model_trained = train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs,
                                 patience=patience)
@@ -268,11 +291,4 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "small_training_data"
-    base_model_train(0.0005, 128, 64, 20, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    base_model_train(0.0005, 512, 16, 20, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    # if base_model_train(0.0005, 32, 128, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
-    #     if base_model_train(0.0005, 32, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
-    #         if base_model_train(0.0005, 64, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
-    #             if base_model_train(0.0005, 128, 32, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
-    #                 if base_model_train(0.0005, 256, 16, 400, training_folder=TRAIN_FOLDER, use_validation_split=False):
-    #                     base_model_train(0.0005, 512, 16, 400, training_folder=TRAIN_FOLDER, use_validation_split=False)
+    base_model_train(0.0005, 512, 64, 400, training_folder=TRAIN_FOLDER, use_validation_split=False)
