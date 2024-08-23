@@ -1,24 +1,23 @@
 import torch
 import torch.nn as nn
 
-from attention import Attention
+from attention.ssd_attention import SSDAttention
 
 
 class LanguageModel(nn.Module):
     def __init__(self, vocab_size, embedding_dim=448, state_dim=448, output_dim=448):
         super(LanguageModel, self).__init__()
         self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
-        self.state_space_model = Attention(state_dim=state_dim, input_dim=embedding_dim, output_dim=output_dim)
+        # self.state_space_model = Attention(state_dim=state_dim, input_dim=embedding_dim, output_dim=output_dim)
+        self.attention = SSDAttention(state_dim=state_dim, input_dim=embedding_dim, output_dim=output_dim)
         self.layer_norm = nn.LayerNorm(output_dim)
         self.output_layer = nn.Linear(output_dim, vocab_size)
 
     def forward(self, input_tokens):
-        embedded = self.embedding(input_tokens)
-        if len(embedded.shape) == 2:
-            embedded = embedded.unsqueeze(0)
-        context_representation = self.state_space_model(embedded)
+        embedded = self.embedding(input_tokens)  # Shape: (batch_size, seq_len, embedding_dim)
+        context_representation = self.attention(embedded)  # Shape: (batch_size, seq_len, output_dim)
         context_representation = self.layer_norm(context_representation)
-        output = self.output_layer(context_representation)
+        output = self.output_layer(context_representation)  # Shape: (batch_size, seq_len, vocab_size)
         return output
 
     def predict_next_token(self, input_tokens):

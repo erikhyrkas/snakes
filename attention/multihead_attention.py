@@ -7,7 +7,7 @@ ATTENTION_DEBUG = False
 
 
 class MultiheadAttention(nn.Module):
-    def __init__(self, state_dim=448, input_dim=448, output_dim=448, block_size=32, num_heads=4, dropout_rate=0.1):
+    def __init__(self, state_dim=448, input_dim=448, output_dim=448, block_size=32, num_heads=8, dropout_rate=0.1):
         super(MultiheadAttention, self).__init__()
         assert state_dim % num_heads == 0, "State dimension must be divisible by the number of heads."
 

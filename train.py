@@ -177,6 +177,7 @@ def get_training_file_names(directory="training_data"):
 def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs, training_folder="training_data",
                      patience=10,
                      use_validation_split=True):
+    print(f"LR: {learning_rate} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     model_path = f"{base_path}model.bin"
 
@@ -234,6 +235,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
         print(f"Model saved to {model_path}")
         print(f"Number of parameters: {model.count_parameters()}")
         print(f"Vocabulary size: {vocab_size}")
+    return model_trained
 
 
 def train_or_load_tokenizer(training_folder, tokenizer_file_name='tokenizer.pkl'):
@@ -267,8 +269,9 @@ if __name__ == "__main__":
 
     TRAIN_FOLDER = "small_training_data"
 
-    base_model_train(0.0005, 32, 128, 25, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    base_model_train(0.0005, 32, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    base_model_train(0.0005, 64, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    base_model_train(0.0005, 128, 32, 25, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    base_model_train(0.0005, 256, 16, 400, training_folder=TRAIN_FOLDER, use_validation_split=False)
+    if base_model_train(0.0005, 32, 128, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
+        if base_model_train(0.0005, 32, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
+            if base_model_train(0.0005, 64, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
+                if base_model_train(0.0005, 128, 32, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
+                    if base_model_train(0.0005, 256, 16, 400, training_folder=TRAIN_FOLDER, use_validation_split=False):
+                        base_model_train(0.0005, 512, 16, 400, training_folder=TRAIN_FOLDER, use_validation_split=False)

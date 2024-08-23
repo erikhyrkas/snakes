@@ -1,15 +1,18 @@
-import time
-
 import torch
-import torch.nn as nn
+from torch import nn
+
+from structured_matrix import StructuredMatrix
 
 ATTENTION_DEBUG = False
 
 
-class Attention(nn.Module):
-    def __init__(self, state_dim=448, input_dim=448, output_dim=448, block_size=32, num_heads=4, dropout_rate=0.1):
-        super(Attention, self).__init__()
-        assert state_dim % num_heads == 0, "State dimension must be divisible by the number of heads."
+class StructuredMaskedAttention(nn.Module):
+    def __init__(self, state_dim=448, input_dim=448, output_dim=448, block_size=32, num_heads=8,
+                 structure_type='semiseparable', dropout_rate=0.1):
+        super(StructuredMaskedAttention, self).__init__()
+
+        if state_dim % num_heads != 0:
+            raise ValueError("State dimension must be divisible by the number of heads.")
 
         self.num_heads = num_heads
         self.head_dim = state_dim // num_heads
@@ -26,6 +29,9 @@ class Attention(nn.Module):
             torch.eye(output_dim // num_heads, self.head_dim).repeat(num_heads, 1, 1) * 0.1 + torch.randn(num_heads,
                                                                                                           output_dim // num_heads,
                                                                                                           self.head_dim) * 0.01)
+
+        # Initialize structured matrix for masked attention
+        self.structured_matrix = StructuredMatrix(self.head_dim, structure_type)
 
         self.dropout = nn.Dropout(dropout_rate)
         self.layer_norm = nn.LayerNorm(state_dim)  # Layer normalization
@@ -57,7 +63,9 @@ class Attention(nn.Module):
 
             intermediate_result = torch.einsum('bhik,hkj->bhij', h_block, self.A)
 
-            y_block = torch.einsum('bhij,hjk->bhik', intermediate_result, C_transpose)
+            # Apply structured masked attention
+            structured_mask = self.structured_matrix.apply_mask(intermediate_result)
+            y_block = torch.einsum('bhij,hjk->bhik', structured_mask, C_transpose)
 
             y_block = self.dropout(y_block)
 
@@ -86,56 +94,3 @@ class Attention(nn.Module):
                 print(f"Vanishing final output detected with norm: {final_output_norm.min().item()}")
 
         return final_output
-
-
-def example_model():
-    model = Attention(state_dim=10, input_dim=5, output_dim=2)
-    x = torch.randn(1, 100, 5)  # Batch size of 1, sequence length of 100, input dimension of 5
-    output = model(x)
-    print(output.shape)  # Expected shape: (1, 100, 2)
-
-
-def benchmark_model(model, x):
-    start_time = time.time()
-    output = model(x)
-    end_time = time.time()
-    return output, end_time - start_time
-
-
-def test_model():
-    state_dim = 10
-    input_dim = 5
-    output_dim = 2
-    sequence_length = 1000
-    batch_size = 32
-
-    # random input data
-    x = torch.randn(batch_size, sequence_length, input_dim)
-
-    quadratic_model = Attention(state_dim, input_dim, output_dim)
-
-    # Benchmark quadratic model
-    quadratic_output, quadratic_time = benchmark_model(quadratic_model, x)
-
-    print(f"Quadratic mode time: {quadratic_time:.6f} seconds")
-    print(f"Output shape (Quadratic): {quadratic_output.shape}")
-
-
-def test_correctness():
-    model = Attention(state_dim=10, input_dim=5, output_dim=2)
-    x = torch.randn(1, 10, 5)  # A small batch of 10 sequences
-
-    expected_output_shape = (1, 10, 2)  # Expecting output to match input sequence length
-
-    # Run the model
-    output = model(x)
-    print(f"Output shape: {output.shape}")
-
-    assert output.shape == expected_output_shape, "Output shape does not match expected shape"
-    print("Output shape is correct.")
-
-
-if __name__ == "__main__":
-    example_model()
-    test_model()
-    test_correctness()
