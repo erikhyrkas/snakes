@@ -72,8 +72,6 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         return output
 
     def apply_linear_ssm(self, q, k, v):
-        # Implement the linear SSM-specific operations
-        # For example, a simple recurrent-like processing using the SSM matrices
         ssm_q = torch.matmul(q, self.SSM_A)
         ssm_k = torch.matmul(k, self.SSM_B)
         ssm_v = torch.matmul(v, self.SSM_C)
@@ -83,8 +81,6 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         return ssm_output
 
     def apply_quadratic_ssm(self, q, k, v):
-        # Implement the quadratic SSM-specific operations using structured processing
-        # For example, block decomposition or structured attention-like operations
         ssm_q = self.structured_processing(q, self.SSM_A)
         ssm_k = self.structured_processing(k, self.SSM_B)
         ssm_v = self.structured_processing(v, self.SSM_C)
@@ -94,9 +90,6 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         return ssm_output
 
     def structured_processing(self, x, matrix):
-        # Implement the structured processing for quadratic SSM
-        # For demonstration, a block decomposition approach is applied
-        # You can customize this further based on the specific structured method
         block_size = self.block_size
         seq_len = x.size(1)
         structured_output = torch.zeros_like(x)
