@@ -4,13 +4,69 @@
 
 `"Why did it have to be snakes?"`
 
-"Why Snakes" 71 Million is an example LLM that leverages ideas from the Mamba 2 paper for its attention.
+## Why Snakes - 120 Million v0.1 Base Model
 
-This LLM is based on my understanding of Mamba 2 and works with CPU or GPU.
+The "Why Snakes" 120 Million v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism.
+
+## Current Development: v0.2 Base Model
+
+I am currently working towards a v0.2 base model, refining the design to better align with my specific goals and hardware constraints.
+
+### Design Philosophy and Goals:
+
+Mamba 2 integrates traditional transformer attention into SSM-based attention, but that approach does not align with my objectives. There are still valuable learnings from their paper and findings, though. 
+
+My goals for the v0.2 base model include:
+
+#### State Space Model Focused:
+
+Why: Prioritize the sequential processing strengths of SSMs, which are more efficient on limited hardware compared to transformers.
+
+Impact: This allows the model to efficiently handle sequences without the heavy computational load typically associated with transformer-based attention.
+
+#### State Space Duality:
+
+Why: Implement a flexible mechanism that balances linear and quadratic SSMs, enabling efficient attention for varying sequence lengths.
+
+Impact: This duality provides the model with the ability to switch between more efficient linear processing and higher-quality quadratic processing as needed.
+
+#### Structured Processing for Quadratic SSMs:
+
+Why: Apply structured methods, such as block decomposition, to efficiently manage the increased computational demands of quadratic SSMs.
+
+Impact: By structuring the quadratic operations, the model can maintain performance without requiring extensive hardware resources.
+
+#### Block Decomposition of Semiseparable Matrices:
+
+Why: Optimize memory usage by breaking down large matrices into smaller, more manageable blocks.
+
+Impact: This approach reduces memory overhead, allowing the model to scale effectively without sacrificing efficiency.
+
+#### Layer Normalization:
+
+Why: Stabilize outputs across the model’s layers, ensuring consistent performance during training and inference.
+
+Impact: Layer normalization is critical for preventing issues such as exploding or vanishing gradients, particularly in sequential models.
+
+#### Memory and Numerical Stability:
+
+Why: Utilize stable initialization techniques and ensure the model remains numerically stable, even during long training runs.
+
+Impact: This ensures that the model can train effectively without encountering instability issues, which is especially important when using SSMs.
+
+#### Dropout Regularization:
+
+Why: Prevent overfitting by applying dropout, particularly important in models with sequential dependencies.
+
+Impact: Regularization helps the model generalize better, leading to more robust performance across different datasets and tasks.
+
+### Looking Ahead
+
+The v0.2 base model aims to fully leverage the advantages of SSMs while avoiding the pitfalls of traditional transformer-based approaches. By focusing on structured processing and memory-efficient techniques, the model is designed to perform well on limited hardware without compromising on capability.
 
 ## Dependencies
 
-The model will train on cpu, but is a little slow.
+The all versions of the model will train on cpu, but is a little slow. My suggestion if you only have a CPU is to limit the vocabulary and sequence length.
 
 If you have cuda:
 
@@ -122,7 +178,7 @@ Example training:
 
 ![img_1.png](img_1.png)
 
-### Training Observations and Speculation
+### v0.1 Training Observations and Speculation
 
 * Memory Used: I looked at how much GPU was being used at during training and wrote it down.
     * When making changes to the model design, I knew it would impact the memory usage, so I put ? when I was no longer
