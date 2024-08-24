@@ -268,8 +268,8 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "small_training_data"
-    base_model_train(0.0005, 256, 16, 50, training_folder=TRAIN_FOLDER, use_validation_split=False)
-    base_model_train(0.0005, 512, 16, 50, training_folder=TRAIN_FOLDER, use_validation_split=False)
+    base_model_train(0.0005, 128, 64, 20, training_folder=TRAIN_FOLDER, use_validation_split=False)
+    base_model_train(0.0005, 512, 16, 20, training_folder=TRAIN_FOLDER, use_validation_split=False)
     # if base_model_train(0.0005, 32, 128, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
     #     if base_model_train(0.0005, 32, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
     #         if base_model_train(0.0005, 64, 64, 25, training_folder=TRAIN_FOLDER, use_validation_split=False):
