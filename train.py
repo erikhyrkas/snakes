@@ -227,7 +227,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
 
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     if os.path.exists(f"{base_path}model_checkpoint.bin"):
-        model.load_state_dict(torch.load(f"{base_path}model_checkpoint.bin"))
+        model.load_state_dict(torch.load(f"{base_path}model_checkpoint.bin", weights_only=False))
         print(f"Resumed training from {base_path}model_checkpoint.bin")
 
     total_training_steps = (number_of_samples // batch_size) * max_epochs
@@ -240,7 +240,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     criterion = nn.CrossEntropyLoss()
 
     if os.path.exists(f'{base_path}optimizer_checkpoint.bin'):
-        optimizer.load_state_dict(torch.load(f'{base_path}optimizer_checkpoint.bin'))
+        optimizer.load_state_dict(torch.load(f'{base_path}optimizer_checkpoint.bin', weights_only=False))
         device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         # Ensure all optimizer states are on the correct device
         for state in optimizer.state.values():
@@ -248,7 +248,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
                 if isinstance(v, torch.Tensor):
                     state[k] = v.to(device)
     if os.path.exists(f'{base_path}scheduler_checkpoint.bin'):
-        scheduler.load_state_dict(torch.load(f'{base_path}scheduler_checkpoint.bin'))
+        scheduler.load_state_dict(torch.load(f'{base_path}scheduler_checkpoint.bin', weights_only=False))
 
     model_trained = train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs,
                                 patience=patience)
