@@ -207,13 +207,15 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
         val_files = []
 
     # DataLoader for batching (shuffle is done within the TextDataset)
-    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length, batch_size)
+    train_dataset = TextDataset(train_files, tokenizer, training_sequence_length, batch_size,
+                                cache_dir='./training_data_cache')
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
 
     if use_validation_split:
         val_loader = None
     else:
-        val_dataset = TextDataset(val_files, tokenizer, training_sequence_length, batch_size)
+        val_dataset = TextDataset(val_files, tokenizer, training_sequence_length, batch_size,
+                                  cache_dir='./validation_data_cache')
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
     number_of_samples = len(train_dataset)

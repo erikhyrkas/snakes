@@ -5,30 +5,30 @@ import numpy as np
 from torch.utils.data import IterableDataset
 
 
-def preprocess_and_save_tokens(files, tokenizer, output_dir):
+def preprocess_and_save_tokens(files, tokenizer, cache_dir):
     total_tokens = 0
-    if os.path.exists(output_dir):
+    if os.path.exists(cache_dir):
         for file in files:
-            output_file = str(os.path.join(output_dir, os.path.basename(file) + ".npy"))
+            output_file = str(os.path.join(cache_dir, os.path.basename(file) + ".npy"))
             tokens = np.load(output_file, mmap_mode='r')
             total_tokens += len(tokens)
         return total_tokens
-    os.makedirs(output_dir)
+    os.makedirs(cache_dir)
 
     for file in files:
         tokens = tokenizer.tokenize(open(file, 'r', encoding='utf-8').read())
         tokens = np.array(tokens, dtype=np.int32)
         total_tokens += len(tokens)
-        output_file = str(os.path.join(output_dir, os.path.basename(file) + ".npy"))
+        output_file = str(os.path.join(cache_dir, os.path.basename(file) + ".npy"))
         np.save(output_file, tokens)
     return total_tokens
 
 
 class TextDataset(IterableDataset):
-    def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, output_dir="./cache_dir",
+    def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, cache_dir="./cache_dir",
                  shuffle_files=True):
-        self.files = [os.path.join(output_dir, os.path.basename(f) + ".npy") for f in original_files]
-        total_tokens = preprocess_and_save_tokens(original_files, tokenizer, output_dir)
+        self.files = [os.path.join(cache_dir, os.path.basename(f) + ".npy") for f in original_files]
+        total_tokens = preprocess_and_save_tokens(original_files, tokenizer, cache_dir)
         self.max_sequence_length = max_sequence_length
         self.batch_size = batch_size
         self._length = None
