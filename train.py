@@ -293,4 +293,5 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "small_training_data"
-    base_model_train(0.0005, 512, 64, 400, training_folder=TRAIN_FOLDER, use_validation_split=False)
+    base_model_train(0.0005, 512, 64, 400,
+                     patience=20, training_folder=TRAIN_FOLDER, use_validation_split=False)
