@@ -45,9 +45,6 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         self.SSM_B = nn.Parameter(torch.tril(torch.randn(state_dim, input_dim) * 0.001))
         self.SSM_C = nn.Parameter(torch.tril(torch.randn(output_dim, state_dim) * 0.001))
 
-        # Learnable dynamic weight
-        self.dynamic_weight = nn.Parameter(torch.tensor(0.5))  # Initialized at 0.5 (neutral)
-
         # Dropout layer for regularization
         self.dropout_layer = nn.Dropout(dropout)
 
@@ -59,7 +56,6 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
 
         # Move LayerNorm and dynamic weight to the same device as the input tensor
         self.layer_norm = self.layer_norm.to(device)
-        self.dynamic_weight = self.dynamic_weight.to(device)
 
         batch_size, seq_len, _ = x.size()
 
@@ -68,33 +64,39 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         k = torch.einsum('bsi,id->bsd', x, self.W_k)
         v = torch.einsum('bsi,id->bsd', x, self.W_v)
 
-        dynamic_weight_clamped = torch.sigmoid(self.dynamic_weight)  # Ensure the weight stays within [0, 1]
+        # Compute attention scores
+        attention_scores = torch.einsum('bsd,bsd->bs', q, k)
+        attention_mean = torch.mean(attention_scores, dim=1)
 
-        if seq_len <= self.sequence_length_threshold and dynamic_weight_clamped > 0.99:
+        # Compute sequence length-based scaling
+        length_scale = torch.log(torch.tensor(seq_len, dtype=torch.float32) + 1).to(device)
+
+        # Combine sequence length and attention score to determine dynamic weight
+        dynamic_weight_clamped = torch.sigmoid(10 * (attention_mean / length_scale))
+
+        if seq_len <= self.sequence_length_threshold and torch.all(dynamic_weight_clamped > 0.99):
             # Only perform quadratic calculation
             ssm_output = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
                                                                                             self.SSM_B) + self.quadratic_transform(
                 v, self.SSM_C)
-            ssm_output = self.layer_norm(ssm_output)
-        elif seq_len > self.sequence_length_threshold or dynamic_weight_clamped < 0.01:
+        elif seq_len > self.sequence_length_threshold or torch.all(dynamic_weight_clamped < 0.01):
             # Only perform linear calculation
             ssm_output = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
                                                                                       self.SSM_B) + self.linear_transform(
                 v, self.SSM_C)
-            ssm_output = self.layer_norm(ssm_output)
         else:
             # Weighted blend between linear and quadratic transforms
             ssm_linear = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
                                                                                       self.SSM_B) + self.linear_transform(
                 v, self.SSM_C)
-            ssm_linear = self.layer_norm(ssm_linear)
-
             ssm_quadratic = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
                                                                                                self.SSM_B) + self.quadratic_transform(
                 v, self.SSM_C)
-            ssm_quadratic = self.layer_norm(ssm_quadratic)
-
+            # Expand dynamic_weight_clamped to match the last dimension of ssm_linear and ssm_quadratic
+            dynamic_weight_clamped = dynamic_weight_clamped.unsqueeze(-1).unsqueeze(-1).expand_as(ssm_linear)
             ssm_output = dynamic_weight_clamped * ssm_quadratic + (1 - dynamic_weight_clamped) * ssm_linear
+
+        ssm_output = self.layer_norm(ssm_output)
 
         # Add residual connection to help with stability
         ssm_output += x

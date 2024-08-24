@@ -2,12 +2,14 @@ import torch
 import torch.nn as nn
 
 from attention.ssd_attention import StateSpaceModelAttentionWithSSD
+from rope import RoPE
 
 
 class LanguageModel(nn.Module):
     def __init__(self, vocab_size, embedding_dim=448, state_dim=448, output_dim=448, dropout=0.1):
         super(LanguageModel, self).__init__()
         self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
+        self.rope = RoPE(embedding_dim)
         self.dropout = nn.Dropout(dropout)
         self.attention = StateSpaceModelAttentionWithSSD(state_dim=state_dim, input_dim=embedding_dim,
                                                          output_dim=output_dim)
@@ -16,6 +18,7 @@ class LanguageModel(nn.Module):
 
     def forward(self, input_tokens):
         embedded = self.embedding(input_tokens)  # Shape: (batch_size, seq_len, embedding_dim)
+        embedded = self.rope(embedded)  # Apply RoPE
         embedded = self.dropout(embedded)
         context_representation = self.attention(embedded)  # Shape: (batch_size, seq_len, output_dim)
         context_representation = self.layer_norm(context_representation)

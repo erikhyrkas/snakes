@@ -10,7 +10,7 @@ class ModelInterface:
         self.tokenizer.load(tokenizer_save_path)
         self.end_token = self.tokenizer.get_end_token()
         self.model = LanguageModel(vocab_size=self.tokenizer.vocab_size())
-        self.model.load_state_dict(torch.load(model_save_path), strict=False)
+        self.model.load_state_dict(torch.load(model_save_path, weights_only=False), strict=False)
         self.model.eval()
         self.device_name = "cuda" if torch.cuda.is_available() else "cpu"
         print(f"Using {self.device_name}")
