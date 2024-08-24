@@ -25,8 +25,9 @@ def preprocess_and_save_tokens(files, tokenizer, cache_dir):
 
 
 class TextDataset(IterableDataset):
-    def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, cache_dir="./cache_dir",
+    def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, block_size=32, cache_dir="./cache_dir",
                  shuffle_files=True):
+        self.block_size = block_size
         self.files = [os.path.join(cache_dir, os.path.basename(f) + ".npy") for f in original_files]
         total_tokens = preprocess_and_save_tokens(original_files, tokenizer, cache_dir)
         self.max_sequence_length = max_sequence_length
@@ -40,11 +41,12 @@ class TextDataset(IterableDataset):
         # Pre-generate random sequence lengths for all batches
         remaining_tokens = total_tokens
         while remaining_tokens > 0:
-            sequence_length = random.randint(32, self.max_sequence_length)
+            sequence_length = random.randint(self.block_size, self.max_sequence_length)
+            sequence_length = sequence_length - (sequence_length % self.block_size)
             total_tokens_used = sequence_length * self.batch_size
             if total_tokens_used > remaining_tokens:
                 # we still might be able to squeak in a batch or two
-                sequence_length = 32
+                sequence_length = self.block_size
                 total_tokens_used = sequence_length * self.batch_size
                 if total_tokens_used > remaining_tokens:
                     break

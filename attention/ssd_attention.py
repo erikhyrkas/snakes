@@ -31,7 +31,7 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
     reduced computational overhead.
     """
 
-    def __init__(self, state_dim=448, input_dim=448, output_dim=448, sequence_length_threshold=256,
+    def __init__(self, state_dim=448, input_dim=448, output_dim=448, sequence_length_threshold=512,
                  dropout=0.1, block_size=32):
         super(StateSpaceModelAttentionWithSSD, self).__init__()
 
