@@ -70,13 +70,13 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
 
         dynamic_weight_clamped = torch.sigmoid(self.dynamic_weight)  # Ensure the weight stays within [0, 1]
 
-        if seq_len <= self.sequence_length_threshold and dynamic_weight_clamped > 0.75:
+        if seq_len <= self.sequence_length_threshold and dynamic_weight_clamped > 0.99:
             # Only perform quadratic calculation
             ssm_output = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
                                                                                             self.SSM_B) + self.quadratic_transform(
                 v, self.SSM_C)
             ssm_output = self.layer_norm(ssm_output)
-        elif seq_len > self.sequence_length_threshold or dynamic_weight_clamped < 0.25:
+        elif seq_len > self.sequence_length_threshold or dynamic_weight_clamped < 0.01:
             # Only perform linear calculation
             ssm_output = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
                                                                                       self.SSM_B) + self.linear_transform(
