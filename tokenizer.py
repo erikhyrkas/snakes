@@ -11,14 +11,10 @@ class Tokenizer:
         self.word_to_index = {}
         self.current_index = 0
         self.initialized = False
-        self.special_tokens = ["<upper>", "<shout>", "<start>", "<end>", "<space>", "<newline>"]
+        self.special_tokens = ["<upper>", "<shout>", "<start>", "<end>", "<space>", "<newline>", "<pad>"]
 
     def _add_to_vocab(self, word):
         if word not in self.word_to_index:
-            # if self.current_index > 2147483647:
-            #     # skip the word because we use an int to hold tokens. This word will need to be individual characters.
-            #     # i tried to use a uint16 with a max value of 65535, but cuda was upset
-            #     return
             self.index_to_word[self.current_index] = word
             self.word_to_index[word] = self.current_index
             self.current_index += 1
@@ -97,7 +93,7 @@ class Tokenizer:
                 continue
             if DEBUG_TOKENIZER:
                 print(f"Processing token: {token}")
-            # sleep(0)
+            sleep(0)
             if '\n' in token:
                 result.append('<newline>')
             elif token.isspace():
@@ -128,7 +124,7 @@ class Tokenizer:
         tokens = []
         words = self.to_words(text)
         for word in words:
-            # sleep(0)
+            sleep(0)
             if word in self.word_to_index:
                 tokens.append(self.word_to_index[word])
             else:
@@ -197,6 +193,11 @@ class Tokenizer:
             self._initialize_vocabulary()
         return self.word_to_index['<start>']
 
+    def get_pad_token(self):
+        if not self.initialized:
+            self._initialize_vocabulary()
+        return self.word_to_index['<pad>']
+
 
 def example_tokenize():
     tokenizer = Tokenizer()
@@ -227,8 +228,16 @@ def run_tokenizer_tests():
         "Math symbols: 2 * 3 = 6 and a^2 + b^2 = c^2.",
         "The 1980s were fun but I came in 43th place in my race.",
         "Can you write a blog post for me?<start>Here's a post for you.<end>",
-        "  Python  needs  spaces.   So, let's give it   spaces    ."
+        "  Python  needs  spaces.   So, let's give it   spaces    .",
+        "<pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad>",
+        "Erik is testing padding.<pad><pad><pad><pad>",
+        "<start><start><start><start><start>",
+        "<end><end><end><end><end><end>",
     ]
+
+    tokenizer.get_pad_token()
+    for test in test_cases:
+        tokenizer.learn_new_vocab(test)
 
     for idx, test in enumerate(test_cases):
         print(f"Test Case {idx + 1}:")
