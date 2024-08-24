@@ -6,7 +6,7 @@ from rope import RoPE
 
 
 class LanguageModel(nn.Module):
-    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, output_dim=768, dropout=0.1):
+    def __init__(self, vocab_size, embedding_dim=768, state_dim=8192, output_dim=768, dropout=0.1):
         super(LanguageModel, self).__init__()
         self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
         self.rope = RoPE(embedding_dim)

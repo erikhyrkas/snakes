@@ -4,7 +4,9 @@ import torch.nn as nn
 
 class StateSpaceModelAttentionWithSSD(nn.Module):
     """
-    This is the in-progress attention for the YS v0.2 base model.
+    This is the in-progress attention for the YS v0.2 base model. One of the big changes to the overall LLM
+    architecture that this introduces is the need for RoPE. I was pretty excited about not having positional
+    embedding with v0.1, but for multi-head attention to work well, it seems like positional encoding is the way to go.
 
     Implementation Summary:
     -----------------------
@@ -22,15 +24,15 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
 
     Techniques Utilized and Their Benefits:
     ---------------------------------------
-    This implementation leverages advanced techniques from state space models (SSMs) to optimize both performance
-    and efficiency. By employing the State Space Duality (SSD) framework, the model seamlessly balances linear and
+    This implementation leverages advanced techniques from state space models (SSMs) to optimize both performance and
+    efficiency. By employing the State Space Duality (SSD) framework, the model seamlessly balances linear and
     quadratic processing, ensuring that it can adapt to varying sequence lengths and computational demands. The use
     of structured semiseparable matrices allows for efficient memory usage, enabling the model to handle larger state
-    sizes without compromising speed. The multi-head SSM design, combined with Grouped-Value Attention (GVA), enhances
-    parallelism and performance, especially in large-scale models. Layer normalization and dropout are critical for maintaining
-    numerical stability and preventing overfitting, especially in deep learning environments with long sequences.
-    These techniques, inspired by recent advancements in SSMs, enable the model to achieve high performance on language
-    modeling tasks with reduced computational overhead.
+    sizes without compromising speed. The multi-head SSM design, combined with Grouped-Value Attention (GVA),
+    enhances parallelism and performance, especially in large-scale models. Layer normalization and dropout are
+    critical for maintaining numerical stability and preventing overfitting, especially in deep learning environments
+    with long sequences. These techniques, inspired by recent advancements in SSMs, enable the model to achieve high
+    performance on language modeling tasks with reduced computational overhead.
 
     Note on Grouped-Value Attention:
     --------------------------------
