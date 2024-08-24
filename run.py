@@ -7,16 +7,27 @@ def interactive_interface():
     print("This is a usage example. This LLM will completely make up things and be wrong. Don't follow its advice and "
           "don't expect good results. There is no warranty. Use at your own risk.")
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+
     model_path = f"{base_path}model.bin"
     if not os.path.isfile(model_path):
         model_path = f"{base_path}model_checkpoint.bin"
 
     tokenizer_path = f"{base_path}tokenizer.pkl"
+
+    if not os.path.exists(model_path):
+        print("Did you forget to train the model?")
+        return
+    if not os.path.exists(tokenizer_path):
+        print("Did you forget to train the tokenizer?")
+        return
+
     print("Loading...")
     interface = ModelInterface(model_save_path=model_path, tokenizer_save_path=tokenizer_path)
     params = interface.count_parameters()
+
     print(f"Number of parameters: {params}")
     print(f"Vocabulary size: {interface.vocab_size()}")
+    print()
     print("Type text that the model will complete. Type 'exit' to exit.")
     while True:
         next_input = input("> ")

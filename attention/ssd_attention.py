@@ -4,6 +4,8 @@ import torch.nn as nn
 
 class StateSpaceModelAttentionWithSSD(nn.Module):
     """
+    This is the in-progress attention for the YS v0.2 base model.
+
     Implementation Summary:
     -----------------------
     * State Space Model Focused -- Prioritizes sequential processing for hardware efficiency.
@@ -16,6 +18,17 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
 
     This class is optimized for efficient, sequential attention processing using structured state space models (SSMs),
     tailored for environments with limited hardware resources.
+
+    Techniques Utilized and Their Benefits:
+    ---------------------------------------
+    This implementation leverages advanced techniques from state space models (SSMs) to optimize both performance
+    and efficiency. By employing the State Space Duality (SSD) framework, the model seamlessly balances linear and
+    quadratic processing, ensuring that it can adapt to varying sequence lengths and computational demands. The use
+    of structured semiseparable matrices allows for efficient memory usage, enabling the model to handle larger state
+    sizes without compromising speed. Layer normalization and dropout are critical for maintaining numerical stability
+    and preventing overfitting, especially in deep learning environments with long sequences. These techniques, inspired
+    by recent advancements in SSMs, enable the model to achieve high performance on language modeling tasks with
+    reduced computational overhead.
     """
 
     def __init__(self, state_dim=448, input_dim=448, output_dim=448, sequence_length_threshold=256,
@@ -31,6 +44,7 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         self.block_size = block_size
 
         # Initialize attention matrices with Xavier uniform
+        # This ensures balanced initialization, critical for training deep networks.
         self.W_q = nn.Parameter(torch.empty(input_dim, state_dim))
         nn.init.xavier_uniform_(self.W_q)
         self.W_k = nn.Parameter(torch.empty(input_dim, state_dim))
@@ -41,6 +55,8 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         nn.init.xavier_uniform_(self.W_o)
 
         # Initialize semiseparable matrices directly in this class
+        # Using structured matrices like semiseparable matrices helps optimize memory usage
+        # and efficiently handle large matrices, a key principle from the SSD framework.
         self.SSM_A = nn.Parameter(torch.tril(torch.randn(state_dim, state_dim) * 0.001))  # Increased scale slightly
         self.SSM_B = nn.Parameter(torch.tril(torch.randn(state_dim, input_dim) * 0.001))
         self.SSM_C = nn.Parameter(torch.tril(torch.randn(output_dim, state_dim) * 0.001))
@@ -49,6 +65,9 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         self.dropout_layer = nn.Dropout(dropout)
 
         # Layer normalization layers with increased epsilon
+        # Layer normalization is used here to stabilize the output
+        # across sequential layers, which is crucial for models with deep or complex architectures, as it mitigates
+        # the risk of vanishing/exploding gradients.
         self.layer_norm = nn.LayerNorm(self.state_dim, eps=1e-5)
 
     def forward(self, x):
@@ -64,28 +83,38 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         k = torch.einsum('bsi,id->bsd', x, self.W_k)
         v = torch.einsum('bsi,id->bsd', x, self.W_v)
 
-        # Compute attention scores
-        attention_scores = torch.einsum('bsd,bsd->bs', q, k)
-        attention_mean = torch.mean(attention_scores, dim=1)
+        if seq_len > self.sequence_length_threshold:
+            # Compute attention scores
+            attention_scores = torch.einsum('bsd,bsd->bs', q, k)
+            attention_mean = torch.mean(attention_scores, dim=1)
 
-        # Compute sequence length-based scaling
-        length_scale = torch.log(torch.tensor(seq_len, dtype=torch.float32) + 1).to(device)
+            # Compute sequence length-based scaling
+            # This dynamic adjustment is part of the State Space Duality technique, where the model adapts between
+            # linear and quadratic operations based on the sequence length, ensuring efficient processing regardless
+            # of input size.
+            length_scale = torch.log(torch.tensor(seq_len, dtype=torch.float32) + 1).to(device)
 
-        # Combine sequence length and attention score to determine dynamic weight
-        dynamic_weight_clamped = torch.sigmoid(10 * (attention_mean / length_scale))
+            # Combine sequence length and attention score to determine dynamic weight
+            dynamic_weight_clamped = torch.sigmoid(10 * (attention_mean / length_scale))
+            dynamic_weight_clamped_mean = dynamic_weight_clamped.mean()
+        else:
+            dynamic_weight_clamped = None
+            dynamic_weight_clamped_mean = 0
 
-        if seq_len <= self.sequence_length_threshold and torch.all(dynamic_weight_clamped > 0.99):
+        if dynamic_weight_clamped_mean > 0.99:
             # Only perform quadratic calculation
             ssm_output = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
                                                                                             self.SSM_B) + self.quadratic_transform(
                 v, self.SSM_C)
-        elif seq_len > self.sequence_length_threshold or torch.all(dynamic_weight_clamped < 0.01):
+        elif dynamic_weight_clamped_mean < 0.01:
             # Only perform linear calculation
             ssm_output = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
                                                                                       self.SSM_B) + self.linear_transform(
                 v, self.SSM_C)
         else:
             # Weighted blend between linear and quadratic transforms
+            # By combining linear and quadratic transformations dynamically, the model leverages the strengths of both
+            # forms of processing, which is a core advantage of using the SSD framework.
             ssm_linear = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
                                                                                       self.SSM_B) + self.linear_transform(
                 v, self.SSM_C)
@@ -96,10 +125,12 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
             dynamic_weight_clamped = dynamic_weight_clamped.unsqueeze(-1).unsqueeze(-1).expand_as(ssm_linear)
             ssm_output = dynamic_weight_clamped * ssm_quadratic + (1 - dynamic_weight_clamped) * ssm_linear
 
-        ssm_output = self.layer_norm(ssm_output)
-
         # Add residual connection to help with stability
+        # Residual connections are essential for maintaining numerical stability, especially in deep models,
+        # and help prevent the degradation of gradients during backpropagation.
         ssm_output += x
+
+        ssm_output = self.layer_norm(ssm_output)
 
         # Apply dropout and final transformation
         ssm_output = self.dropout_layer(ssm_output)
@@ -114,6 +145,8 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
     def block_decomposition(self, x, matrix):
         """
         Apply block decomposition to matrix operations for better memory efficiency.
+        This technique, derived from the SSD framework, is critical for managing memory usage efficiently,
+        allowing the model to scale without a linear increase in memory consumption.
         """
         output = torch.zeros_like(x)
         num_blocks = x.size(-1) // self.block_size
