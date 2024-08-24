@@ -101,7 +101,8 @@ class Tokenizer:
             if '\n' in token:
                 result.append('<newline>')
             elif token.isspace():
-                result.append('<space>')
+                for _ in token:
+                    result.append('<space>')
             elif re.match(r'<[a-z]+>', token):
                 result.append(token)  # tag
             elif re.match(r'[A-Z][a-zà-ÿ]*', token):
@@ -226,6 +227,7 @@ def run_tokenizer_tests():
         "Math symbols: 2 * 3 = 6 and a^2 + b^2 = c^2.",
         "The 1980s were fun but I came in 43th place in my race.",
         "Can you write a blog post for me?<start>Here's a post for you.<end>",
+        "  Python  needs  spaces.   So, let's give it   spaces    ."
     ]
 
     for idx, test in enumerate(test_cases):
