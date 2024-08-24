@@ -35,7 +35,6 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
                  dropout=0.1, block_size=32):
         super(StateSpaceModelAttentionWithSSD, self).__init__()
 
-        # Store parameters
         self.state_dim = state_dim
         self.input_dim = input_dim
         self.output_dim = output_dim
@@ -43,58 +42,56 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
         self.dropout = dropout
         self.block_size = block_size
 
+        # Input transformation
+        if input_dim != state_dim:
+            self.input_transform = nn.Linear(input_dim, state_dim)
+        else:
+            self.input_transform = None
+
+        # Output transformation
+        if state_dim != output_dim:
+            self.output_transform = nn.Linear(state_dim, output_dim)
+        else:
+            self.output_transform = None
+
         # Initialize attention matrices with Xavier uniform
-        # This ensures balanced initialization, critical for training deep networks.
-        self.W_q = nn.Parameter(torch.empty(input_dim, state_dim))
+        self.W_q = nn.Parameter(torch.empty(state_dim, state_dim))
         nn.init.xavier_uniform_(self.W_q)
-        self.W_k = nn.Parameter(torch.empty(input_dim, state_dim))
+        self.W_k = nn.Parameter(torch.empty(state_dim, state_dim))
         nn.init.xavier_uniform_(self.W_k)
-        self.W_v = nn.Parameter(torch.empty(input_dim, state_dim))
+        self.W_v = nn.Parameter(torch.empty(state_dim, state_dim))
         nn.init.xavier_uniform_(self.W_v)
-        self.W_o = nn.Parameter(torch.empty(state_dim, output_dim))
+        self.W_o = nn.Parameter(torch.empty(output_dim, output_dim))
         nn.init.xavier_uniform_(self.W_o)
 
-        # Initialize semiseparable matrices directly in this class
-        # Using structured matrices like semiseparable matrices helps optimize memory usage
-        # and efficiently handle large matrices, a key principle from the SSD framework.
-        self.SSM_A = nn.Parameter(torch.tril(torch.randn(state_dim, state_dim) * 0.001))  # Increased scale slightly
-        self.SSM_B = nn.Parameter(torch.tril(torch.randn(state_dim, input_dim) * 0.001))
-        self.SSM_C = nn.Parameter(torch.tril(torch.randn(output_dim, state_dim) * 0.001))
+        # Initialize semiseparable matrices
+        self.SSM_A = nn.Parameter(torch.tril(torch.randn(state_dim, state_dim) * 0.001))
+        self.SSM_B = nn.Parameter(torch.tril(torch.randn(state_dim, state_dim) * 0.001))
+        self.SSM_C = nn.Parameter(torch.tril(torch.randn(state_dim, state_dim) * 0.001))
 
-        # Dropout layer for regularization
+        # Dropout layer
         self.dropout_layer = nn.Dropout(dropout)
 
-        # Layer normalization layers with increased epsilon
-        # Layer normalization is used here to stabilize the output
-        # across sequential layers, which is crucial for models with deep or complex architectures, as it mitigates
-        # the risk of vanishing/exploding gradients.
-        self.layer_norm = nn.LayerNorm(self.state_dim, eps=1e-5)
+        # Layer normalization
+        self.layer_norm = nn.LayerNorm(state_dim, eps=1e-5)
 
     def forward(self, x):
-        device = x.device  # Get the device of the input tensor
+        device = x.device
 
-        # Move LayerNorm and dynamic weight to the same device as the input tensor
-        self.layer_norm = self.layer_norm.to(device)
+        if self.input_transform:
+            x = self.input_transform(x)
 
         batch_size, seq_len, _ = x.size()
 
-        # Compute queries, keys, and values using einsum notation
         q = torch.einsum('bsi,id->bsd', x, self.W_q)
         k = torch.einsum('bsi,id->bsd', x, self.W_k)
         v = torch.einsum('bsi,id->bsd', x, self.W_v)
 
+        # Processing with SSM
         if seq_len > self.sequence_length_threshold:
-            # Compute attention scores
             attention_scores = torch.einsum('bsd,bsd->bs', q, k)
             attention_mean = torch.mean(attention_scores, dim=1)
-
-            # Compute sequence length-based scaling
-            # This dynamic adjustment is part of the State Space Duality technique, where the model adapts between
-            # linear and quadratic operations based on the sequence length, ensuring efficient processing regardless
-            # of input size.
             length_scale = torch.log(torch.tensor(seq_len, dtype=torch.float32) + 1).to(device)
-
-            # Combine sequence length and attention score to determine dynamic weight
             dynamic_weight_clamped = torch.sigmoid(10 * (attention_mean / length_scale))
             dynamic_weight_clamped_mean = dynamic_weight_clamped.mean()
         else:
@@ -102,43 +99,38 @@ class StateSpaceModelAttentionWithSSD(nn.Module):
             dynamic_weight_clamped_mean = 0
 
         if dynamic_weight_clamped_mean > 0.99:
-            # Only perform quadratic calculation
-            ssm_output = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
-                                                                                            self.SSM_B) + self.quadratic_transform(
-                v, self.SSM_C)
+            ssm_output = self.quadratic_transform(q, self.SSM_A) + \
+                         self.quadratic_transform(k, self.SSM_B) + \
+                         self.quadratic_transform(v, self.SSM_C)
         elif dynamic_weight_clamped_mean < 0.01:
-            # Only perform linear calculation
-            ssm_output = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
-                                                                                      self.SSM_B) + self.linear_transform(
-                v, self.SSM_C)
+            ssm_output = self.linear_transform(q, self.SSM_A) + \
+                         self.linear_transform(k, self.SSM_B) + \
+                         self.linear_transform(v, self.SSM_C)
         else:
-            # Weighted blend between linear and quadratic transforms
-            # By combining linear and quadratic transformations dynamically, the model leverages the strengths of both
-            # forms of processing, which is a core advantage of using the SSD framework.
-            ssm_linear = self.linear_transform(q, self.SSM_A) + self.linear_transform(k,
-                                                                                      self.SSM_B) + self.linear_transform(
-                v, self.SSM_C)
-            ssm_quadratic = self.quadratic_transform(q, self.SSM_A) + self.quadratic_transform(k,
-                                                                                               self.SSM_B) + self.quadratic_transform(
-                v, self.SSM_C)
-            # Expand dynamic_weight_clamped to match the last dimension of ssm_linear and ssm_quadratic
+            ssm_linear = self.linear_transform(q, self.SSM_A) + \
+                         self.linear_transform(k, self.SSM_B) + \
+                         self.linear_transform(v, self.SSM_C)
+            ssm_quadratic = self.quadratic_transform(q, self.SSM_A) + \
+                            self.quadratic_transform(k, self.SSM_B) + \
+                            self.quadratic_transform(v, self.SSM_C)
             dynamic_weight_clamped = dynamic_weight_clamped.unsqueeze(-1).unsqueeze(-1).expand_as(ssm_linear)
             ssm_output = dynamic_weight_clamped * ssm_quadratic + (1 - dynamic_weight_clamped) * ssm_linear
 
-        # Add residual connection to help with stability
-        # Residual connections are essential for maintaining numerical stability, especially in deep models,
-        # and help prevent the degradation of gradients during backpropagation.
+        # Add residual connection
         ssm_output += x
 
+        # Apply dropout
+        ssm_output = self.dropout_layer(ssm_output)
+
+        # Apply LayerNorm
         ssm_output = self.layer_norm(ssm_output)
 
-        # Apply dropout and final transformation
-        ssm_output = self.dropout_layer(ssm_output)
-        output = torch.einsum('bsd,do->bso', ssm_output, self.W_o)
+        # # Align output dimensions if necessary
+        if self.output_transform:
+            ssm_output = self.output_transform(ssm_output)
 
-        # Check for numerical stability
-        # if torch.any(torch.isnan(ssm_output)) or torch.any(torch.isinf(ssm_output)):
-        #     print("Numerical instability detected.")
+        # Final output, matching dimensions of W_o
+        output = torch.einsum('bsd,do->bso', ssm_output, self.W_o)
 
         return output
 
