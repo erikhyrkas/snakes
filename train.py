@@ -128,6 +128,7 @@ def calc_val_loss(criterion, inputs, model, targets):
 def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
                scaler: torch.amp.GradScaler, train_loader, total_steps):
     epoch_loss = 0.0
+    start_time = time.time()
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
 
@@ -148,12 +149,16 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss/step}', end='\r', flush=True)
+        elapsed_time = (time.time() - start_time) / 60
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step} - Elapsed time: {elapsed_time:.2f} minutes',
+              end='\r', flush=True)
+    print()
     return epoch_loss
 
 
 def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer, train_loader, total_steps):
     epoch_loss = 0.0
+    start_time = time.time()
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
 
@@ -170,7 +175,10 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss/step}', end='\r', flush=True)
+        elapsed_time = (time.time() - start_time) / 60
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step} - Elapsed time: {elapsed_time:.2f} minutes',
+              end='\r', flush=True)
+    print()
     return epoch_loss
 
 
