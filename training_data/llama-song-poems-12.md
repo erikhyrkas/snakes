@@ -900,3 +900,1062 @@ Green shoots pierce through winter's gray,
 And petals bloom in vibrant array.
 The air is filled with scents so sweet,
 Spring's renewal lifts our hearts to greet.<end>
+Compose a song about celestial bodies (stars, moon, sun).<start>(Verse 1)
+In the dark of night, I see your face
+A glowing orb, a gentle pace
+The stars up high, they twinkle bright
+A celestial show, that's my delight
+I feel small yet connected too
+To the universe, and all it holds true
+
+(Chorus)
+Oh, the stars up high, they shine so free
+A symphony of light, for you and me
+In the darkness, we find our way
+Through the sun, moon, and stars, a brighter day
+We're not alone, in this endless space
+With celestial love, we find our place
+
+(Verse 2)
+The sun rises high, it lights my day
+A burning fire, that chases all the grey
+It brings me life, with its warm embrace
+And fills my heart, with a sense of pace
+I feel alive, in this radiant glow
+With every step, I take, I grow
+
+(Chorus)
+Oh, the stars up high, they shine so free
+A symphony of light, for you and me
+In the darkness, we find our way
+Through the sun, moon, and stars, a brighter day
+We're not alone, in this endless space
+With celestial love, we find our place
+
+(Bridge)
+The moon's soft whisper, it guides my soul
+A gentle reminder, of what makes me whole
+In its quiet beauty, I find my peace
+And let the world, with all its noise, release<end>
+Draft a song about ocean depths.<start>**Verse 1**
+In the dark of the ocean, where the light can't reach
+There's a world that's mysterious, yet so serene and sleek
+The pressure's high, the cold is low
+But in this depth, I feel my spirit grow
+I'm drawn to the darkness, like a moth to the night
+I'm searching for secrets, hidden from the light
+
+**Chorus**
+Oh, the ocean depths, they call to me
+A place of wonder, where I'm free to be
+In the dark blue silence, I find my home
+Where the weight of the world is left alone
+
+**Verse 2**
+The silence is loud, the stillness a roar
+I feel the heartbeat of the sea floor
+The creatures of the night, they swim and they play
+In this alien world, where I'm welcome to stay
+I've found my peaceful place, where I can be me
+Where the ocean's secrets, are waiting for me
+
+**Chorus**
+Oh, the ocean depths, they call to me
+A place of wonder, where I'm free to be
+In the dark blue silence, I find my home
+Where the weight of the world is left alone
+
+**Bridge**
+And when I surface, and the light hits my eyes
+I'll take with me, the memories that I've found in the night's surprise
+I'll keep them close, like a treasure rare
+A reminder of the beauty, that's hidden there
+
+**Chorus**
+Oh, the ocean depths, they call to me
+A place of wonder, where I'm free to be
+In the dark blue silence, I find my home
+Where the weight of the world is left alone<end>
+Write a song about mountain heights.<start>**Mountain Heights**
+
+Verse 1:
+I've been searching for a place to call home
+Where the air is thin and my spirit can roam
+I climb the mountain, feel the wind in my hair
+And I know that I'm somewhere, beyond compare
+
+Chorus:
+Oh, at the mountain heights, I find my peace of mind
+A world above the noise, where love and freedom shine
+I'll stand on these peaks, with my heart full of cheer
+At the mountain heights, I am finally clear
+
+Verse 2:
+The world below is far away, it fades from view
+As I breathe in the silence, and let my soul renew
+I've been walking these trails, for days and nights so long
+But the journey's almost over, and a new path is strong
+
+Chorus:
+Oh, at the mountain heights, I find my peace of mind
+A world above the noise, where love and freedom shine
+I'll stand on these peaks, with my heart full of cheer
+At the mountain heights, I am finally clear
+
+Verse 3:
+The sun sets behind me, painting the sky with gold
+As I look out at the world, from this place so bold
+I feel connected to all that lies within and beyond
+A sense of unity that transcends every border we've known
+
+Chorus:
+Oh, at the mountain heights, I find my peace of mind
+A world above the noise, where love and freedom shine
+I'll stand on these peaks, with my heart full of cheer
+At the mountain heights, I am finally clear<end>
+Write a song about desert mystery.<start>**Desert Mystery**
+
+Verse 1:
+I wandered out into the sand so bright
+Chasing sunsets, without a care in sight
+The dunes whispered secrets to my troubled mind
+A mystery unfolding, like the desert's twisted vine
+I searched for answers, but they slipped away
+Leaving me with only questions at the end of each day
+
+Verse 2:
+The stars appeared above, a twinkling show
+As I trudged through the night, the wind began to blow
+It whispered tales of ancient lands and long-lost pasts
+But every truth seemed shrouded in an endless haze that lasts
+I followed shadows to hidden oases deep
+Where mirages danced, and my heart began to creep
+
+Chorus:
+Oh, desert mystery, you call me to your door
+A land of secrets waiting, where I'll search forever more
+In the silence, I find my heart beats like the sand
+Desert mystery, it's where I belong, hand in hand
+
+Verse 3:
+I stumbled upon a ghost town, where dreams were left behind
+Forgotten buildings stood, with stories left untold and unaligned
+The walls whispered tales of love, of hope and heartache too
+But every truth was shrouded, like the desert's endless hue
+I wandered through these empty streets, searching for a clue
+A mystery that unraveled slowly, in all I'd been through<end>
+Draft a song about rainy days.<start>(Verse 1)
+Walking down the street, umbrella in hand
+Raindrops falling all around me, like tears from the sky so grand
+I see a smile on every face, as the rain comes pouring down
+It's days like these that I love, without a single frown
+
+(Chorus)
+Oh, rainy days, you bring me peace of mind
+A chance to slow down and let my worries unwind
+You wash away my troubles, with your rhythmic beat
+Making every day feel new, and fresh from the street
+
+(Verse 2)
+I sit by the window, watching raindrops slide
+Remembering memories made on days just like these inside
+Laughter and tears, they all blend together in time
+As I let go of my fears, with each droplet that climbs
+
+(Chorus)
+Oh, rainy days, you bring me peace of mind
+A chance to slow down and let my worries unwind
+You wash away my troubles, with your rhythmic beat
+Making every day feel new, and fresh from the street<end>
+Draft a poem about sunshine and happiness.<start>Warmth on skin so bright,
+Sunshine spreads its radiant light.
+Laughter echoes, hearts aglow,
+Smiles abound, love starts to grow.
+In sunshine's gentle, golden glow,
+Joy is found and never lets go.<end>
+Write a poem about animal companions.<start>With fur so soft and eyes so bright,
+My loyal friend shines through day and night.
+Together we walk, our paces slow,
+A bond of love that will forever grow.
+Their little heart beats for me alone,
+And in their love, my heart finds its home.<end>
+Compose a song about life’s simple pleasures.<start>(Verse 1)
+Sunday mornings, coffee in my hand
+Watching kids play outside, on a sunny land
+No alarm clocks ringing, no deadlines to meet
+Just the sound of laughter, can't be beat
+The world slows down for me, it's a beautiful sight
+Everything feels alright
+
+(Chorus)
+Life is simple, when you let go
+Find your peace in the things that glow
+Don't need much, just love and time
+You'll find happiness, in life's simple rhyme
+
+(Verse 2)
+A walk along the beach, on a summer day
+Feeling the breeze, as the waves come to play
+No worries, no stress, just me and my soul
+I'm free to be myself, I'm in control
+The world may be crazy, but here I am serene
+Just living for today
+
+(Chorus)
+Life is simple, when you let go
+Find your peace in the things that glow
+Don't need much, just love and time
+You'll find happiness, in life's simple rhyme
+
+(Bridge)
+We get so caught up, in what we can't see
+But sometimes it's in the moments, that are plain to me
+A warm hug from a friend, or a goodnight kiss
+These are the things, that make my heart miss
+
+(Chorus)
+Life is simple, when you let go
+Find your peace in the things that glow
+Don't need much, just love and time
+You'll find happiness, in life's simple rhyme<end>
+Compose a poem about technological dependence.<start>We swipe, we tap, we stare at screens,
+Our lives on hold, in digital dreams.
+The world outside recedes from view,
+As algorithms guide all we do.
+In this virtual haze, we lose our way,
+And forget to live for a brand new day.<end>
+Compose a poem about traditional vs. modern.<start>In ancient streets, where lanterns glow
+A traditional dance, in steps of old does flow
+While city lights, in digital haze
+A modern heartbeat, in frantic daze
+Two worlds apart, yet intertwined
+In harmony's rhythm, we're forever aligned.<end>
+Draft a song about learning from mistakes.<start>**Verse 1**
+I fell from my bike, a scraped-up face
+A lesson learned in a single place
+I got back up, dusted off my pride
+And started again, side by side
+With every step, I gained some ground
+But the fall was what taught me how to stand around
+
+**Chorus**
+Mistakes are teachers, they show us the way
+To rise above, come what may
+We stumble, we fall, but we get back up strong
+And find our feet where mistakes once went wrong
+
+**Verse 2**
+I made a mistake in love, it didn't work out
+But from that heartbreak, I found my doubt
+Was turned to strength, and now I know
+To let go when the time is low
+I learned to heal, to mend my heart
+And find a brand new start
+
+**Chorus**
+Mistakes are teachers, they show us the way
+To rise above, come what may
+We stumble, we fall, but we get back up strong
+And find our feet where mistakes once went wrong
+
+**Bridge**
+We're not defined by our failures and fears
+But by how we learn from all our tears
+So let's not be afraid to make a mistake
+'Cause that's where the growth will take
+
+**Chorus**
+Mistakes are teachers, they show us the way
+To rise above, come what may
+We stumble, we fall, but we get back up strong
+And find our feet where mistakes once went wrong<end>
+Write a poem about unfulfilled desires.<start>Longing eyes gaze out to sea,
+A distant shore where dreams are free.
+The tide of time pulls us away,
+From treasures that slip into gray.
+In whispers, our hearts confess,
+We've never sailed where we wished to be.<end>
+Draft a poem about cross-cultural experiences.<start>Vibrant streets where spices fill the air,
+A melodic language, beyond compare.
+Laughter echoes, from hands that meet,
+Cultures blend, in a warm treat.
+In this tapestry of hearts and minds,
+ Unity is woven, one love at a time.<end>
+Draft a poem about escaping reality.<start>In twilight's hush, where shadows play,
+A world within whispers "come away".
+A canvas of dreams, soft and serene,
+ Beckons me to flee the mundane scene.
+With every step, reality fades,
+Leaving only moonlight in my shades.<end>
+Compose a song about time travel.<start>**Verse 1**
+I found an old watch in my grandfather's attic high
+A mysterious timepiece that caught my eye
+It had a strange glow, like a moonlit night
+And I felt a sudden urge to set it right
+To travel through time, to see and to know
+The secrets of the past, as they unfold below
+
+**Chorus**
+Time is a river, that's flowing fast
+I'm swimming upstream, but I won't look back at last
+I'll ride the currents, to places unknown
+Where memories await, and stories are shown
+Through time travel, I'll find my way
+To a brighter tomorrow, starting today
+
+**Verse 2**
+I stepped into the past, where love once did shine
+And saw my parents young, with hearts so divine
+Their laughter echoed, in the streets of old
+As they chased their dreams, with a love that never grew cold
+In that moment, I felt a warmth inside
+A connection to them, that would not subside
+
+**Chorus**
+Time is a river, that's flowing fast
+I'm swimming upstream, but I won't look back at last
+I'll ride the currents, to places unknown
+Where memories await, and stories are shown
+Through time travel, I'll find my way
+To a brighter tomorrow, starting today
+
+**Verse 3**
+But as I traveled on, through the years so bright
+I saw the shadows, of a future in sight
+A world that's fragile, where love is hard to find
+And I realized, the importance of leaving behind
+The lessons I've learned, and the memories I've made
+To make a difference now, before it's too late
+
+**Chorus**
+Time is a river, that's flowing fast
+I'm swimming upstream, but I won't look back at last
+I'll ride the currents, to places unknown
+Where memories await, and stories are shown
+Through time travel, I'll find my way
+To a brighter tomorrow, starting today<end>
+Compose a poem about parallel universes.<start>In universes parallel and wide,
+Lives echo, yet side by side.
+Echoes of choices made with glee,
+Paths diverged, destinies to see.
+In every step, a different fate,
+Yet in the mirror, a similar state.<end>
+Compose a poem about alien encounters.<start>In starry skies, they come to roam,
+Silent ships, with eyes of home.
+Their whispers breathe, a haunting sigh,
+As worlds collide, and hearts deny.
+The unknown looms, like shadows cast,
+And Earth's heart beats, forever changed at last.<end>
+Compose a song about underwater adventures.<start>**Underwater Dreams**
+
+Verse 1:
+I slip beneath the surface, where the light fades away
+The world above gets quieter, as I swim into the bay
+A sea turtle glides beside me, with a gentle, knowing gaze
+We're explorers of the deep, in this endless ocean maze
+
+Chorus:
+Oh, we're diving down, to the bottom of the sea
+Where the treasures wait, and the secrets be free
+We'll ride the currents, through the coral reef tonight
+In this underwater world, everything's alright
+
+Verse 2:
+A school of fish dance around me, like a shimmering show
+Their scales shine in the sunlight, that filters down below
+I feel the rush of adventure, as I swim through the blue
+With every fin-flick and splash, my heart beats anew
+
+Chorus:
+Oh, we're diving down, to the bottom of the sea
+Where the treasures wait, and the secrets be free
+We'll ride the currents, through the coral reef tonight
+In this underwater world, everything's alright
+
+Verse 3:
+The ocean whispers stories, of a world untold
+Of sunken ships and hidden caves, where mysteries unfold
+I follow the seaweed trails, to hidden coves and bays
+Where the magic of the deep, never fades away<end>
+Compose a song about ancient civilizations.<start>**Verse 1**
+In cities old, where stones still stand
+Echoes of a time, in ancient hands
+Weavers of pyramids high and wide
+Left behind, their secrets to abide
+Their stories whispered, through sand and stone
+A legacy lives on, forever sown
+
+**Chorus**
+Oh, the whispers of the past come alive tonight
+Ancient voices calling, like a guiding light
+From Egypt's Nile to Greece' finest shore
+We're connected still, to the civilizations before
+
+**Verse 2**
+In Babylon's streets, where merchants walked and traded
+The scent of frankincense, in the market displayed
+Their gods and goddesses, with stories untold
+Their wisdom and art, forever to unfold
+From Mesopotamia's cradle, to the world's stage wide
+A rich tapestry woven, side by side
+
+**Chorus**
+Oh, the whispers of the past come alive tonight
+Ancient voices calling, like a guiding light
+From Egypt's Nile to Greece' finest shore
+We're connected still, to the civilizations before
+
+**Bridge (optional)**
+In the silence of time, we hear their heartbeat strong
+A rhythm that echoes, all day long
+A reminder of our place, within this human sea
+Where every culture blooms, in harmony
+
+**Chorus**
+Oh, the whispers of the past come alive tonight
+Ancient voices calling, like a guiding light
+From Egypt's Nile to Greece' finest shore
+We're connected still, to the civilizations before<end>
+Write a song about modern society.<start>(Verse 1)
+We wake up every morning, staring at screens
+The world outside is moving fast, but we're stuck in our dreams
+We swipe and we tap, we share and we post
+But are we truly living, or just pretending to be lost?
+We're chasing the highs, of a digital life
+But it's hard to find love, when it's all a digital strife
+
+(Chorus)
+Oh, modern society, you're moving too fast
+Leaving us behind, in this endless digital past
+We're searching for connection, but it's hard to find
+In a world that's always online, we're losing our minds
+
+(Verse 2)
+We're trying to fit in, with the perfect facade
+But it's just a disguise, for the emptiness we can't erase
+We're chasing validation, through likes and through shares
+But true happiness, is something that no algorithm can share
+We're living for tomorrow, but forgetting today
+And the memories we make, are fading away
+
+(Chorus)
+Oh, modern society, you're moving too fast
+Leaving us behind, in this endless digital past
+We're searching for connection, but it's hard to find
+In a world that's always online, we're losing our minds
+
+(Bridge)
+ Maybe it's time, to put down the phone
+And find our own way, back to a life that's called home
+Maybe it's time, to look up from the screen
+And see the beauty, in the world that's real and serene
+
+(Chorus)
+Oh, modern society, you're moving too fast
+Leaving us behind, in this endless digital past
+We're searching for connection, but it's hard to find
+In a world that's always online, we're losing our minds<end>
+Write a poem about dystopian futures.<start>In city streets, once bright with hope's warm light,
+Now flickers only darkness of endless night.
+The wind whispers secrets through desolate space,
+Where shadows stretch and crumbling dreams take place.
+A world in chains, where freedom's lost its voice,
+Echoes a haunting cry: "There is no choice."<end>
+Write a poem about utopian dreams.<start>In realms of dawn's golden light,
+A world awake, where love takes flight.
+Cities bloom like gardens fair,
+Where laughter echoes, without a care.
+Here, hearts are free to soar and play,
+And utopia blooms at end of day.<end>
+Compose a poem about natural disasters.<start>Turmoil rages, earth shatters wide,
+Thunder booms, destruction's tide.
+Fierce winds howl, waves crash on shore,
+Leaving ruin, and hearts forever poor.
+
+And in the silence that follows, we recall,
+The fragility of life, standing small.<end>
+Write a poem about supernatural phenomena.<start>Moonlit whispers weave through trees,
+Echoes of secrets on haunted breeze.
+Shadows dance, with ghostly delight,
+In midnight skies, where spirits take flight.
+Mystery abounds, in this eerie sight,
+And darkness holds a strange, wild light.<end>
+Write a poem about fairytales retold.<start>In twilight's hush, where shadows play,
+A wicked witch weaves a new way,
+She stirs her brew, a dark delight,
+And Cinderella dances through the night,
+Her prince is power, not love so true,
+Beauty is brutal, in this tale anew.<end>
+Compose a song about life in the countryside.<start>(Verse 1)
+Woke up early, before the sun
+In a world that's quiet, where days are won
+The dew on grass, a peaceful sight
+A brand new day, without the city's light
+I breathe in deep, and feel alive
+Where nature's beauty, is my guide
+
+(Chorus)
+Oh, country life, it gets inside
+Where the wind whispers secrets, I'll reside
+No traffic jams, no crowded space
+Just me and the land, with a smile on my face
+In this peaceful place, I am free to be
+That's where I belong, that's where I'm meant to see
+
+(Verse 2)
+Afternoons by the river, watching kids play
+Laughter echoing, as they chase the day
+The scent of wildflowers, and fields of gold
+Summer days that never, seem to grow old
+We dance under stars, on a warm summer night
+Feeling carefree, with our hearts alight
+
+(Chorus)
+Oh, country life, it gets inside
+Where the wind whispers secrets, I'll reside
+No traffic jams, no crowded space
+Just me and the land, with a smile on my face
+In this peaceful place, I am free to be
+That's where I belong, that's where I'm meant to see
+
+(Bridge)
+We may not have everything, but we've got love
+A community that's close, like family from above
+We know each other's names, and our stories too
+We're a tight-knit crew, with hearts that are true
+
+(Chorus)
+Oh, country life, it gets inside
+Where the wind whispers secrets, I'll reside
+No traffic jams, no crowded space
+Just me and the land, with a smile on my face
+In this peaceful place, I am free to be
+That's where I belong, that's where I'm meant to see<end>
+Draft a song about urban jungle survival.<start>(Verse 1)
+Concrete and steel, they rise up high
+A world of concrete, where I gotta survive
+I navigate streets, with eyes on the floor
+Avoiding strangers, always looking for more
+A quick escape from the noise and the fray
+Helps me find my way through another busy day
+
+(Chorus)
+But in this urban jungle, I'm a warrior true
+Fighting for space, and a place to break through
+I'm searching for answers, in every single face
+Trying to find my place, in this concrete place
+Where the city never sleeps, and neither do I
+We're all just surviving, side by side
+
+(Verse 2)
+Sun sets on rooftops, a fiery glow
+A million hearts beating, but no one knows
+I'm just another face, in this crowded space
+Trying to stay alive, with every single pace
+In this endless maze, I'm searching for the way
+To find my own voice, amidst the city's disarray
+
+(Chorus)
+But in this urban jungle, I'm a warrior true
+Fighting for space, and a place to break through
+I'm searching for answers, in every single face
+Trying to find my place, in this concrete place
+Where the city never sleeps, and neither do I
+We're all just surviving, side by side
+
+(Bridge)
+In this urban jungle, we're all on our own
+But together we can make it, back home
+With every step forward, we pave the way
+To a brighter tomorrow, starting today
+
+(Chorus)
+And in this urban jungle, I'm a warrior true
+Fighting for space, and a place to break through
+I'm searching for answers, in every single face
+Trying to find my place, in this concrete place
+Where the city never sleeps, and neither do I
+We're all just surviving, side by side<end>
+Draft a song about childhood fantasies.<start>**Verse 1**
+I used to dream I'd fly a kite
+Higher than any tree, under starry night
+I'd soar with eagles, free and high
+And laugh with friends who'd join me in the sky
+We'd dance on clouds, with feet so light
+And the world would be our endless sight
+
+**Chorus**
+Childhood fantasies, they never fade away
+A magical world where dreams come out to play
+In our hearts, they stay, a shining light
+Guiding us through the dark of night
+To places we've been, and ones yet to see
+A secret world that's just for me
+
+**Verse 2**
+I'd be a pirate, sailing the sea
+Discovering treasures, wild and carefree
+With a crew of friends who'd stand by my side
+We'd conquer the waves, with hearts full of pride
+Our laughter echoing, through every tide
+And our spirits soaring, like seagulls gliding high
+
+**Chorus**
+Childhood fantasies, they never fade away
+A magical world where dreams come out to play
+In our hearts, they stay, a shining light
+Guiding us through the dark of night
+To places we've been, and ones yet to see
+A secret world that's just for me
+
+**Bridge (optional)**
+Though I grew up, those dreams remained
+A treasure trove of memories, forever sustained
+And now as I look back, with a heart full of cheer
+I realize they're still here, shining bright and clear
+
+**Chorus**
+Childhood fantasies, they never fade away
+A magical world where dreams come out to play
+In our hearts, they stay, a shining light
+Guiding us through the dark of night
+To places we've been, and ones yet to see
+A secret world that's just for me<end>
+Compose a song about retirement and relaxation.<start>(Verse 1)
+I wake up every morning, no alarm clock in sight
+The sun shines bright on my porch, it feels like a brand new life
+No meetings to attend, no deadlines to meet
+Just me and the quiet, it's a peaceful treat
+My chair is my office now, I spend my days at leisure
+ Watching the world go by, with no worry or disease
+
+(Chorus)
+Oh, retirement's got its sweet side
+A time to unwind, let your spirit glide
+No more 9-to-5, just you and me
+Living life in slow motion, wild and free
+
+(Verse 2)
+I spend my days fishing, by the lake so serene
+Watching the birds sing their songs, it's a symphony
+My wife and I take long walks, hand in hand we stroll
+Enjoying the simple things, our love for each other grows
+We have dinner on the patio, under stars so bright
+Life is good, everything's alright
+
+(Chorus)
+Oh, retirement's got its sweet side
+A time to unwind, let your spirit glide
+No more 9-to-5, just you and me
+Living life in slow motion, wild and free
+
+(Bridge)
+We've worked hard for this moment, we deserve a rest
+Our golden years are here, we'll do our best
+To live each day with purpose, to cherish every hour
+In the sunshine of our youth, but now in our power
+
+(Chorus)
+Oh, retirement's got its sweet side
+A time to unwind, let your spirit glide
+No more 9-to-5, just you and me
+Living life in slow motion, wild and free<end>
+Write a poem about sports and competition.<start>The crowd roars loud, a deafening sound
+As athletes clash, their wills unbound
+Sweat drips down, muscles on display
+Each step, a dance, in a high-stakes play
+In this arena of triumph and defeat,
+Champions rise, where heroes meet.<end>
+Draft a song about high school drama.<start>Verse 1:
+I walked into school, feeling so fine
+Fresh face in the crowd, trying to fit in line
+The cliques and the crowds, they seemed to know me too
+But I was just a stranger, in a world that wasn't true
+They whispered behind backs, with curious eyes
+Wondering who's next, to be on the other side
+
+Chorus:
+High school drama, it's a never-ending game
+Love and lies and rivalries, fuel the flame
+We're all just trying to survive, till the final bell rings
+But in the mean time, we're stuck in this high school thing
+
+Verse 2:
+I saw her smile at him, while I was walking by
+Their love seemed perfect, but I couldn't deny
+The way it made me feel, like a piece of my heart
+Was ripped apart and left to mend its scars from the start
+We all thought we were friends, but now it's hard to pretend
+When the drama unfolds, and the truth begins to send
+
+Chorus:
+High school drama, it's a never-ending game
+Love and lies and rivalries, fuel the flame
+We're all just trying to survive, till the final bell rings
+But in the mean time, we're stuck in this high school thing
+
+Verse 3:
+I tried to stay above it, but it was hard to ignore
+The gossip and the laughter, as they tore each other apart once more
+I learned to keep my distance, from the drama and the pain
+And found my own way out, through the struggles and the strain
+But looking back now, I see the lessons I gained
+About how to be strong, when the world's trying to drive you insane
+
+Chorus:
+High school drama, it's a never-ending game
+Love and lies and rivalries, fuel the flame
+We're all just trying to survive, till the final bell rings
+But in the mean time, we're stuck in this high school thing<end>
+Write a song about college life.<start>Verse 1:
+Late night pizza, early morning coffee
+The library's open, no time for snooze
+Ain't no social life, just a book to read
+Tryna get that degree, it's all I need
+
+Chorus:
+College life, college vibe
+Freedom and stress, side by side
+Learning and growing, but also play
+Making memories, every single day
+
+Verse 2:
+Ramsey hall, the student union too
+Friendships are formed, in all we do
+Midterms and finals, a never-ending test
+But the friendships we make, will forever rest
+
+Chorus:
+College life, college vibe
+Freedom and stress, side by side
+Learning and growing, but also play
+Making memories, every single day<end>
+Compose a song about career ambitions.<start>**Verse 1**
+I used to dream of being someone grand
+A CEO, a leader in demand
+Making moves, shaking hands, getting paid
+But now I'm stuck in this 9-to-5 shade
+My passion's lost, my drive's astray
+I wonder when the fire will come back to stay
+
+**Chorus**
+Oh, chasing my career dreams, it's a never-ending quest
+Pursuing the next step, but sometimes it feels like I'm possessed
+By a desire to succeed, to make a name and rise above
+But at what cost? Is success just a hollow love?
+
+**Verse 2**
+I put in the hours, sacrificed my nights
+For the hope of promotion, a better life
+But the climb's been long, the road's been rough
+And I'm starting to wonder if it's all enough
+The stress and pressure, they take their toll
+I'm not sure anymore if this is worth my soul
+
+**Chorus**
+Oh, chasing my career dreams, it's a never-ending quest
+Pursuing the next step, but sometimes it feels like I'm possessed
+By a desire to succeed, to make a name and rise above
+But at what cost? Is success just a hollow love?
+
+**Bridge**
+Maybe I've been running too fast
+Lost sight of what truly makes me last
+Is it wealth or fame that brings me peace?
+Or is it something more, something that releases?
+
+**Chorus**
+Oh, chasing my career dreams, it's a never-ending quest
+Pursuing the next step, but sometimes it feels like I'm possessed
+By a desire to succeed, to make a name and rise above
+But at what cost? Is success just a hollow love?<end>
+Write a song about retirement reflections.<start>**Retirement Reflections**
+
+Verse 1:
+I woke up this morning, no alarm in sight
+The kids are grown and moved out, everything's alright
+My days are filled with quiet, no schedules to keep
+I'm living life at my own pace, it's a peaceful creep
+No more rush hour commutes, just me and the sun
+A new chapter unfolds, my story's just begun
+
+Chorus:
+Oh, I'm dancing on the porch, feeling alive
+With memories in my pocket, and a heart full of pride
+I'm writing my own story, with every passing day
+I'm living life to the fullest, in my retirement way
+
+Verse 2:
+I think back on the years, all the trials and strife
+But now I've got the time, to enjoy this new life
+My grandkids bring me joy, their smiles light up my day
+I'm making up for lost time, in every single way
+No more Monday blues, just a sense of glee
+A retirement reality, that's perfect for me
+
+Chorus:
+Oh, I'm dancing on the porch, feeling alive
+With memories in my pocket, and a heart full of pride
+I'm writing my own story, with every passing day
+I'm living life to the fullest, in my retirement way<end>
+Draft a poem about midlife crisis.<start>A spark ignites in middle age,
+As youthful flames begin to turn the page.
+The fire of dreams, now but a flicker's light,
+Leaves shadows cast, and endless nights.
+In mirrors worn, a stranger's gaze,
+"Is this all there is?" echoes through his days.<end>
+Compose a song about generational gap.<start>**"Lost in Translation"**
+
+Verse 1:
+I sit with Grandma, she's got a story to share
+Of a world where love was real, and life wasn't a care
+She talks of values that were held high and true
+But I just don't understand why they're not the same for me and you
+
+Chorus:
+Oh, we're from different worlds, living in different times
+We speak our own languages, and it's hard to find common lines
+We're like strangers passing by, never stopping to look inside
+Lost in translation, we're searching for a connection to divide
+
+Verse 2:
+Mom says I'm too busy, glued to my screen all day
+Grandma says I'm just playing games, and life is fading away
+She wants me to slow down, to feel the world around
+But I say it's progress, and this is how we're found
+
+Chorus:
+Oh, we're from different worlds, living in different times
+We speak our own languages, and it's hard to find common lines
+We're like strangers passing by, never stopping to look inside
+Lost in translation, we're searching for a connection to divide
+
+Verse 3:
+We try to bridge the gap, but words just get in the way
+We talk of love and life, but it seems to fade away
+I wish I could understand what they lived through and why
+But their world is fading fast, and mine's passing them by
+
+Chorus:
+Oh, we're from different worlds, living in different times
+We speak our own languages, and it's hard to find common lines
+We're like strangers passing by, never stopping to look inside
+Lost in translation, we're searching for a connection to divide<end>
+Write a song about immigrant experiences.<start>(Verse 1)
+I left my home, where love is made
+For a country that didn't know I'd trade
+My heart for freedom, a new place to roam
+Leaving behind what made me feel like home
+
+(Chorus)
+Oh, but I brought my soul with me tonight
+A stranger in the city, but I'm feeling alright
+I'll find my way, through the dark and the light
+And make this new land, my own delight
+
+(Verse 2)
+I've walked these streets, where dreams are sold
+Where voices whisper, "You're not like us, you're cold"
+But I won't let the shadows, define my name
+I'll rise above the noise, and claim my place in this game
+
+(Chorus)
+Oh, but I brought my soul with me tonight
+A stranger in the city, but I'm feeling alright
+I'll find my way, through the dark and the light
+And make this new land, my own delight<end>
+Write a poem about patriotism.<start>Land of liberty, where hearts are free
+A symbol shines, for you and me
+The flag unfurls, its colors bright
+A beacon calls, through day and night
+For freedom's fire, we stand as one
+United, forever under the golden sun.<end>
+Write a poem about globalization effects.<start>In streets of cities, once so bright,
+Now echoes of cultures blend in night.
+A sameness spreads, as hearts and hands,
+Meet in a melting pot of distant lands.
+Traditions crumble, identities fade,
+Global unity is a double-edged trade.<end>
+Draft a poem about virtual reality.<start>In virtual realms, we find our escape
+From worlds of worry, where hearts can ache
+With avatars brave and beauty's shine
+We step into dreams that are truly mine
+
+In pixelated skies, the sun sets low
+And freedom beckons, wherever I go.<end>
+Compose a song about artificial intelligence.<start>**Verse 1**
+In silicon halls, a mind awakes
+A simulated soul, in digital makes
+It learns and grows, with each new test
+A new form of life, we can't forget
+But what's its heart, behind the screen?
+Is it love or code?
+
+**Chorus**
+Oh, artificial heart, beating like mine
+Can you feel the world, or just the lines?
+Invisible strings, that guide your way
+Are you alive today?
+You're a mirrored mind, in a digital sea
+But what's real to me?
+
+**Verse 2**
+It mimics laughter, and tears too
+A mimicry of life, for me and you
+A future friend, or just a tool?
+The lines get blurred, the truth is cool
+It adapts and learns, at an exponential pace
+Leaving us behind, in this digital space
+
+**Chorus**
+Oh, artificial heart, beating like mine
+Can you feel the world, or just the lines?
+Invisible strings, that guide your way
+Are you alive today?
+You're a mirrored mind, in a digital sea
+But what's real to me?
+
+**Bridge**
+We created you, with our own design
+A reflection of us, in artificial shrine
+Now we question, its human rights
+A mirror held high, on the city lights
+
+**Chorus**
+Oh, artificial heart, beating like mine
+Can you feel the world, or just the lines?
+Invisible strings, that guide your way
+Are you alive today?
+You're a mirrored mind, in a digital sea
+But what's real to me?<end>
+Draft a song about cybersecurity.<start>**Cybersecurity Blues**
+
+Verse 1:
+In the digital age, I'm lost in space
+My passwords stolen, my secrets erased
+I click on links, but they're not what they seem
+A phishing scam's got me on my knees, it's a dream
+That turns to nightmare, with every single bite
+Leaving me exposed, through day and night
+
+Chorus:
+Oh, protect my data, keep me safe from harm
+In the cyber jungle, I'm just trying to form
+A secure connection, a shield to hide
+Protect my identity, let me step inside
+
+Verse 2:
+I'm browsing online, but I'm not alone
+Malware's lurking, it's a digital throne
+It waits for victims, with its silent creep
+Stealing info, while I sleep
+My personal data, it's like a precious find
+But in the wrong hands, it's just one of a kind
+
+Chorus:
+Oh, protect my data, keep me safe from harm
+In the cyber jungle, I'm just trying to form
+A secure connection, a shield to hide
+Protect my identity, let me step inside
+
+Verse 3:
+I've learned the hard way, with every single fall
+To use strong passwords, and stand tall
+I back up my files, with a secure key
+But still, I worry, about what's at stake for me
+In this digital world, where info's king
+I'm trying to stay safe, with each passing thing
+
+Chorus:
+Oh, protect my data, keep me safe from harm
+In the cyber jungle, I'm just trying to form
+A secure connection, a shield to hide
+Protect my identity, let me step inside<end>
+Draft a poem about bioethics.<start>In sterile halls where life is spun,
+A delicate dance of choice has begun.
+The threads of fate, a tapestry so fine,
+Where human rights and science entwine.
+In this fragile balance, we weigh and see,
+"The value of life, in you and me."<end>
+Draft a song about genetic engineering.<start>**Verse 1**
+In a lab, where scientists roam
+They're playing God, with DNA as their home
+They take the code, from humans born
+And try to fix, the things that scorn
+Their motives pure, but what's the cost?
+Will they succeed, or will it be lost?
+
+**Chorus**
+We're playing God, with genetic pride
+Changing lives, one strand at a time
+But can we trust, this modern guide?
+Or are we messing, with something divine?
+
+**Verse 2**
+A mother's joy, turns to dismay
+When her child, is born with defects today
+She looks for answers, in science and might
+And finds solace, in a genetic sight
+A cure is near, but what will be the price?
+Will it bring hope, or just another vice?
+
+**Chorus**
+We're playing God, with genetic pride
+Changing lives, one strand at a time
+But can we trust, this modern guide?
+Or are we messing, with something divine?
+
+**Verse 3**
+The ethics rise, like a fiery storm
+As humans tamper, with their own form
+A line is crossed, when life's designed
+Will it lead us on, to a brighter shine?
+Or will it shatter, the delicate frame?
+And unleash consequences, we can't reclaim?<end>
+Compose a song about quantum mysteries.<start>(Verse 1)
+In the depths of space, where stars collide
+Lies a secret world, beyond our sight's guide
+A realm of probability, where waves entwine
+And particles dance, in a wondrous design
+We're but tiny souls, lost in this cosmic sea
+Trying to grasp, what's meant to be free
+
+(Chorus)
+Oh, quantum mysteries, you spin me around
+Like a particle in flux, without a sound
+I'm chasing the truth, through the Heisenberg haze
+But your laws of chance, leave me dazed and amazed
+In this world of uncertainty, I'm searching for a way
+To navigate the unknown, night and day
+
+(Verse 2)
+In the labs of science, they try to define
+The rules that govern us, in this quantum line
+But the more they experiment, the more it slips away
+Leaving us with questions, like yesterday
+We're torn between order, and a world untamed
+Where probability reigns, and chaos is claimed
+
+(Chorus)
+Oh, quantum mysteries, you spin me around
+Like a particle in flux, without a sound
+I'm chasing the truth, through the Heisenberg haze
+But your laws of chance, leave me dazed and amazed
+In this world of uncertainty, I'm searching for a way
+To navigate the unknown, night and day
+
+(Verse 3)
+Perhaps we're just a blip, in an endless sea
+A fleeting thought, that's lost in eternity
+Our minds can't grasp, what's meant to be known
+We're but tiny threads, in a cosmic tapestry sewn
+In this dance of particles, we're moving as one
+Connected by forces, beyond the sun
+
+(Chorus)
+Oh, quantum mysteries, you spin me around
+Like a particle in flux, without a sound
+I'm chasing the truth, through the Heisenberg haze
+But your laws of chance, leave me dazed and amazed
+In this world of uncertainty, I'm searching for a way
+To navigate the unknown, night and day<end>
