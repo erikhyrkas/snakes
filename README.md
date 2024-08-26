@@ -1,16 +1,18 @@
-# YS-120M-BASE-v0.1
+# YS-323M-BASE-v0.2
 
 ![img_2.png](img_2.png)
 
 `"Why did it have to be snakes?"`
 
-## Why Snakes - 120 Million v0.1 Base Model
-
-The "Why Snakes" 120 Million v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism.
-
-## Current Development: v0.2 Base Model
+## Current Development: Why Snakes - 323M v0.2 Base Model
 
 I am currently working towards a v0.2 base model, refining the design to better align with my specific goals and hardware constraints.
+
+The v0.2 model has 323,268,881 parameters and a vocabulary of 48,913 tokens.
+
+### Previous Release: Why Snakes - 120 Million v0.1 Base Model
+
+The "Why Snakes" 120 Million v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism. You can find it on the release page of the GitHub page.
 
 ### Design Philosophy and Goals:
 
