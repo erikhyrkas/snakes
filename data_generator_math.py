@@ -125,7 +125,7 @@ def save_data(data, filename):
     global data_counter
     data_counter += 1
     file_ext = data_counter // 2000
-    with open(f"{filename}-{file_ext}", 'a', encoding='utf-8') as f:
+    with open(f"{filename}-{file_ext}.md", 'a', encoding='utf-8') as f:
         f.write(data)
 
 
@@ -226,4 +226,4 @@ def learn_math(file_path: str):
 
 
 if __name__ == '__main__':
-    learn_math(".\\training_data\\step-by-step-math.md")
+    learn_math(".\\training_data\\step-by-step-math")
