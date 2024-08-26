@@ -151,8 +151,8 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
         elapsed_time = (time.time() - start_time) / 60
         estimated_completion = (elapsed_time / step) * total_steps
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - Elapsed time: {elapsed_time:.2f} minutes, '
-              f'Completion: ~{estimated_completion:.2f} minutes',
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - Elapsed time: {elapsed_time:.2f} minutes '
+              f'of ~{estimated_completion:.2f} minutes',
               end='\r', flush=True)
     print()
     return epoch_loss
@@ -179,8 +179,8 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
         elapsed_time = (time.time() - start_time) / 60
         estimated_completion = (elapsed_time / step) * total_steps
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - Elapsed time: {elapsed_time:.2f} minutes, '
-              f'Completion: ~{estimated_completion:.2f} minutes',
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - Elapsed time: {elapsed_time:.2f} minutes '
+              f'of ~{estimated_completion:.2f} minutes',
               end='\r', flush=True)
     print()
     return epoch_loss
