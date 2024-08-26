@@ -24,8 +24,7 @@ def get_dynamic_sequence_length(max_sequence_length):
 
 
 def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optimizer, criterion, scheduler, epochs=100,
-                max_grad_norm=1.0,
-                patience=5, accumulation_steps=4):
+                max_grad_norm=1.0, patience=5, accumulation_steps=4):
     print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device_name}")
@@ -42,6 +41,7 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
     start_time = time.time()
 
+    total_steps = len(train_loader)
     print("First epoch starting...")
     best_loss = float('inf')
     for epoch in range(epochs):
@@ -50,10 +50,10 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
 
         if device_name == "cuda":
             epoch_loss = cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
-                                    scaler, train_loader)
+                                    scaler, train_loader, total_steps)
         else:
             epoch_loss = cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
-                                   train_loader)
+                                   train_loader, total_steps)
 
         if val_loader:
             model.eval()
@@ -61,16 +61,18 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
                 val_loss = cuda_validate(criterion, device, model, val_loader)
             else:
                 val_loss = cpu_validate(criterion, device, model, val_loader)
-            elapsed_time = (time.time() - start_time)/60
-            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss} - Elapsed time: {elapsed_time:.2f} minutes')
+            elapsed_time = (time.time() - start_time) / 60
+            print(
+                f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss} - Elapsed time: {elapsed_time:.2f} minutes')
             loss_to_check = val_loss
 
             if math.isnan(val_loss) or math.isinf(val_loss):
                 print("Stopping due to numerical instability.")
                 return False
         else:
-            elapsed_time = (time.time() - start_time)/60
-            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)} - Elapsed time: {elapsed_time:.2f} minutes')
+            elapsed_time = (time.time() - start_time) / 60
+            print(
+                f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)} - Elapsed time: {elapsed_time:.2f} minutes')
             loss_to_check = epoch_loss
 
         scheduler.step()
@@ -124,8 +126,7 @@ def calc_val_loss(criterion, inputs, model, targets):
 
 
 def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
-               scaler: torch.amp.GradScaler,
-               train_loader):
+               scaler: torch.amp.GradScaler, train_loader, total_steps):
     epoch_loss = 0.0
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
@@ -147,11 +148,11 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
-        print(f'Step {step} Loss: {epoch_loss}', end='\r', flush=True)
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss}', end='\r', flush=True)
     return epoch_loss
 
 
-def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer, train_loader):
+def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer, train_loader, total_steps):
     epoch_loss = 0.0
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
@@ -169,7 +170,7 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
-        print(f'Step {step} Loss: {epoch_loss}', end='\r', flush=True)
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss}', end='\r', flush=True)
     return epoch_loss
 
 
