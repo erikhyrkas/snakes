@@ -84,7 +84,7 @@ pip install torch torchvision torchaudio
 
 ## Synthetic Data
 
-I used ollama with llama 3.1 to generate training data. And I provided it as an example, but if 
+Except for a few fully programmatically-generated files, I used ollama with llama 3.1 to generate training data. And I provided it as an example, but if 
 you were to use this code, I'd highly encourage you to build the data that works for you.
 
 You can generate additional data using the command:
@@ -92,7 +92,7 @@ You can generate additional data using the command:
 ```
 pip install ollama
 
-python data_generator.py
+python data_generator_<generator>.py
 ```
 
 NOTE: I did very minimal curation on the data after generation. I relied mostly on some search and replaces and the

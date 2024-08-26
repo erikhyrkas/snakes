@@ -1,6 +1,7 @@
 import math
 import os
 import random
+import time
 from typing import Optional
 
 import torch
@@ -39,6 +40,7 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
         scaler = torch.amp.GradScaler('cuda')
 
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    start_time = time.time()
 
     print("First epoch starting...")
     best_loss = float('inf')
@@ -59,14 +61,16 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
                 val_loss = cuda_validate(criterion, device, model, val_loader)
             else:
                 val_loss = cpu_validate(criterion, device, model, val_loader)
-            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss}')
+            elapsed_time = (time.time() - start_time)/60
+            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss} - Elapsed time: {elapsed_time:.2f} minutes')
             loss_to_check = val_loss
 
             if math.isnan(val_loss) or math.isinf(val_loss):
                 print("Stopping due to numerical instability.")
                 return False
         else:
-            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}')
+            elapsed_time = (time.time() - start_time)/60
+            print(f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)} - Elapsed time: {elapsed_time:.2f} minutes')
             loss_to_check = epoch_loss
 
         scheduler.step()
@@ -132,8 +136,10 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             loss = calculate_loss(accumulation_steps, criterion, masks, outputs, targets)
         scaler.scale(loss).backward()
 
+        step = i + 1
+
         # Accumulate gradients and update model after a certain number of steps
-        if (i + 1) % accumulation_steps == 0:
+        if step % accumulation_steps == 0:
             scaler.unscale_(optimizer)
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
             optimizer.step()
@@ -141,6 +147,7 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
+        print(f'Step {step} Loss: {epoch_loss}', end='\r', flush=True)
     return epoch_loss
 
 
@@ -154,13 +161,15 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
         loss = calculate_loss(accumulation_steps, criterion, masks, outputs, targets)
         loss.backward()
 
+        step = i + 1
         # Accumulate gradients and update model after a certain number of steps
-        if (i + 1) % accumulation_steps == 0:
+        if step % accumulation_steps == 0:
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
             optimizer.step()
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
+        print(f'Step {step} Loss: {epoch_loss}', end='\r', flush=True)
     return epoch_loss
 
 
