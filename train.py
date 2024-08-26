@@ -148,7 +148,7 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss}', end='\r', flush=True)
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss/step}', end='\r', flush=True)
     return epoch_loss
 
 
@@ -170,7 +170,7 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
             optimizer.zero_grad()  # Reset gradients for the next accumulation cycle
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss}', end='\r', flush=True)
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss/step}', end='\r', flush=True)
     return epoch_loss
 
 
