@@ -63,7 +63,7 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
                 val_loss = cpu_validate(criterion, device, model, val_loader)
             elapsed_time = (time.time() - start_time) / 60
             print(
-                f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)}, Val Loss: {val_loss} - Elapsed time: {elapsed_time:.2f} minutes')
+                f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader):.3f}, Val Loss: {val_loss} - Elapsed time: {elapsed_time:.2f} minutes')
             loss_to_check = val_loss
 
             if math.isnan(val_loss) or math.isinf(val_loss):
@@ -72,7 +72,7 @@ def train_model(model, train_loader: TextDataset, val_loader: TextDataset, optim
         else:
             elapsed_time = (time.time() - start_time) / 60
             print(
-                f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader)} - Elapsed time: {elapsed_time:.2f} minutes')
+                f'Epoch {epoch + 1}, Loss: {epoch_loss / len(train_loader):.3f} - Elapsed time: {elapsed_time:.2f} minutes')
             loss_to_check = epoch_loss
 
         scheduler.step()
@@ -150,7 +150,7 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
         elapsed_time = (time.time() - start_time) / 60
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step} - Elapsed time: {elapsed_time:.2f} minutes',
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - Elapsed time: {elapsed_time:.2f} minutes',
               end='\r', flush=True)
     print()
     return epoch_loss
@@ -176,7 +176,7 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
 
         epoch_loss += loss.item() * accumulation_steps  # Multiply to undo the earlier division
         elapsed_time = (time.time() - start_time) / 60
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step} - Elapsed time: {elapsed_time:.2f} minutes',
+        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - Elapsed time: {elapsed_time:.2f} minutes',
               end='\r', flush=True)
     print()
     return epoch_loss
