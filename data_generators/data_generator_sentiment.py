@@ -63,7 +63,7 @@ def generate_prompt(subject, review, emotion):
 def sentiment_generator():
     sentiments = []
     for i in range(10):
-        output_file = f'./training_data/llama-sentiment-{i}.md'
+        output_file = f'../training_data/llama-sentiment-{i}.md'
         if os.path.exists(output_file):
             print(f"Skipping existing file: {output_file}")
             continue

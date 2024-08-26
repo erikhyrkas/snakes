@@ -7,10 +7,10 @@ import os
 
 
 class FineTuningDataset(IterableDataset):
-    def __init__(self, directory, tokenizer, pad_token_id=None, shuffle_files=True):
+    def __init__(self, directory, tokenizer, shuffle_files=True):
         self.directory = directory
         self.tokenizer = tokenizer
-        self.pad_token_id = pad_token_id if pad_token_id is not None else tokenizer.get_end_token()
+        self.pad_token_id = tokenizer.get_pad_token()
         self.files = [os.path.join(directory, f) for f in os.listdir(directory) if f.endswith('.txt')]
         self._length = None
         if shuffle_files:
@@ -22,7 +22,7 @@ class FineTuningDataset(IterableDataset):
                 text = f.read().strip()
             items = [item + '<end>' for item in text.split('<end>') if item.strip()]
 
-            tokenized_items = [torch.tensor(self.tokenizer.tokenize(item), dtype=torch.uint16) for item in items]
+            tokenized_items = [torch.tensor(self.tokenizer.tokenize(item), dtype=torch.long) for item in items]
             if len(tokenized_items) == 0:
                 continue
 

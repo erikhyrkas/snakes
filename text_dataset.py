@@ -63,7 +63,8 @@ class TextDataset(IterableDataset):
         sequences_returned = 0
 
         for file in self.files:
-            tokens = np.load(file, mmap_mode='r')
+            tokens = np.load(file)
+            # tokens = np.load(file, mmap_mode='r')
             file_length = len(tokens)
             start_idx = 0
 
@@ -83,7 +84,7 @@ class TextDataset(IterableDataset):
                 if buffer_length >= self.batch_size * sequence_length:
                     # Split buffer into X (inputs) and Y (targets)
                     x = [buffer[i:i + sequence_length] for i in range(0, len(buffer) - sequence_length)]
-                    y = [buffer[i:i + sequence_length] for i in range(1, len(buffer) - sequence_length + 1)]
+                    y = [buffer[i + 1:i + 1 + sequence_length] for i in range(0, len(buffer) - sequence_length)]
 
                     for i in range(self.batch_size):
                         sequences_returned += 1

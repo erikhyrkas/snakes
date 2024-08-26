@@ -59,7 +59,7 @@ def generate_slice_of_life_story(group, location, topic):
 
 
 def write_stories_to_file(stories: dict, base_file_name, file_count):
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
+    output_file = f'../training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for prompt in stories:
             story = stories[prompt]

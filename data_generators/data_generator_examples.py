@@ -21,7 +21,7 @@ def generate_example_sentence(word):
 
 
 def write_sentences_to_file(sentences: dict, base_file_name, file_count):
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
+    output_file = f'../training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for word in sentences:
             examples = sentences[word]

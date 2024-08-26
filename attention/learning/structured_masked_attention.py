@@ -1,7 +1,7 @@
 import torch
 from torch import nn
 
-from structured_matrix import StructuredMatrix
+from attention.learning.structured_matrix import StructuredMatrix
 
 ATTENTION_DEBUG = False
 

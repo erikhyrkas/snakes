@@ -6,6 +6,7 @@ import torch.nn as nn
 class StructuredStateAttention(nn.Module):
     """
     This was the original attention mechanism of YS-120M-base-v0.1.
+    It was trained with state_dim=448, input_dim=448, output_dim=448
 
     The `StructuredStateAttention` class is a custom implementation inspired by the principles of state space models (SSMs) and
     attention mechanisms discussed in the Mamba-2 architecture. This class leverages structured state space duality (
@@ -16,6 +17,8 @@ class StructuredStateAttention(nn.Module):
     """
     def __init__(self, state_dim, input_dim, output_dim, block_size=32, dropout_rate=0.1):
         super(StructuredStateAttention, self).__init__()
+        # Note: I think that state_dim must equal input_dim and output_dim.
+        #  I didn't test with other options, but there might be shape issues if you try to diverge.
         self.state_dim = state_dim
         self.block_size = block_size
         # Initializing structured matrices with small values ensures stability in the model, echoing the use of

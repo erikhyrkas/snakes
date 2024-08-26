@@ -130,7 +130,7 @@ def write_scripts(prompts: list, base_file_name, file_count):
     """
     Write generated prompts to a markdown file.
     """
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
+    output_file = f'../training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for prompt in prompts:
             response = ollama.generate('llama3.1', prompt)

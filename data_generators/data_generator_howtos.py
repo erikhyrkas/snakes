@@ -21,7 +21,7 @@ def generate_howto_result(topic):
 
 
 def write_howto_to_file(howtos: dict, base_file_name, file_count):
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
+    output_file = f'../training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for howto_topic in howtos:
             howto_answer = howtos[howto_topic]

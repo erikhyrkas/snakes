@@ -20,7 +20,7 @@ def generate_eli5_result(topic):
 
 
 def write_eli5_to_file(eli5s: dict, base_file_name, file_count):
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
+    output_file = f'../training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for eli5_topic in eli5s:
             eli5_answer = eli5s[eli5_topic]

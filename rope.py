@@ -8,6 +8,7 @@ class RoPE(nn.Module):
         super(RoPE, self).__init__()
         self.embedding_dim = embedding_dim
         self.theta = 10000.0 ** (torch.arange(0, embedding_dim, 2).float() / embedding_dim)
+        assert self.embedding_dim % 2 == 0, "Embedding dimension must be even."
 
     def forward(self, x):
         device = x.device  # Get the device of the input tensor

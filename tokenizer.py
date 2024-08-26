@@ -93,7 +93,7 @@ class Tokenizer:
                 continue
             if DEBUG_TOKENIZER:
                 print(f"Processing token: {token}")
-            sleep(0)
+            # sleep(0)
             if '\n' in token:
                 result.append('<newline>')
             elif token.isspace():
@@ -124,7 +124,7 @@ class Tokenizer:
         tokens = []
         words = self.to_words(text)
         for word in words:
-            sleep(0)
+            # sleep(0)
             if word in self.word_to_index:
                 tokens.append(self.word_to_index[word])
             else:

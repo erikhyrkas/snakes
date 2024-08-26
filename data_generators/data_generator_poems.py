@@ -10,7 +10,7 @@ import ollama
 
 def main(count):
     record_number = 0
-    output_file = f"./training_data/llama-song-poems-{count}.md"
+    output_file = f"../training_data/llama-song-poems-{count}.md"
     input_file = "./song_poem_themes.txt"
     fast_forwarding_count = 0
     if os.path.exists(output_file):

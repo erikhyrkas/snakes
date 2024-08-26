@@ -17,7 +17,7 @@ def generate_blog_post(topic):
 
 
 def write_blogs_to_file(articles: dict, base_file_name, file_count):
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
+    output_file = f'../training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'w', encoding="utf-8") as file:
         for topic in articles:
             article = articles[topic]

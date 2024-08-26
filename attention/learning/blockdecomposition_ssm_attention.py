@@ -3,6 +3,37 @@ import torch.nn as nn
 
 
 class BlockDecomposedSSMAttention(nn.Module):
+    """
+    A PyTorch module that implements a block-decomposed state space model (SSM) attention mechanism.
+
+    This model is designed to process sequences in blocks, allowing it to handle long sequences more efficiently.
+    It leverages the principles of state space models (SSMs) by incorporating state matrices and block decomposition,
+    making it particularly suitable for sequence modeling tasks where the relationship between input and output sequences
+    can be captured by state transitions.
+
+    Attributes:
+        state_size (int): The dimensionality of the state vector. Default is 448.
+        input_size (int): The dimensionality of the input vector. Default is 448.
+        output_size (int): The dimensionality of the output vector. Default is 448.
+        block_size (int): The size of the blocks into which the input sequence is divided for processing. Default is 32.
+        A (torch.nn.Parameter): The state transition matrix, representing how the state vector evolves over time.
+        B (torch.nn.Parameter): The input-to-state matrix, representing how the input influences the state.
+        C (torch.nn.Parameter): The state-to-output matrix, representing how the state produces the output.
+        dropout (torch.nn.Dropout): A dropout layer applied to the output, with a default dropout rate of 0.1.
+
+    Methods:
+        forward(x):
+            Computes the forward pass of the model.
+            Args:
+                x (torch.Tensor): The input tensor of shape (batch_size, seq_len, input_size).
+            Returns:
+                torch.Tensor: The output tensor of shape (batch_size, seq_len, output_size).
+
+    Example Usage:
+        model = BlockDecomposedSSMAttention()
+        x = torch.randn(10, 100, 448)  # batch_size=10, seq_len=100, input_size=448
+        output = model(x)
+    """
     def __init__(self, state_dim=448, input_dim=448, output_dim=448, block_size=32, dropout_rate=0.1):
         super(BlockDecomposedSSMAttention, self).__init__()
         self.state_size = state_dim
@@ -17,6 +48,20 @@ class BlockDecomposedSSMAttention(nn.Module):
         self.dropout = nn.Dropout(dropout_rate)
 
     def forward(self, x):
+        """
+        Forward pass through the BlockDecomposedSSMAttention model.
+
+        The input sequence is divided into blocks of a specified size. Each block is processed independently
+        by the state space model using the matrices A, B, and C, which govern the evolution of the state,
+        the influence of the input on the state, and the production of the output from the state, respectively.
+        The outputs of the blocks are combined to form the final output sequence.
+
+        Args:
+            x (torch.Tensor): Input tensor of shape (batch_size, seq_len, input_size).
+
+        Returns:
+            torch.Tensor: Output tensor of shape (batch_size, seq_len, output_size).
+        """
         # x is of shape (batch_size, seq_len, input_size)
         batch_size, seq_len, _ = x.size()
 

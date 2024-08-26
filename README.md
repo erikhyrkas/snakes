@@ -1,6 +1,6 @@
 # YS-323M-BASE-v0.2
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 `"Why did it have to be snakes?"`
 
@@ -9,6 +9,8 @@
 I am currently working towards a v0.2 base model, refining the design to better align with my specific goals and hardware constraints.
 
 The v0.2 model has 323,268,881 parameters and a vocabulary of 48,913 tokens.
+
+I'm currently using a single `A100 PCIE` with 40 GB of video memory for training this model. I ended up only using 36.6 gb of the 40 gb available. I probably should have upped the batch size, but I didn't want to restart.
 
 ### Previous Release: Why Snakes - 120 Million v0.1 Base Model
 
@@ -178,7 +180,7 @@ model isn't versatile. It's effectively memorizing the training data.
 
 Example training:
 
-![img_1.png](img_1.png)
+![img_1.png](images/img_1.png)
 
 ### v0.1 Training Observations and Speculation
 
@@ -254,7 +256,7 @@ This enters a cli mode where you give text, and it completes the text. Nothing f
 
 Example usage:
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 ## Where is the RoPE?
 
