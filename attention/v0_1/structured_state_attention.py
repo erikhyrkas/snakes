@@ -15,12 +15,12 @@ class StructuredStateAttention(nn.Module):
     maintaining the ability to handle complex sequences. The `P`, `Q`, `R`, and `S` matrices in this class are
     initialized in a structured manner to ensure that the state transitions are computationally efficient and stable.
     """
-    def __init__(self, state_dim, input_dim, output_dim, block_size=32, dropout_rate=0.1):
+    def __init__(self, state_dim, input_dim, output_dim, block_length=32, dropout_rate=0.1):
         super(StructuredStateAttention, self).__init__()
         # Note: I think that state_dim must equal input_dim and output_dim.
         #  I didn't test with other options, but there might be shape issues if you try to diverge.
         self.state_dim = state_dim
-        self.block_size = block_size
+        self.block_length = block_length
         # Initializing structured matrices with small values ensures stability in the model, echoing the use of
         # semiseparable matrices in the Mamba-2 approach.
 
@@ -63,8 +63,8 @@ class StructuredStateAttention(nn.Module):
         q_expanded = self.Q.expand(batch_size, -1, -1)
         s_expanded = self.S.expand(batch_size, -1, -1)
 
-        for start in range(0, sequence_length, self.block_size):
-            end = min(start + self.block_size, sequence_length)
+        for start in range(0, sequence_length, self.block_length):
+            end = min(start + self.block_length, sequence_length)
             x_block = x[:, start:end, :]
 
             for t in range(x_block.shape[1]):

@@ -33,7 +33,7 @@ def interactive_interface():
         next_input = input("> ")
         if next_input == 'exit':
             break
-        result = interface.complete(next_input.strip(), top_p=1.0, max_tokens=32)
+        result = interface.complete(next_input.strip(), top_p=1.0, max_tokens=64)
         print(f"\n{result}")
 
 

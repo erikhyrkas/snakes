@@ -1,0 +1,240 @@
+Append to a file	def append_to_file(file_path: str, content: str) -> None
+Binary search in sorted list	def binary_search(items: List[Any], target: Any) -> int
+Calculate BMI	def calculate_bmi(weight_kg: float, height_m: float) -> float
+Calculate Fibonacci number using recursion	def fibonacci_recursive(n: int) -> int
+Calculate age from birthdate	def calculate_age(birthdate: date) -> int
+Calculate area of a circle	def circle_area(radius: float) -> float
+Calculate average of a list	def calculate_average(numbers: List[float]) -> float
+Calculate compound interest	def compound_interest(principal: float, rate: float, time: int, n: int) -> float
+Calculate distance between points	def calculate_distance(x1: float, y1: float, x2: float, y2: float) -> float
+Calculate dot product of vectors	def dot_product(v1: List[float], v2: List[float]) -> float
+Calculate edit distance between strings	def edit_distance(s1: str, s2: str) -> int
+Calculate factorial	def factorial(n: int) -> int
+Calculate factorial using recursion	def factorial_recursive(n: int) -> int
+Calculate fibonacci sequence	def fibonacci(n: int) -> List[int]
+Calculate nth Catalan number	def catalan_number(n: int) -> int
+Calculate perimeter of rectangle	def rectangle_perimeter(length: float, width: float) -> float
+Calculate sum of digits	def sum_of_digits(n: int) -> int
+Capitalize first letter of each word	def capitalize_words(s: str) -> str
+Check if list is sorted	def is_sorted(items: List[Any]) -> bool
+Check if matrix is symmetric	def is_symmetric_matrix(matrix: List[List[Any]]) -> bool
+Check if number is Armstrong number	def is_armstrong_number(n: int) -> bool
+Check if number is perfect number	def is_perfect_number(n: int) -> bool
+Check if number is perfect square	def is_perfect_square(n: int) -> bool
+Check if number is prime	def is_prime(n: int) -> bool
+Check if string contains substring	def contains_substring(s: str, substring: str) -> bool
+Check if string is palindrome	def is_palindrome(s: str) -> bool
+Check if string is valid parentheses	def is_valid_parentheses(s: str) -> bool
+Check if two strings are anagrams	def are_anagrams(s1: str, s2: str) -> bool
+Check if year is leap year	def is_leap_year(year: int) -> bool
+Compress string	def compress_string(s: str) -> str
+Convert HEX to RGB color	def hex_to_rgb(hex_color: str) -> Tuple[int, int, int]
+Convert HH:MM:SS to seconds	def hms_to_seconds(time_str: str) -> int
+Convert RGB to HEX color	def rgb_to_hex(r: int, g: int, b: int) -> str
+Convert binary to decimal	def binary_to_decimal(binary: str) -> int
+Convert celsius to fahrenheit	def celsius_to_fahrenheit(celsius: float) -> float
+Convert decimal to binary	def decimal_to_binary(n: int) -> str
+Convert fahrenheit to celsius	def fahrenheit_to_celsius(fahrenheit: float) -> float
+Convert seconds to HH:MM:SS	def seconds_to_hms(seconds: int) -> str
+Convert string to lowercase	def to_lowercase(s: str) -> str
+Convert string to uppercase	def to_uppercase(s: str) -> str
+Count vowels in a string	def count_vowels(s: str) -> int
+Count word frequency	def count_word_frequency(text: str) -> Dict[str, int]
+Decode ROT13 string	def rot13_decode(s: str) -> str
+Decompress string	def decompress_string(s: str) -> str
+Decrypt Caesar cipher text	def caesar_decrypt(text: str, shift: int) -> str
+Encode string to ROT13	def rot13_encode(s: str) -> str
+Encrypt text using Caesar cipher	def caesar_encrypt(text: str, shift: int) -> str
+Extract domain from URL	def extract_domain(url: str) -> str
+Find GCD of two numbers	def gcd(a: int, b: int) -> int
+Find LCM of two numbers	def lcm(a: int, b: int) -> int
+Find all combinations of a list	def list_combinations(items: List[Any]) -> List[List[Any]]
+Find all permutations of a string	def string_permutations(s: str) -> List[str]
+Find all prime factors of a number	def prime_factors(n: int) -> List[int]
+Find articulation points in graph	def find_articulation_points(graph: Dict[Any, List[Any]]) -> List[Any]
+Find bridge edges in graph	def find_bridges(graph: Dict[Any, List[Any]]) -> List[Tuple[Any, Any]]
+Find common elements in two lists	def find_common_elements(list1: List[Any], list2: List[Any]) -> List[Any]
+Find intersection of two lists	def find_intersection(list1: List[Any], list2: List[Any]) -> List[Any]
+Find kth largest element in array	def find_kth_largest(nums: List[int], k: int) -> int
+Find longest common prefix	def longest_common_prefix(strings: List[str]) -> str
+Find longest common subsequence	def longest_common_subsequence(s1: str, s2: str) -> str
+Find longest increasing subsequence	def longest_increasing_subsequence(arr: List[int]) -> List[int]
+Find longest palindromic substring	def longest_palindromic_substring(s: str) -> str
+Find lowest common ancestor in binary tree	def lowest_common_ancestor(root: TreeNode, p: TreeNode, q: TreeNode) -> TreeNode
+Find maximum in a list	def find_max(numbers: List[int]) -> int
+Find maximum subarray sum	def max_subarray_sum(arr: List[int]) -> int
+Find median of two sorted arrays	def median_of_sorted_arrays(nums1: List[int], nums2: List[int]) -> float
+Find minimum in a list	def find_min(numbers: List[int]) -> int
+Find second largest in list	def find_second_largest(numbers: List[int]) -> int
+Find shortest path in graph (Dijkstra's algorithm)	def dijkstra(graph: Dict[Any, Dict[Any, int]], start: Any, end: Any) -> List[Any]
+Find shortest supersequence	def shortest_supersequence(s1: str, s2: str) -> str
+Find strongly connected components in graph	def strongly_connected_components(graph: Dict[Any, List[Any]]) -> List[List[Any]]
+Find union of two lists	def find_union(list1: List[Any], list2: List[Any]) -> List[Any]
+Generate Fibonacci sequence	def fibonacci_sequence(n: int) -> List[int]
+Generate UUID	def generate_uuid() -> str
+Generate a password	def generate_password(length: int) -> str
+Generate all possible valid IP addresses	def generate_ip_addresses(s: str) -> List[str]
+Generate multiplication table	def multiplication_table(n: int) -> List[List[int]]
+Generate pascal's triangle	def pascal_triangle(n: int) -> List[List[int]]
+Generate random number	def generate_random_number(min_value: int, max_value: int) -> int
+Generate random password	def generate_password(length: int) -> str
+Implement A* search algorithm	def a_star_search(graph: Dict[Any, Dict[Any, int]], start: Any, goal: Any, heuristic: Callable) -> List[Any]
+Implement Aho-Corasick algorithm	class AhoCorasick: def __init__(self, patterns: List[str]): ... def search(self, text: str) -> List
+Implement B-tree	class BTree: def __init__(self, t: int): ... def insert(self, k: Any) -> None: ... def delete(self, k: Any) -> None: ...
+Implement Bellman-Ford algorithm	def bellman_ford(graph: Dict[Any, Dict[Any, int]], start: Any) -> Dict[Any, int]
+Implement Bloom filter	class BloomFilter: def __init__(self, size: int, hash_functions: List[Callable]): ... def add(self, item: Any) -> None: ... def contains(self, item: Any) -> bool: ...
+Implement Conway's Game of Life	def game_of_life(board: List[List[int]]) -> None
+Implement Fenwick tree (Binary Indexed Tree)	class FenwickTree: def __init__(self, n: int): ... def update(self, index: int, delta: int) -> None: ... def query(self, index: int) -> int: ...
+Implement Fisher-Yates shuffle	def fisher_yates_shuffle(arr: List[Any]) -> List[Any]
+Implement Floyd-Warshall algorithm	def floyd_warshall(graph: List[List[int]]) -> List[List[int]]
+Implement Huffman coding	def huffman_encoding(text: str) -> Tuple[Dict[str, str], str]
+Implement Kadane's algorithm	def kadanes_algorithm(arr: List[int]) -> int
+Implement Knuth-Morris-Pratt algorithm	def kmp_search(text: str, pattern: str) -> List[int]
+Implement LRU cache	class LRUCache: def __init__(self, capacity: int): ... def get(self, key: int) -> int: ... def put(self, key: int, value: int) -> None: ...
+Implement Rabin-Karp algorithm	def rabin_karp_search(text: str, pattern: str) -> List[int]
+Implement Sieve of Eratosthenes	def sieve_of_eratosthenes(n: int) -> List[int]
+Implement Union-Find data structure	class UnionFind: def __init__(self, n: int): ... def find(self, x: int) -> int: ... def union(self, x: int, y: int) -> None: ...
+Implement binary exponentiation	def binary_exponentiation(base: int, exponent: int) -> int
+Implement binary search tree	class BinarySearchTree: def __init__(self): ... def insert(self, data: Any) -> None: ... def search(self, data: Any) -> bool: ... def delete(self, data: Any) -> None: ...
+Implement breadth-first search	def bfs(graph: Dict[Any, List[Any]], start: Any) -> List[Any]
+Implement bubble sort	def bubble_sort(arr: List[int]) -> List[int]
+Implement depth-first search	def dfs(graph: Dict[Any, List[Any]], start: Any) -> List[Any]
+Implement hash table	class HashTable: def __init__(self): ... def set(self, key: Any, value: Any) -> None: ... def get(self, key: Any) -> Any: ... def remove(self, key: Any) -> None: ...
+Implement heap data structure	class Heap: def __init__(self): ... def push(self, item: Any) -> None: ... def pop(self) -> Any: ... def peek(self) -> Any: ...
+Implement insertion sort	def insertion_sort(arr: List[int]) -> List[int]
+Implement linked list	class LinkedList: def __init__(self): ... def append(self, data: Any) -> None: ... def prepend(self, data: Any) -> None: ... def delete(self, data: Any) -> None: ...
+Implement matrix multiplication	def matrix_multiply(matrix1: List[List[int]], matrix2: List[List[int]]) -> List[List[int]]
+Implement merge sort	def merge_sort(arr: List[int]) -> List[int]
+Implement queue data structure	class Queue: def __init__(self): ... def enqueue(self, item: Any) -> None: ... def dequeue(self) -> Any: ... def front(self) -> Any: ... def is_empty(self) -> bool: ...
+Implement quick sort	def quick_sort(arr: List[int]) -> List[int]
+Implement red-black tree	class RedBlackTree: def __init__(self): ... def insert(self, key: Any) -> None: ... def delete(self, key: Any) -> None: ...
+Implement regex matching	def regex_match(text: str, pattern: str) -> bool
+Implement segment tree	class SegmentTree: def __init__(self, arr: List[int]): ... def update(self, index: int, value: int) -> None: ... def query(self, left: int, right: int) -> int: ...
+Implement selection sort	def selection_sort(arr: List[int]) -> List[int]
+Implement skip list	class SkipList: def __init__(self): ... def insert(self, key: Any) -> None: ... def search(self, key: Any) -> bool: ... def delete(self, key: Any) -> None: ...
+Implement stack data structure	class Stack: def __init__(self): ... def push(self, item: Any) -> None: ... def pop(self) -> Any: ... def peek(self) -> Any: ... def is_empty(self) -> bool: ...
+Implement topological sort	def topological_sort(graph: Dict[Any, List[Any]]) -> List[Any]
+Implement trie data structure	class Trie: def __init__(self): ... def insert(self, word: str) -> None: ... def search(self, word: str) -> bool: ... def starts_with(self, prefix: str) -> bool: ...
+Join list into string	def join_list(items: List[str], delimiter: str = ' ') -> str
+Linear search in list	def linear_search(items: List[Any], target: Any) -> int
+Merge two sorted lists	def merge_sorted_lists(list1: List[Any], list2: List[Any]) -> List[Any]
+Read a file	def read_file(file_path: str) -> str
+Read user input	def get_user_input(prompt: str) -> str
+Remove duplicates from a list	def remove_duplicates(items: List[Any]) -> List[Any]
+Remove vowels from a string	def remove_vowels(s: str) -> str
+Replace substring in string	def replace_substring(s: str, old: str, new: str) -> str
+Reverse a list	def reverse_list(items: List[Any]) -> List[Any]
+Reverse a string	def reverse_string(s: str) -> str
+Rotate list by k positions	def rotate_list(items: List[Any], k: int) -> List[Any]
+Solve 0/1 Knapsack problem	def knapsack_01(values: List[int], weights: List[int], capacity: int) -> int
+Solve N-Queens problem	def solve_n_queens(n: int) -> List[List[str]]
+Solve Sudoku puzzle	def solve_sudoku(board: List[List[int]]) -> bool
+Solve Travelling Salesman Problem	def travelling_salesman(graph: Dict[Any, Dict[Any, int]]) -> Tuple[List[Any], int]
+Solve matrix chain multiplication	def matrix_chain_multiplication(dimensions: List[int]) -> int
+Solve maximum flow problem (Ford-Fulkerson algorithm)	def ford_fulkerson(graph: Dict[Any, Dict[Any, int]], source: Any, sink: Any) -> int
+Solve minimum spanning tree (Kruskal's algorithm)	def kruskal_mst(graph: Dict[Any, Dict[Any, int]]) -> List[Tuple[Any, Any, int]]
+Sort a list	def sort_list(items: List[Any], reverse: bool = False) -> List[Any]
+Split string into list	def split_string(s: str, delimiter: str = ' ') -> List[str]
+Transpose a matrix	def transpose_matrix(matrix: List[List[Any]]) -> List[List[Any]]
+Validate credit card number	def is_valid_credit_card(card_number: str) -> bool
+Validate email address	def is_valid_email(email: str) -> bool
+Write to a file	def write_file(file_path: str, content: str) -> None
+Manage a bank account with deposits and withdrawals	BankAccount
+Create a customizable to-do list	ToDoList
+Represent a book in a library system	Book
+Handle employee information and payroll	Employee
+Simulate a basic car with methods for accelerating and braking	Car
+Create a shopping cart for an e-commerce site	ShoppingCart
+Manage a student's grades and calculate GPA	Student
+Implement a simple game character with health and abilities	GameCharacter
+Create a customizable calendar event	CalendarEvent
+Handle file operations like read, write, and append	FileHandler
+Represent a geometric shape with area and perimeter calculations	Shape
+Manage a restaurant menu with items and prices	Menu
+Create a basic chat room with users and messages	ChatRoom
+Implement a deck of cards for card games	Deck
+Handle user authentication and permissions	User
+Create a customizable alarm clock	AlarmClock
+Manage a music playlist with songs and playback controls	Playlist
+Represent a blog post with comments and likes	BlogPost
+Implement a basic calculator with arithmetic operations	Calculator
+Handle currency conversion between different currencies	CurrencyConverter
+Create a customizable survey with questions and responses	Survey
+Manage a hotel room booking system	HotelRoom
+Implement a basic weather station with temperature and humidity	WeatherStation
+Create a simple inventory management system	Inventory
+Handle email composition and sending	EmailClient
+Represent a social media post with likes and shares	SocialMediaPost
+Implement a basic text editor with formatting options	TextEditor
+Create a customizable recipe with ingredients and instructions	Recipe
+Manage a pet in a virtual pet game	VirtualPet
+Handle flight bookings and seat assignments	FlightBooking
+Create a basic drawing tool with shapes and colors	DrawingTool
+Implement a simple address book with contacts	AddressBook
+Represent a movie with ratings and reviews	Movie
+Manage a simple budget with income and expenses	Budget
+Create a customizable quiz with questions and scoring	Quiz
+Handle product orders and shipping information	Order
+Implement a basic image processor with filters	ImageProcessor
+Create a simple task scheduler with reminders	TaskScheduler
+Manage a library catalog with books and borrowers	LibraryCatalog
+Represent a restaurant reservation system	Reservation
+Handle stock portfolio management and tracking	StockPortfolio
+Create a customizable form builder with various field types	FormBuilder
+Implement a basic chat bot with responses	ChatBot
+Manage a fitness tracker with exercises and calories	FitnessTracker
+Create a simple voting system for polls	VotingSystem
+Handle package tracking for a delivery service	PackageTracker
+Represent a board game with players and moves	BoardGame
+Implement a basic URL shortener	URLShortener
+Create a customizable resume builder	ResumeBuilder
+Manage a simple CMS for a website	ContentManagementSystem
+Handle appointment scheduling for a clinic	AppointmentScheduler
+Create a basic encryption/decryption tool	EncryptionTool
+Implement a simple network packet sniffer	PacketSniffer
+Represent a vehicle rental system	VehicleRental
+Manage a simple project management tool with tasks and deadlines	ProjectManager
+Create a customizable password generator	PasswordGenerator
+Handle file compression and decompression	FileCompressor
+Implement a basic web crawler	WebCrawler
+Create a simple music synthesizer with different instruments	MusicSynthesizer
+Manage a digital wallet for cryptocurrencies	DigitalWallet
+Represent a social network with friends and connections	SocialNetwork
+Handle timezone conversions for different locations	TimezoneConverter
+Create a customizable meme generator	MemeGenerator
+Implement a basic recommendation system	RecommendationEngine
+Manage a simple auction system with bidding	AuctionSystem
+Create a customizable workout planner	WorkoutPlanner
+Handle event ticketing and seat allocation	EventTicketing
+Represent a simple database management system	DatabaseManager
+Implement a basic spell checker	SpellChecker
+Create a customizable notification system	NotificationSystem
+Manage a simple email marketing campaign	EmailCampaign
+Handle data visualization for charts and graphs	DataVisualizer
+Create a basic machine learning model trainer	ModelTrainer
+Implement a simple version control system	VersionControl
+Represent a digital art canvas with layers	DigitalCanvas
+Manage a simple customer relationship management system	CRMSystem
+Create a customizable chatroom with multiple channels	ChatroomManager
+Handle natural language processing tasks	NLPProcessor
+Implement a basic web server	WebServer
+Create a simple game engine with sprites and collision detection	GameEngine
+Manage a digital asset management system	AssetManager
+Represent a simple neural network	NeuralNetwork
+Handle API requests and responses	APIClient
+Create a customizable dashboard for data analytics	AnalyticsDashboard
+Implement a basic load balancer for distributed systems	LoadBalancer
+Manage a simple continuous integration/deployment pipeline	CIPipeline
+Create a customizable chatbot with natural language understanding	NLUChatbot
+Handle geographic information system (GIS) data	GISProcessor
+Represent a simple blockchain with transactions	Blockchain
+Implement a basic recommendation system using collaborative filtering	CollaborativeFilter
+Create a customizable data ETL (Extract, Transform, Load) pipeline	ETLPipeline
+Manage a simple IoT device network	IoTNetwork
+Handle real-time data streaming and processing	StreamProcessor
+Create a basic augmented reality (AR) object placement system	ARObjectPlacer
+Implement a simple facial recognition system	FacialRecognition
+Represent a quantum computing circuit simulator	QuantumCircuit
+Manage a simple smart home automation system	SmartHomeController
+Create a customizable voice assistant	VoiceAssistant
+Handle sentiment analysis for text data	SentimentAnalyzer

@@ -15,14 +15,6 @@ from text_dataset import TextDataset
 from tokenizer import Tokenizer
 
 
-def get_dynamic_batch_size(max_batch_size, sequence_length):
-    return max(1, max_batch_size // (sequence_length // 32))
-
-
-def get_dynamic_sequence_length(max_sequence_length):
-    return random.randint(32, max_sequence_length)
-
-
 def pretty_time(seconds: float) -> str:
     if seconds < 60:
         return f"{seconds:0.3f} seconds"
@@ -235,9 +227,9 @@ def get_training_file_names(directory="training_data"):
     return file_names
 
 
-def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs, training_folder="training_data",
-                     patience=10,
-                     use_validation_split=True):
+def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs,
+                     training_folder="training_data", patience=10, use_validation_split=True,
+                     block_length=32):
     print(
         f"LR: {learning_rate} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
@@ -258,14 +250,14 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
 
     # DataLoader for batching (shuffle is done within the TextDataset)
     train_dataset = TextDataset(train_files, tokenizer, training_sequence_length, batch_size,
-                                cache_dir='./training_data_cache')
+                                cache_dir='./training_data_cache', block_length=block_length)
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
 
     if use_validation_split:
         val_loader = None
     else:
         val_dataset = TextDataset(val_files, tokenizer, training_sequence_length, batch_size,
-                                  cache_dir='./validation_data_cache')
+                                  cache_dir='./validation_data_cache', block_length=block_length)
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
     number_of_samples = len(train_dataset)
@@ -274,7 +266,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     vocab_size = tokenizer.vocab_size()
     print(f"Vocabulary size: {vocab_size}")
 
-    model = LanguageModel(tokenizer.vocab_size())
+    model = LanguageModel(tokenizer.vocab_size(), block_length=block_length)
     print(f"Number of parameters: {model.count_parameters()}")
 
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
@@ -368,19 +360,19 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
     TRAIN_FOLDER = "training_data"
 
-    # warm up. this helps with stability.
-    base_model_train(0.0005, 32, 150, 30, patience=2, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-
-    # we don't want to keep the model from warm up.
-    if os.path.exists("model.bin"):
-        os.remove("model.bin")
-
-    # we might have numerical instability, but we're determined.
     trained = False
     while not trained:
-        trained = base_model_train(0.0005, 128, 64, 400, patience=20, training_folder=TRAIN_FOLDER,
+        trained = base_model_train(0.0005, 32, 128, 30, patience=3, training_folder=TRAIN_FOLDER,
+                                   use_validation_split=False)
+
+    # we don't want to keep the model from warm up.
+    # if os.path.exists("model.bin"):
+    #     os.remove("model.bin")
+
+    # we might have numerical instability, but we're determined.
+    while not trained:
+        trained = base_model_train(0.0005, 96, 64, 200, patience=5, training_folder=TRAIN_FOLDER,
                                    use_validation_split=False)
 
     # base_model_train(0.0005, 512, 8, 20, patience=2, training_folder=TRAIN_FOLDER,
-    #                  use_validation_split=False)
+    #                  use_validation_split=False, block_length=64)
