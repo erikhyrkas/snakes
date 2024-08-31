@@ -359,7 +359,7 @@ def cleanup_old_bins(remove_tokenizer=False, clear_cache=False):
 
 def warmed_up() -> bool:
     base_path = get_base_path()
-    return os.path.exists(f"{base_path}model_checkpoint.bin")
+    return os.path.exists(f"{base_path}model.bin")
 
 
 def get_base_path():
@@ -380,12 +380,12 @@ if __name__ == "__main__":
         # first pass, let's try to get loss down and get numeric stability.
         # we might have numerical instability, but we're determined.
         while not trained:
-            trained = base_model_train(0.0005, 32, 64, 50, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0001, 32, 128, 30, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
 
     if warmed_up():
         # whether we are restarting training or not, we've done our best to warm up, so we'll try to train some long
         # sequences.
         while not trained:
-            trained = base_model_train(0.0001, 512, 3, 100, patience=2, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0001, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
