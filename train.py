@@ -1,6 +1,7 @@
 import math
 import os
 import random
+import sys
 import time
 from typing import Optional
 
@@ -47,7 +48,7 @@ def train_model(model, train_loader: DataLoader, val_loader: DataLoader, optimiz
         # Initialize GradScaler for mixed precision if using GPU
         scaler = torch.amp.GradScaler('cuda')
 
-    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    base_path = get_base_path()
     start_time = time.time()
 
     total_steps = len(train_loader)
@@ -218,7 +219,7 @@ def calculate_loss(accumulation_steps, criterion, masks, outputs, targets):
 
 
 def get_training_file_names(directory="training_data"):
-    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    base_path = get_base_path()
     file_names = []
     for filename in os.listdir(f"{base_path}{directory}"):
         if filename.endswith(".txt") or filename.endswith(".md"):
@@ -232,7 +233,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
                      block_length=32):
     print(
         f"LR: {learning_rate} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
-    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    base_path = get_base_path()
     model_path = f"{base_path}model.bin"
 
     tokenizer = train_or_load_tokenizer(training_folder)
@@ -269,7 +270,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     model = LanguageModel(tokenizer.vocab_size(), block_length=block_length)
     print(f"Number of parameters: {model.count_parameters()}")
 
-    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    base_path = get_base_path()
     if os.path.exists(f"{base_path}model_checkpoint.bin"):
         model.load_state_dict(torch.load(f"{base_path}model_checkpoint.bin", weights_only=False))
         print(f"Resumed training from {base_path}model_checkpoint.bin")
@@ -310,7 +311,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
 
 
 def train_or_load_tokenizer(training_folder, tokenizer_file_name='tokenizer.pkl'):
-    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    base_path = get_base_path()
     tokenizer_path = f"{base_path}{tokenizer_file_name}"
 
     print("Loading and tokenizing training data...")
@@ -336,43 +337,55 @@ def train_or_load_tokenizer(training_folder, tokenizer_file_name='tokenizer.pkl'
 
 
 def cleanup_old_bins(remove_tokenizer=False, clear_cache=False):
-    if os.path.exists("scheduler_checkpoint.bin"):
-        os.remove("scheduler_checkpoint.bin")
-    if os.path.exists("optimizer_checkpoint.bin"):
-        os.remove("optimizer_checkpoint.bin")
-    if os.path.exists("model_checkpoint.bin"):
-        os.remove("model_checkpoint.bin")
-    if os.path.exists("model.bin"):
-        os.remove("model.bin")
-    if clear_cache and os.path.exists("fine_tuning"):
-        os.removedirs("fine_tuning")
-    if clear_cache and os.path.exists("training_data_cache"):
-        os.removedirs("training_data_cache")
-    if clear_cache and os.path.exists("validation_data_cache"):
-        os.removedirs("validation_data_cache")
-    if remove_tokenizer and os.path.exists("tokenizer.pkl"):
-        os.remove("tokenizer.pkl")
+    print("Cleaning up...")
+    base_path = get_base_path()
+    if os.path.exists(f"{base_path}scheduler_checkpoint.bin"):
+        os.remove(f"{base_path}scheduler_checkpoint.bin")
+    if os.path.exists(f"{base_path}optimizer_checkpoint.bin"):
+        os.remove(f"{base_path}optimizer_checkpoint.bin")
+    if os.path.exists(f"{base_path}model_checkpoint.bin"):
+        os.remove(f"{base_path}model_checkpoint.bin")
+    if os.path.exists(f"{base_path}model.bin"):
+        os.remove(f"{base_path}model.bin")
+    if clear_cache and os.path.exists(f"{base_path}fine_tuning"):
+        os.removedirs(f"{base_path}fine_tuning")
+    if clear_cache and os.path.exists(f"{base_path}training_data_cache"):
+        os.removedirs(f"{base_path}training_data_cache")
+    if clear_cache and os.path.exists(f"{base_path}validation_data_cache"):
+        os.removedirs(f"{base_path}validation_data_cache")
+    if remove_tokenizer and os.path.exists(f"{base_path}tokenizer.pkl"):
+        os.remove(f"{base_path}tokenizer.pkl")
+
+
+def warmed_up() -> bool:
+    base_path = get_base_path()
+    return os.path.exists(f"{base_path}model_checkpoint.bin")
+
+
+def get_base_path():
+    base_path = os.getenv("YS_LLM_BASE_PATH", "./")
+    return base_path
 
 
 if __name__ == "__main__":
-    # cleanup_old_bins()
+    if len(sys.argv) > 1 and sys.argv[1] == "clean":
+        cleanup_old_bins()
 
     train_or_load_tokenizer("training_data")
     TRAIN_FOLDER = "training_data"
 
     trained = False
-    while not trained:
-        trained = base_model_train(0.0005, 32, 128, 30, patience=3, training_folder=TRAIN_FOLDER,
-                                   use_validation_split=False)
 
-    # we don't want to keep the model from warm up.
-    # if os.path.exists("model.bin"):
-    #     os.remove("model.bin")
+    if not warmed_up():
+        # first pass, let's try to get loss down and get numeric stability.
+        # we might have numerical instability, but we're determined.
+        while not trained:
+            trained = base_model_train(0.0005, 32, 64, 50, patience=3, training_folder=TRAIN_FOLDER,
+                                       use_validation_split=False)
 
-    # we might have numerical instability, but we're determined.
-    while not trained:
-        trained = base_model_train(0.0005, 96, 64, 200, patience=5, training_folder=TRAIN_FOLDER,
-                                   use_validation_split=False)
-
-    # base_model_train(0.0005, 512, 8, 20, patience=2, training_folder=TRAIN_FOLDER,
-    #                  use_validation_split=False, block_length=64)
+    if warmed_up():
+        # whether we are restarting training or not, we've done our best to warm up, so we'll try to train some long
+        # sequences.
+        while not trained:
+            trained = base_model_train(0.0001, 512, 3, 100, patience=2, training_folder=TRAIN_FOLDER,
+                                       use_validation_split=False)

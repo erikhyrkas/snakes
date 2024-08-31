@@ -31,7 +31,7 @@ class SSDAttention(nn.Module):
         - Input tensor: (batch_size, sequence_length, input_dim)
         - Output tensor: (batch_size, sequence_length, output_dim)
     """
-    def __init__(self, input_dim, state_dim, output_dim, block_length=32, number_of_heads=8):
+    def __init__(self, input_dim, state_dim, output_dim, block_length, number_of_heads):
         super(SSDAttention, self).__init__()
 
         self.block_length = block_length
@@ -49,11 +49,11 @@ class SSDAttention(nn.Module):
 
         # Initialize the learnable parameters: attention_weights, state_transformation_weights,
         # and output_transformation_weights
-        self.attention_weights = nn.Parameter(torch.randn(1, 1, 1, self.number_of_heads) * 0.05 + 0.05)
+        self.attention_weights = nn.Parameter(torch.randn(1, 1, 1, self.number_of_heads) * 0.1 + 0.01)
         self.state_transformation_weights = nn.Parameter(
-            torch.randn(1, 1, self.number_of_heads, self.state_dim) * 0.05 + 0.05)
+            torch.randn(1, 1, self.number_of_heads, self.state_dim) * 0.1 + 0.01)
         self.output_transformation_weights = nn.Parameter(
-            torch.randn(1, 1, self.number_of_heads, self.state_dim) * 0.05 + 0.05)
+            torch.randn(1, 1, self.number_of_heads, self.state_dim) * 0.1 + 0.01)
 
         # Linear layer to project the attention output to the desired output dimension
         self.output_projection = nn.Linear(input_dim, self.output_dim)

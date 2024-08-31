@@ -15,7 +15,7 @@ class StructuredStateAttention(nn.Module):
     maintaining the ability to handle complex sequences. The `P`, `Q`, `R`, and `S` matrices in this class are
     initialized in a structured manner to ensure that the state transitions are computationally efficient and stable.
     """
-    def __init__(self, state_dim, input_dim, output_dim, block_length=32, dropout_rate=0.1):
+    def __init__(self, state_dim, input_dim, output_dim, block_length, dropout_rate):
         super(StructuredStateAttention, self).__init__()
         # Note: I think that state_dim must equal input_dim and output_dim.
         #  I didn't test with other options, but there might be shape issues if you try to diverge.

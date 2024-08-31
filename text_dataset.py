@@ -42,17 +42,24 @@ class TextDataset(IterableDataset):
         # Pre-generate random sequence lengths for all batches
         remaining_tokens = total_tokens
         while remaining_tokens > 0:
-            sequence_length = random.randint(self.block_length, self.max_sequence_length) if self.block_length < self.max_sequence_length else self.max_sequence_length
+            sequence_length = random.randint(self.block_length,
+                                             self.max_sequence_length) if self.block_length < self.max_sequence_length else self.max_sequence_length
             sequence_length = sequence_length - (sequence_length % self.block_length)
             total_tokens_used = sequence_length * self.batch_size
             if total_tokens_used > remaining_tokens:
                 break
             self.sequence_lengths.append(sequence_length)
             remaining_tokens -= total_tokens_used
+        # It helps training stability if we use short sequences early in training
+        # However, shuffling helps expose different data sequences, which can be helpful in the long run.
+        self.sequence_lengths.sort()
+        self.first_pass = True
 
     def __iter__(self):
-        if self.shuffle_files:
+        if self.shuffle_files and not self.first_pass:
             random.shuffle(self.sequence_lengths)
+        else:
+            self.first_pass = False
         sequence_lengths = iter(self.sequence_lengths)
         sequence_length = next(sequence_lengths)
         buffer = []
