@@ -46,7 +46,7 @@ class TextDataset(IterableDataset):
                                              self.max_sequence_length) if self.block_length < self.max_sequence_length else self.max_sequence_length
             sequence_length = sequence_length - (sequence_length % self.block_length)
             total_tokens_used = sequence_length * self.batch_size
-            if total_tokens_used > remaining_tokens:
+            if total_tokens_used > remaining_tokens or remaining_tokens < self.batch_size * self.block_length:
                 break
             self.sequence_lengths.append(sequence_length)
             remaining_tokens -= total_tokens_used
@@ -88,8 +88,8 @@ class TextDataset(IterableDataset):
                 if buffer_length >= self.batch_size * sequence_length:
                     # Split buffer into X (inputs) and Y (targets)
                     result_len = len(buffer) - sequence_length
-                    if result_len == 0:
-                        return
+                    if result_len <= 0:
+                        continue  # Skip this batch since it doesn't have enough data
                     x = [buffer[i:i + sequence_length] for i in range(0, result_len)]
                     y = [buffer[i + 1:i + 1 + sequence_length] for i in range(0, result_len)]
 
