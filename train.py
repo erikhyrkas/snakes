@@ -369,7 +369,7 @@ if __name__ == "__main__":
     TRAIN_FOLDER = "training_data"
 
     # warm up. this helps with stability.
-    base_model_train(0.0005, 32, 64, 30, patience=10, training_folder=TRAIN_FOLDER,
+    base_model_train(0.0005, 32, 150, 30, patience=2, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
 
     # we don't want to keep the model from warm up.
@@ -379,5 +379,8 @@ if __name__ == "__main__":
     # we might have numerical instability, but we're determined.
     trained = False
     while not trained:
-        trained = base_model_train(0.0005, 512, 8, 400, patience=20, training_folder=TRAIN_FOLDER,
+        trained = base_model_train(0.0005, 128, 64, 400, patience=20, training_folder=TRAIN_FOLDER,
                                    use_validation_split=False)
+
+    # base_model_train(0.0005, 512, 8, 20, patience=2, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)

@@ -25,7 +25,8 @@ def preprocess_and_save_tokens(files, tokenizer, cache_dir):
 
 
 class TextDataset(IterableDataset):
-    def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, block_size=32, cache_dir="./cache_dir",
+    def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, block_size=32,
+                 cache_dir="./cache_dir",
                  shuffle_files=True):
         self.block_size = block_size
         self.files = [os.path.join(cache_dir, os.path.basename(f) + ".npy") for f in original_files]
@@ -83,8 +84,11 @@ class TextDataset(IterableDataset):
                 # If the buffer is full, yield the batch
                 if buffer_length >= self.batch_size * sequence_length:
                     # Split buffer into X (inputs) and Y (targets)
-                    x = [buffer[i:i + sequence_length] for i in range(0, len(buffer) - sequence_length)]
-                    y = [buffer[i + 1:i + 1 + sequence_length] for i in range(0, len(buffer) - sequence_length)]
+                    result_len = len(buffer) - sequence_length
+                    if result_len == 0:
+                        return
+                    x = [buffer[i:i + sequence_length] for i in range(0, result_len)]
+                    y = [buffer[i + 1:i + 1 + sequence_length] for i in range(0, result_len)]
 
                     for i in range(self.batch_size):
                         sequences_returned += 1
