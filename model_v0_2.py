@@ -4,24 +4,6 @@ import torch.nn as nn
 from attention.v0_2.ssd_attention import SSDAttention
 
 
-# Embedding: 960
-# State: 16,384
-# Output: 768
-# block length: 32
-# heads: 8
-# Vocab: 56,668
-# Parameters: 98,980,708
-# Trained on an A100 (80 gb of memory)
-# warm up training for stability
-# learning rate: 0.00005
-# sequence length: 32
-# batch size: 128
-# patience: 3
-# final
-# learning rate: 0.00005
-# sequence length: 512
-# batch size: 8
-# patience: 3
 class LanguageModel(nn.Module):
     def __init__(self, vocab_size, embedding_dim=960, state_dim=16384, output_dim=768,
                  block_length=32, number_of_heads=8, dropout=0.1):

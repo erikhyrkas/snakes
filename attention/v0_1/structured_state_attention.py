@@ -8,11 +8,11 @@ class StructuredStateAttention(nn.Module):
     This was the original attention mechanism of YS-120M-base-v0.1.
     It was trained with state_dim=448, input_dim=448, output_dim=448
 
-    The `StructuredStateAttention` class is a custom implementation inspired by the principles of state space models (SSMs) and
-    attention mechanisms discussed in the Mamba-2 architecture. This class leverages structured state space duality (
-    SSD), which connects the efficiency of SSMs with the expressiveness of attention mechanisms. Key techniques
-    include the use of semiseparable matrices and block decompositions, enabling efficient computation while
-    maintaining the ability to handle complex sequences. The `P`, `Q`, `R`, and `S` matrices in this class are
+    The `StructuredStateAttention` class is a custom implementation inspired by the principles of state space models
+    (SSMs) and attention mechanisms discussed in the Mamba-2 architecture. This class leverages structured state
+    space duality (SSD), which connects the efficiency of SSMs with the expressiveness of attention mechanisms. Key
+    techniques include the use of semiseparable matrices and block decompositions, enabling efficient computation
+    while maintaining the ability to handle complex sequences. The `P`, `Q`, `R`, and `S` matrices in this class are
     initialized in a structured manner to ensure that the state transitions are computationally efficient and stable.
     """
     def __init__(self, state_dim, input_dim, output_dim, block_length, dropout_rate):

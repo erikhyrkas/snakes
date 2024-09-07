@@ -4,19 +4,20 @@
 
 `"Why did it have to be snakes?"`
 
-## Current Development: Why Snakes - 323M v0.2 Base Model
+## Current Development: Why Snakes - ?? Million v0.3 Base Model
 
-I am currently working towards a v0.2 base model, refining the design to better align with my specific goals and hardware constraints.
+## Previous Releases: 
+### Why Snakes - 99 Million v0.2 Base Model
 
-The v0.2 model has 323,268,881 parameters and a vocabulary of 48,913 tokens.
+See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory.
 
-I'm currently using a single `A100 PCIE` with 40 GB of video memory for training this model. I ended up only using 36.6 gb of the 40 gb available. I probably should have upped the batch size, but I didn't want to restart.
+The v0.1 model was better.
 
-### Previous Release: Why Snakes - 120 Million v0.1 Base Model
+### Why Snakes - 120 Million v0.1 Base Model
 
 The "Why Snakes" 120 Million v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism. You can find it on the release page of the GitHub page.
 
-### Design Philosophy and Goals:
+## Design Philosophy and Goals:
 
 Mamba 2 integrates traditional transformer attention into SSM-based attention, but that approach does not align with my objectives. There are still valuable learnings from their paper and findings, though. 
 
@@ -72,7 +73,7 @@ The v0.2 base model aims to fully leverage the advantages of SSMs while avoiding
 
 The all versions of the model will train on cpu, but is a little slow. My suggestion if you only have a CPU is to limit the vocabulary and sequence length.
 
-If you have cuda:
+If you have cuda (look here for exact command: https://pytorch.org/get-started/locally/):
 
 ```
 pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
@@ -182,6 +183,49 @@ Example training:
 
 ![img_1.png](images/img_1.png)
 
+## Run
+
+Run the model with the command:
+
+```
+python run.py
+```
+
+This enters a cli mode where you give text, and it completes the text. Nothing fancy.
+
+Example usage:
+
+![img.png](images/img.png)
+
+## Where is the Positional Embedding?
+
+When you look at the simplicity of the model, your first reaction might be, "Erik forgot the positional embeddings!
+Where is RoPE?"
+
+It turns out that SSMs naturally keep some amount of positional information, so you don't need to do specific positional
+embeddings!
+
+Maybe our understanding will change in the future, or maybe there's a different way to improve performance, but I found
+that I really didn't need them. 
+
+The paper specifically calls out using positional embedding to allow concurrent operations efficiently, but in my 
+experiments, the results only were worse. It's entirely possible that I made a mistake.
+
+## Related Details
+
+Mamba 2 paper: https://arxiv.org/pdf/2405.21060
+
+HiPPO initialization paper: https://arxiv.org/pdf/2206.12037
+
+Blog on Mamba 2:
+
+* https://tridao.me/blog/2024/mamba2-part1-model/
+* https://tridao.me/blog/2024/mamba2-part2-theory/
+* https://tridao.me/blog/2024/mamba2-part3-algorithm/
+* https://tridao.me/blog/2024/mamba2-part4-systems/
+
+## Observations and Speculation
+
 ### v0.1 Training Observations and Speculation
 
 * Memory Used: I looked at how much GPU was being used at during training and wrote it down.
@@ -244,119 +288,19 @@ I got training to start running on an L4 TPU with 296 million parameters, but wi
 not only be unbearably slow, I imagine that it'd eventually be numerically unstable. Any batch size less than 64 has
 been problematic.
 
-## Run
+### v0.2 Training Observations and Speculation
 
-Run the model with the command:
-
-```
-python run.py
-```
-
-This enters a cli mode where you give text, and it completes the text. Nothing fancy.
-
-Example usage:
-
-![img.png](images/img.png)
-
-## Where is the RoPE?
-
-When you look at the simplicity of the model, your first reaction might be, "Erik forgot the positional embeddings!
-Where is RoPE?"
-
-It turns out that SSMs naturally keep some amount of positional information, so you don't need to do specific positional
-embeddings!
-
-Maybe our understanding will change in the future, or maybe there's a different way to improve performance, but I found
-that I really didn't need them.
-
-## Related Details
-
-Mamba 2 paper: https://arxiv.org/pdf/2405.21060
-
-HiPPO initialization paper: https://arxiv.org/pdf/2206.12037
-
-Blog on Mamba 2:
-
-* https://tridao.me/blog/2024/mamba2-part1-model/
-* https://tridao.me/blog/2024/mamba2-part2-theory/
-* https://tridao.me/blog/2024/mamba2-part3-algorithm/
-* https://tridao.me/blog/2024/mamba2-part4-systems/
-
-
-
-## YS-120-BASE-v0.1 Training Data
-
-* [llama-blog-0.md](training_data%2Fllama-blog-0.md)
-* [llama-blog-1.md](training_data%2Fllama-blog-1.md)
-* [llama-blog-2.md](training_data%2Fllama-blog-2.md)
-* [llama-blog-3.md](training_data%2Fllama-blog-3.md)
-* [llama-blog-4.md](training_data%2Fllama-blog-4.md)
-* [llama-blog-5.md](training_data%2Fllama-blog-5.md)
-* [llama-blog-6.md](training_data%2Fllama-blog-6.md)
-* [llama-blog-7.md](training_data%2Fllama-blog-7.md)
-* [llama-blog-8.md](training_data%2Fllama-blog-8.md)
-* [llama-blog-9.md](training_data%2Fllama-blog-9.md)
-* [llama-blog-10.md](training_data%2Fllama-blog-10.md)
-* [llama-scripts-0.md](training_data%2Fllama-scripts-0.md)
-* [llama-scripts-1.md](training_data%2Fllama-scripts-1.md)
-* [llama-sentences-0.md](training_data%2Fllama-sentences-0.md)
-* [llama-sentences-1.md](training_data%2Fllama-sentences-1.md)
-* [llama-sentences-2.md](training_data%2Fllama-sentences-2.md)
-* [llama-sentences-3.md](training_data%2Fllama-sentences-3.md)
-* [llama-sentences-4.md](training_data%2Fllama-sentences-4.md)
-* [llama-sentences-5.md](training_data%2Fllama-sentences-5.md)
-* [llama-sentences-6.md](training_data%2Fllama-sentences-6.md)
-* [llama-sentences-7.md](training_data%2Fllama-sentences-7.md)
-* [llama-sentences-8.md](training_data%2Fllama-sentences-8.md)
-* [llama-sentences-9.md](training_data%2Fllama-sentences-9.md)
-* [llama-sentences-10.md](training_data%2Fllama-sentences-10.md)
-* [llama-sentences-11.md](training_data%2Fllama-sentences-11.md)
-* [llama-sentences-12.md](training_data%2Fllama-sentences-12.md)
-* [llama-sentences-13.md](training_data%2Fllama-sentences-13.md)
-* [llama-sentences-14.md](training_data%2Fllama-sentences-14.md)
-* [llama-stories.md](training_data%2Fllama-stories.md)
-* [llama-stories-0.md](training_data%2Fllama-stories-0.md)
-* [llama-stories-1.md](training_data%2Fllama-stories-1.md)
-* [llama-stories-2.md](training_data%2Fllama-stories-2.md)
-* [llama-stories-3.md](training_data%2Fllama-stories-3.md)
-* [llama-stories-4.md](training_data%2Fllama-stories-4.md)
-* [llama-stories-5.md](training_data%2Fllama-stories-5.md)
-* [llama-stories-6.md](training_data%2Fllama-stories-6.md)
-* [llama-stories-7.md](training_data%2Fllama-stories-7.md)
-* [llama-stories-8.md](training_data%2Fllama-stories-8.md)
-* [llama-stories-9.md](training_data%2Fllama-stories-9.md)
-* [llama-stories-10.md](training_data%2Fllama-stories-10.md)
-* [llama-stories-11.md](training_data%2Fllama-stories-11.md)
-* [llama-stories-12.md](training_data%2Fllama-stories-12.md)
-* [llama-stories-13.md](training_data%2Fllama-stories-13.md)
-* [llama-stories-14.md](training_data%2Fllama-stories-14.md)
-* [llama-stories-15.md](training_data%2Fllama-stories-15.md)
-* [llama-stories-16.md](training_data%2Fllama-stories-16.md)
-* [llama-stories-17.md](training_data%2Fllama-stories-17.md)
-* [llama-stories-18.md](training_data%2Fllama-stories-18.md)
-* [llama-synonyms-0.md](training_data%2Fllama-synonyms-0.md)
-* [llama-synonyms-1.md](training_data%2Fllama-synonyms-1.md)
-* [llama-synonyms-2.md](training_data%2Fllama-synonyms-2.md)
-* [llama-synonyms-3.md](training_data%2Fllama-synonyms-3.md)
-* [llama-synonyms-4.md](training_data%2Fllama-synonyms-4.md)
-* [llama-synonyms-5.md](training_data%2Fllama-synonyms-5.md)
-* [llama-synonyms-6.md](training_data%2Fllama-synonyms-6.md)
-* [llama-synonyms-7.md](training_data%2Fllama-synonyms-7.md)
-* [llama-synonyms-8.md](training_data%2Fllama-synonyms-8.md)
-* [llama-synonyms-9.md](training_data%2Fllama-synonyms-9.md)
-* [llama-synonyms-10.md](training_data%2Fllama-synonyms-10.md)
-* [llama-synonyms-11.md](training_data%2Fllama-synonyms-11.md)
-* [llama-synonyms-12.md](training_data%2Fllama-synonyms-12.md)
-* [llama-synonyms-13.md](training_data%2Fllama-synonyms-13.md)
-* [llama-synonyms-14.md](training_data%2Fllama-synonyms-14.md)
-* [llama-wiki-0.md](training_data%2Fllama-wiki-0.md)
-* [llama-wiki-1.md](training_data%2Fllama-wiki-1.md)
-* [llama-wiki-2.md](training_data%2Fllama-wiki-2.md)
-* [llama-wiki-3.md](training_data%2Fllama-wiki-3.md)
-* [llama-wiki-4.md](training_data%2Fllama-wiki-4.md)
-* [llama-wiki-5.md](training_data%2Fllama-wiki-5.md)
-* [llama-wiki-6.md](training_data%2Fllama-wiki-6.md)
-* [llama-wiki-7.md](training_data%2Fllama-wiki-7.md)
-* [llama-wiki-8.md](training_data%2Fllama-wiki-8.md)
-* [llama-wiki-9.md](training_data%2Fllama-wiki-9.md)
-* [llama-wiki-10.md](training_data%2Fllama-wiki-10.md)
+* I really struggled with numeric stability. It seemed fine on my machine before beginning training with a larger 
+dataset, but it became a constant battle to keep training.
+* I needed a lot of memory just for batch size -- to help stabilize training, which meant the overall model 
+ parameters was smaller than the first version.
+* Grouped query value made things more unstable and I had to abandon it, but I'd like to consider it in the future.
+* I built a custom dataset loader that uses variable sequences lengths -- each batch gets a different length, to 
+ help train the model to understand longer and shorter sequences. This worked, as long as I trained the short 
+ sequences first during the first epoch -- otherwise I'd bump into numerical instability again. I'm not sure if 
+ doing variable sequence length was a great idea. It created a lot of complications. I think my rationale for 
+ it may have been flawed.
+* I put a lot of effort into ensuring that the attention block could have embedding and output dimensions that 
+ didn't match the attention dimensions, and that was likely a complete waste of energy as well.
+* Training on complicated patterns in the early iterations is inefficient. I think in the future, I'll get the loss to 
+ converge fairly low and then do a second round of training with more complex training data.

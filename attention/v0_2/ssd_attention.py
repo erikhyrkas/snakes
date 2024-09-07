@@ -4,6 +4,25 @@ import torch.nn.functional as F
 import math
 
 
+# some notes from training v0.2
+# Embedding: 960
+# State: 16,384
+# Output: 768
+# block length: 32
+# heads: 8
+# Vocab: 56,668
+# Parameters: 98,980,708
+# Trained on an A100 (80 gb of memory)
+# warm up training for stability
+# learning rate: 0.00005
+# sequence length: 32
+# batch size: 128
+# patience: 3
+# final
+# learning rate: 0.00005
+# sequence length: 512
+# batch size: 8
+# patience: 3
 class SSDAttention(nn.Module):
     """
     SSDAttention implements a custom attention mechanism inspired by the Mamba 2 paper. This implementation

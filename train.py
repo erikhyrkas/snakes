@@ -11,7 +11,7 @@ from torch import optim
 from torch.utils.data import DataLoader
 
 from early_stopping import EarlyStopping
-from model import LanguageModel
+from model_v0_2 import LanguageModel
 from text_dataset import TextDataset
 from tokenizer import Tokenizer
 
@@ -379,33 +379,18 @@ if __name__ == "__main__":
     if not warmed_up():
         # first pass, let's try to get loss down and get numeric stability.
         # we might have numerical instability, but we're determined.
-        count = 0
+        count = 0  # we might have to retry if we bump into numeric instability. This is hacky, but effectively what I'd do by hand.
         while not trained and count < 3:
-            trained = base_model_train(0.0001, 32, 128, 5, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0005, 32, 128, 5, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
             if not trained:
-                trained = base_model_train(0.00001, 64, 64, 5, patience=3, training_folder=TRAIN_FOLDER,
+                trained = base_model_train(0.0005, 64, 64, 5, patience=3, training_folder=TRAIN_FOLDER,
                                            use_validation_split=False)
             count += 1
 
     TRAIN_FOLDER = "training_data"
     if warmed_up():
-        count = 0
-        trained = False
-        while not trained and count < 3:
-            trained = base_model_train(0.00001, 64, 64, 5, patience=3, training_folder=TRAIN_FOLDER,
-                                       use_validation_split=False)
-            if not trained:
-                trained = base_model_train(0.00001, 128, 64, 5, patience=3, training_folder=TRAIN_FOLDER,
-                                           use_validation_split=False)
-            if not trained:
-                trained = base_model_train(0.00001, 256, 32, 5, patience=3, training_folder=TRAIN_FOLDER,
-                                           use_validation_split=False)
-
-            count += 1
-        # whether we are restarting training or not, we've done our best to warm up, so we'll try to train some long
-        # sequences.
         trained = False
         while not trained:
-            trained = base_model_train(0.00001, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0005, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
