@@ -374,23 +374,41 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
     TRAIN_FOLDER = "small_training_data"
 
-    trained = False
-
     if not warmed_up():
         # first pass, let's try to get loss down and get numeric stability.
         # we might have numerical instability, but we're determined.
-        count = 0  # we might have to retry if we bump into numeric instability. This is hacky, but effectively what I'd do by hand.
+        # we retry if we bump into numeric instability. This is hacky, but effectively what I'd do by hand.
+        trained = False
+        count = 0
         while not trained and count < 3:
-            trained = base_model_train(0.0005, 32, 128, 5, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0005, 32, 84, 5, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
-            if not trained:
-                trained = base_model_train(0.0005, 64, 64, 5, patience=3, training_folder=TRAIN_FOLDER,
-                                           use_validation_split=False)
+            count += 1
+
+        trained = False
+        count = 0
+        while not trained and count < 3:
+            trained = base_model_train(0.0005, 64, 32, 5, patience=3, training_folder=TRAIN_FOLDER,
+                                       use_validation_split=False)
+            count += 1
+
+
+        trained = False
+        count = 0
+        while not trained and count < 3:
+            trained = base_model_train(0.0005, 96, 40, 5, patience=3, training_folder=TRAIN_FOLDER,
+                                       use_validation_split=False)
             count += 1
 
     TRAIN_FOLDER = "training_data"
     if warmed_up():
+    #     trained = False
+    #     while not trained:
+    #         trained = base_model_train(0.0005, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
+    #                                    use_validation_split=False)
         trained = False
-        while not trained:
-            trained = base_model_train(0.0005, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
+        count = 0
+        while not trained and count < 3:
+            trained = base_model_train(0.0005, 64, 32, 100, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
+            count += 1
