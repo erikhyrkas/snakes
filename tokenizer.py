@@ -1,6 +1,5 @@
 import pickle
 import re
-from time import sleep
 
 DEBUG_TOKENIZER = False
 
@@ -93,7 +92,6 @@ class Tokenizer:
                 continue
             if DEBUG_TOKENIZER:
                 print(f"Processing token: {token}")
-            # sleep(0)
             if '\n' in token:
                 result.append('<newline>')
             elif token.isspace():
@@ -118,13 +116,12 @@ class Tokenizer:
             print(f"Final token list: {result}")
         return result
 
-    def tokenize(self, text):
+    def encode(self, text):
         if not self.initialized:
             self._initialize_vocabulary()
         tokens = []
         words = self.to_words(text)
         for word in words:
-            # sleep(0)
             if word in self.word_to_index:
                 tokens.append(self.word_to_index[word])
             else:
@@ -137,7 +134,7 @@ class Tokenizer:
                         print(f"Character '{letter}' wasn't in vocabulary. Skipping!")
         return tokens
 
-    def detokenize(self, tokens):
+    def decode(self, tokens):
         text = ''
         capitalize_next = False
         shout_next = False
@@ -204,9 +201,9 @@ def example_tokenize():
     documents = ["Hello world\nthis is a Test", "Hello there", "break <start>dancing<end><start>"]
     for document in documents:
         tokenizer.learn_new_vocab(document)
-    tokens = tokenizer.tokenize("hello 1980 <start>Test ërik's world<start><end> <html> Erik<start>")
+    tokens = tokenizer.encode("hello 1980 <start>Test ërik's world<start><end> <html> Erik<start>")
     print("Tokens:", tokens)
-    print("Detokenized:", tokenizer.detokenize(tokens))
+    print("Decoded:", tokenizer.decode(tokens))
     print("Vocab Size:", tokenizer.vocab_size())
     tokenizer.print_vocabulary()
 
@@ -242,10 +239,10 @@ def run_tokenizer_tests():
     for idx, test in enumerate(test_cases):
         print(f"Test Case {idx + 1}:")
         print(f"Original: {test}")
-        tokens = tokenizer.tokenize(test)
+        tokens = tokenizer.encode(test)
         print(f"Tokens: {tokens}")
-        detokenized_text = tokenizer.detokenize(tokens)
-        print(f"Detokenized: {detokenized_text}")
+        decode_text = tokenizer.decode(tokens)
+        print(f"Decoded: {decode_text}")
         print("-" * 80)
 
 

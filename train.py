@@ -11,7 +11,7 @@ from torch import optim
 from torch.utils.data import DataLoader
 
 from early_stopping import EarlyStopping
-from model_v0_2 import LanguageModel
+from model_v0_2 import LanguageModel #, Config
 from text_dataset import TextDataset
 from tokenizer import Tokenizer
 
@@ -33,7 +33,7 @@ def pretty_time(seconds: float) -> str:
     return f"{days}:{hours:02d}:{minutes:02d}:{seconds:02d} days"
 
 
-def train_model(model, train_loader: DataLoader, val_loader: DataLoader, optimizer, criterion, scheduler, epochs=100,
+def train_model(model, train_loader: DataLoader, val_loader: Optional[DataLoader], optimizer, criterion, scheduler, epochs=100,
                 max_grad_norm=1.0, patience=5, accumulation_steps=4):
     print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
@@ -65,7 +65,7 @@ def train_model(model, train_loader: DataLoader, val_loader: DataLoader, optimiz
             epoch_loss = cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
                                    train_loader, total_steps, scheduler)
 
-        if val_loader:
+        if val_loader is not None:
             model.eval()
             if device_name == "cuda":
                 val_loss = cuda_validate(criterion, device, model, val_loader)
@@ -229,10 +229,10 @@ def get_training_file_names(directory="training_data"):
 
 
 def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs,
-                     training_folder="training_data", patience=10, use_validation_split=True,
-                     block_length=32):
+                     training_folder="training_data", patience=10, use_validation_split: bool =True):
     print(
         f"LR: {learning_rate} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
+    print(f"Use Validation Split: {use_validation_split}")
     base_path = get_base_path()
     model_path = f"{base_path}model.bin"
 
@@ -251,14 +251,14 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
 
     # DataLoader for batching (shuffle is done within the TextDataset)
     train_dataset = TextDataset(train_files, tokenizer, training_sequence_length, batch_size,
-                                cache_dir='./training_data_cache', block_length=block_length)
+                                cache_dir='./training_data_cache')
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=False)
 
-    if use_validation_split:
+    if not use_validation_split:
         val_loader = None
     else:
         val_dataset = TextDataset(val_files, tokenizer, training_sequence_length, batch_size,
-                                  cache_dir='./validation_data_cache', block_length=block_length)
+                                  cache_dir='./validation_data_cache')
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
     number_of_samples = len(train_dataset)
@@ -267,7 +267,9 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     vocab_size = tokenizer.vocab_size()
     print(f"Vocabulary size: {vocab_size}")
 
-    model = LanguageModel(tokenizer.vocab_size(), block_length=block_length)
+    # config = Config(vocab_size=tokenizer.vocab_size())
+    # model = LanguageModel(config)
+    model = LanguageModel(vocab_size=tokenizer.vocab_size())
     print(f"Number of parameters: {model.count_parameters()}")
 
     base_path = get_base_path()
@@ -278,11 +280,6 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     accumulation_steps = 4
     steps_per_epoch = math.ceil(number_of_samples / batch_size)
     total_training_steps = (math.ceil(steps_per_epoch / accumulation_steps) * max_epochs) + 1
-
-    # total_training_steps = (number_of_samples // (batch_size * accumulation_steps)) * max_epochs
-    # if number_of_samples % (batch_size * accumulation_steps) != 0:
-    #     # Add one step for each epoch to cover the last incomplete batch
-    #     total_training_steps += max_epochs
 
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=1e-5)
     scheduler = optim.lr_scheduler.OneCycleLR(optimizer, max_lr=0.0005, total_steps=total_training_steps)
@@ -381,14 +378,14 @@ if __name__ == "__main__":
         trained = False
         count = 0
         while not trained and count < 3:
-            trained = base_model_train(0.0005, 32, 84, 5, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0005, 32, 84, 1, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
             count += 1
 
         trained = False
         count = 0
         while not trained and count < 3:
-            trained = base_model_train(0.0005, 64, 32, 5, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0005, 64, 32, 1, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
             count += 1
 
@@ -396,19 +393,19 @@ if __name__ == "__main__":
         trained = False
         count = 0
         while not trained and count < 3:
-            trained = base_model_train(0.0005, 96, 40, 5, patience=3, training_folder=TRAIN_FOLDER,
+            trained = base_model_train(0.0005, 96, 40, 1, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
             count += 1
 
     TRAIN_FOLDER = "training_data"
     if warmed_up():
-    #     trained = False
-    #     while not trained:
-    #         trained = base_model_train(0.0005, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
-    #                                    use_validation_split=False)
         trained = False
         count = 0
         while not trained and count < 3:
             trained = base_model_train(0.0005, 64, 32, 100, patience=3, training_folder=TRAIN_FOLDER,
                                        use_validation_split=False)
             count += 1
+    #     trained = False
+    #     while not trained:
+    #         trained = base_model_train(0.0005, 512, 3, 100, patience=3, training_folder=TRAIN_FOLDER,
+    #                                    use_validation_split=False)

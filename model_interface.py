@@ -1,6 +1,6 @@
 import torch
 
-from model import LanguageModel
+from model_v0_2 import LanguageModel
 from tokenizer import Tokenizer
 
 
@@ -25,7 +25,7 @@ class ModelInterface:
         return self.tokenizer.vocab_size()
 
     def complete(self, current_context: str, top_p: float = 0.9, max_tokens: int = 100000):
-        tokens = self.tokenizer.tokenize(current_context)
+        tokens = self.tokenizer.encode(current_context)
         for i in range(max_tokens):
             input_tokens = torch.tensor(tokens).to(self.device)
             if top_p >= 1.0 or top_p <= 0.0:
@@ -35,7 +35,7 @@ class ModelInterface:
             tokens.append(next_token)
             if next_token == self.end_token:
                 break
-        result = self.tokenizer.detokenize(tokens)
+        result = self.tokenizer.decode(tokens)
         return result
 
     def prompt(self, prompt: str, top_p: float = 0.9, max_tokens: int = 100000):

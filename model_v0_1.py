@@ -8,7 +8,7 @@ class LanguageModel(nn.Module):
     def __init__(self, vocab_size, embedding_dim=448, state_dim=448, output_dim=448):
         super(LanguageModel, self).__init__()
         self.embedding = nn.Embedding(num_embeddings=vocab_size, embedding_dim=embedding_dim)
-        self.state_space_model = StructuredStateAttention(state_dim=state_dim, input_dim=embedding_dim, output_dim=output_dim)
+        self.state_space_model = StructuredStateAttention(state_dim=state_dim, input_dim=embedding_dim, output_dim=output_dim, block_length=32, dropout_rate= 0.1)
         self.layer_norm = nn.LayerNorm(output_dim)
         self.output_layer = nn.Linear(output_dim, vocab_size)
 

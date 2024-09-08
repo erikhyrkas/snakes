@@ -5,7 +5,7 @@ from tokenizer import Tokenizer
 
 def write_records(records, target_folder, items_per_file, tokenizer):
     # Tokenize each record and store the length with the record for sorting
-    token_lengths = [(record, len(tokenizer.tokenize(record))) for record in records]
+    token_lengths = [(record, len(tokenizer.encode(record))) for record in records]
 
     # Sort based on the number of tokens
     token_lengths.sort(key=lambda x: x[1])

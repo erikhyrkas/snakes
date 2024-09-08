@@ -22,7 +22,7 @@ class FineTuningDataset(IterableDataset):
                 text = f.read().strip()
             items = [item + '<end>' for item in text.split('<end>') if item.strip()]
 
-            tokenized_items = [torch.tensor(self.tokenizer.tokenize(item), dtype=torch.long) for item in items]
+            tokenized_items = [torch.tensor(self.tokenizer.encode(item), dtype=torch.long) for item in items]
             if len(tokenized_items) == 0:
                 continue
 

@@ -4,8 +4,30 @@ import torch
 import numpy as np
 from torch.utils.data import IterableDataset
 
-from text_dataset import preprocess_and_save_tokens
+def preprocess_and_save_tokens(files, tokenizer, cache_dir):
+    total_tokens = 0
+    if os.path.exists(cache_dir):
+        for file in files:
+            output_file = str(os.path.join(cache_dir, os.path.basename(file) + ".npy"))
+            if not os.path.exists(output_file):
+                total_tokens += tokenize_file(cache_dir, file, tokenizer)
+            else:
+                tokens = np.load(output_file, mmap_mode='r')
+                total_tokens += len(tokens)
+        return total_tokens
+    os.makedirs(cache_dir)
 
+    for file in files:
+        total_tokens += tokenize_file(cache_dir, file, tokenizer)
+    return total_tokens
+
+
+def tokenize_file(cache_dir, file, tokenizer):
+    tokens = tokenizer.encode(open(file, 'r', encoding='utf-8').read())
+    tokens = np.array(tokens, dtype=np.int32)
+    output_file = str(os.path.join(cache_dir, os.path.basename(file) + ".npy"))
+    np.save(output_file, tokens)
+    return len(tokens)
 
 class TextDataset(IterableDataset):
     def __init__(self, original_files, tokenizer, max_sequence_length, batch_size, block_length=32,

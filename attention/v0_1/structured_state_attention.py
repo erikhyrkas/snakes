@@ -1,4 +1,3 @@
-import time
 import torch
 import torch.nn as nn
 
@@ -50,7 +49,7 @@ class StructuredStateAttention(nn.Module):
 
     def forward(self, x):
         device = x.device
-        batch_size, sequence_length, input_dim = x.shape
+        batch_size, sequence_length, _ = x.shape
         outputs = []
         state = torch.zeros(batch_size, self.state_dim, device=device)
 
