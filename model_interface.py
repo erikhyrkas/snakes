@@ -1,15 +1,21 @@
 import torch
 
-from model_v0_2 import LanguageModel
+from model_v0_3 import LanguageModel, Config
 from tokenizer import Tokenizer
 
 
 class ModelInterface:
-    def __init__(self, model_save_path="model.bin", tokenizer_save_path="tokenizer.pkl"):
+    def __init__(self, model_save_path="model.bin", tokenizer_save_path="tokenizer.pkl", config_save_path="model_config.json"):
         self.tokenizer = Tokenizer()
         self.tokenizer.load(tokenizer_save_path)
         self.end_token = self.tokenizer.get_end_token()
-        self.model = LanguageModel(vocab_size=self.tokenizer.vocab_size())
+        # v0.3
+        self.model = LanguageModel.load(model_save_path, config_save_path)
+        if self.model.config.vocab_size != self.tokenizer.vocab_size():
+            raise ValueError(
+                f"Model trained with a vocab of {self.model.config.vocab_size}, but the current tokenizer has a vocab of {self.tokenizer.vocab_size()}.")
+        # old v0.1/0.2
+        # self.model = LanguageModel(vocab_size=self.tokenizer.vocab_size())
         self.model.load_state_dict(torch.load(model_save_path, weights_only=False), strict=False)
         self.model.eval()
         self.device_name = "cuda" if torch.cuda.is_available() else "cpu"
@@ -38,7 +44,7 @@ class ModelInterface:
         result = self.tokenizer.decode(tokens)
         return result
 
-    def prompt(self, prompt: str, top_p: float = 0.9, max_tokens: int = 100000):
+    def instruct(self, prompt: str, top_p: float = 0.9, max_tokens: int = 100000):
         new_prompt = prompt
         if '<start>' not in prompt:
             new_prompt = prompt + '\n<start>'
