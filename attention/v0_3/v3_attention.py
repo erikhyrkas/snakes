@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 
-
 class SelectiveSSM(nn.Module):
     def __init__(self, config):
         super(SelectiveSSM, self).__init__()
@@ -14,8 +13,9 @@ class SelectiveSSM(nn.Module):
         self.W_C = nn.Parameter(torch.Tensor(config.num_heads, config.embedding_dim, self.head_dim))
         self.W_D = nn.Parameter(torch.Tensor(config.num_heads, config.embedding_dim, self.head_dim))
 
-        # Selective mechanism
-        self.W_gate = nn.Linear(config.embedding_dim, config.num_heads)
+        # Replace tanh gating mechanism with GLU-like mechanism
+        self.W_gate_1 = nn.Linear(config.embedding_dim, config.num_heads)  # For main linear transformation
+        self.W_gate_2 = nn.Linear(config.embedding_dim, config.num_heads)  # For gating (sigmoid) part
 
         # Output projection
         self.W_out = nn.Linear(config.state_dim, config.output_dim)
@@ -33,8 +33,10 @@ class SelectiveSSM(nn.Module):
             nn.init.xavier_uniform_(param)
             with torch.no_grad():
                 param.mul_(0.05).add_(0.005)
-        nn.init.xavier_uniform_(self.W_gate.weight)
-        nn.init.zeros_(self.W_gate.bias)
+        nn.init.xavier_uniform_(self.W_gate_1.weight)
+        nn.init.zeros_(self.W_gate_1.bias)
+        nn.init.xavier_uniform_(self.W_gate_2.weight)
+        nn.init.zeros_(self.W_gate_2.bias)
         nn.init.xavier_uniform_(self.W_out.weight)
         nn.init.zeros_(self.W_out.bias)
 
@@ -48,15 +50,18 @@ class SelectiveSSM(nn.Module):
         D = torch.einsum('bsi,hio->bhso', x, self.W_D)
 
         x = self.layer_norm1(x)
-        # Compute selective gate
-        gate = torch.tanh(self.W_gate(x))
+
+        # Compute selective gate using GLU
+        gate_linear = self.W_gate_1(x)  # Main linear output
+        gate_gate = torch.sigmoid(self.W_gate_2(x))  # Sigmoid gating
+        gate = gate_linear * gate_gate  # GLU operation: element-wise multiplication
 
         # Initialize output and state
         output = torch.zeros(batch_size, self.config.num_heads, seq_len, self.head_dim, device=x.device)
         state = torch.zeros(batch_size, self.config.num_heads, self.head_dim, device=x.device)
 
         # Process sequence in blocks
-        for i in range(0, seq_len, self.config.block_size):
+        for i in range(0, seq_len, self.config.block_size - self.config.overlap):
             block_end = min(i + self.config.block_size, seq_len)
             block_size = block_end - i
 
@@ -79,12 +84,12 @@ class SelectiveSSM(nn.Module):
                 output[:, :, i + j] = output_part[:, :, j]
 
             # Detach state to prevent gradient accumulation
-            state = state.detach()
+            # state = state.detach()
 
         # Reshape output and apply output projection
         output = output.permute(0, 2, 1, 3).contiguous().view(batch_size, seq_len, -1)
         output = self.W_out(output)
         output = self.dropout(output)
-        output = self.layer_norm2(output + x)  # Residual connection
+        output = self.layer_norm2(output) + x  # Residual connection
 
         return output

@@ -5,8 +5,9 @@ from attention.v0_3.v3_attention import SelectiveSSM
 
 
 class Config:
-    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, output_dim=768, num_heads=4, block_size=64,
-                 dropout=0.1):
+    #    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, output_dim=768, num_heads=4, block_size=64,
+    def __init__(self, vocab_size, embedding_dim=448, state_dim=448, output_dim=448, num_heads=1, block_size=32,
+                 overlap=16, dropout=0.1):
         self.vocab_size = vocab_size
         self.embedding_dim = embedding_dim
         self.state_dim = state_dim
@@ -14,6 +15,7 @@ class Config:
         self.num_heads = num_heads
         self.block_size = block_size
         self.dropout = dropout
+        self.overlap = overlap
         self._validate_shapes()
 
     def _validate_shapes(self):
@@ -26,6 +28,7 @@ class Config:
         assert 0 <= self.dropout < 1, "Dropout must be between 0 and 1"
         assert self.state_dim % self.num_heads == 0, "State dimension must be divisible by number of heads"
         assert self.embedding_dim % self.num_heads == 0, "Embedding dimension must be divisible by number of heads"
+        assert self.overlap >= 0, "Overlap cannot be negative"
 
     def to_dict(self):
         return {
