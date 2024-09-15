@@ -5,3 +5,4 @@ training_data_cache/
 validation_data_cache/
 fine_tuning_data_cache/
 model/
+venv/
