@@ -1,6 +1,6 @@
 import os
 
-from model_interface import ModelInterface
+from ys.inference.model_interface import ModelInterface
 
 
 def interactive_interface():
@@ -8,12 +8,12 @@ def interactive_interface():
           "don't expect good results. There is no warranty. Use at your own risk.")
     base_path = os.getenv("YS_LLM_BASE_PATH", "./")
 
-    model_path = f"{base_path}model.bin"
+    model_path = f"{base_path}model/model.bin"
     if not os.path.isfile(model_path):
-        model_path = f"{base_path}model_checkpoint.bin"
+        model_path = f"{base_path}model/model_checkpoint.bin"
 
-    tokenizer_path = f"{base_path}tokenizer.pkl"
-
+    tokenizer_path = f"{base_path}model/tokenizer.pkl"
+    config_save_path = f"{base_path}model/model_config.json"
     if not os.path.exists(model_path):
         print("Did you forget to train the model?")
         return
@@ -22,7 +22,7 @@ def interactive_interface():
         return
 
     print("Loading...")
-    interface = ModelInterface(model_save_path=model_path, tokenizer_save_path=tokenizer_path)
+    interface = ModelInterface(model_save_path=model_path, tokenizer_save_path=tokenizer_path, config_save_path=config_save_path)
     params = interface.count_parameters()
 
     print(f"Number of parameters: {params}")

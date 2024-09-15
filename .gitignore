@@ -1,12 +1,7 @@
 .idea/
-tokenizer.pkl
-model.bin
-model_checkpoint.bin
-scheduler_checkpoint.bin
-optimizer_checkpoint.bin
 /fine_tuning
 /cache_dir
 /training_data_cache
 /validation_data_cache
 /fine_tuning_data_cache
-/model_config.json
+/model
