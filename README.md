@@ -177,8 +177,7 @@ python train.py
 
 NOTE: This example shows a case where I over-fit, but I needed to ensure training worked. If I was using a much
 larger training set, I would tweak my early stopping values. Overfitting means that the results are coherent, but that
-the
-model isn't versatile. It's effectively memorizing the training data.
+the model isn't versatile. It's effectively memorizing the training data.
 
 Example training:
 
