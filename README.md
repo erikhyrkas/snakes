@@ -6,6 +6,11 @@
 
 ## Current Development: Why Snakes - v0.3 Base Model
 
+I'm still exploring a path forward that is stable across longer contexts.
+
+The code that's checked in is not ready to use yet, so if you want a more functional version of Why Snakes, you should 
+go back to the v0.1 release, which worked reasonably well.
+
 ## Previous Releases: 
 ### Why Snakes - v0.2 Base Model
 
