@@ -14,7 +14,7 @@ go back to the v0.1 release, which worked reasonably well.
 ## Previous Releases: 
 ### Why Snakes - v0.2 Base Model
 
-See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory. It had 99 million parameters.
+See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory. It has 99 million parameters.
 
 The v0.1 model was better.
 
