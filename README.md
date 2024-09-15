@@ -1,73 +1,73 @@
-# YS-323M-BASE-v0.2
+# Why Snakes
 
 ![img_2.png](images/img_2.png)
 
 `"Why did it have to be snakes?"`
 
-## Current Development: Why Snakes - ?? Million v0.3 Base Model
+## Current Development: Why Snakes - v0.3 Base Model
 
 ## Previous Releases: 
-### Why Snakes - 99 Million v0.2 Base Model
+### Why Snakes - v0.2 Base Model
 
-See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory.
+See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory. It had 99 million parameters.
 
 The v0.1 model was better.
 
-### Why Snakes - 120 Million v0.1 Base Model
+### Why Snakes - v0.1 Base Model
 
-The "Why Snakes" 120 Million v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism. You can find it on the release page of the GitHub page.
+The "Why Snakes" v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism. You can find it on the release page of the GitHub page. It has 120 million parameters.
 
 ## Design Philosophy and Goals:
 
 Mamba 2 integrates traditional transformer attention into SSM-based attention, but that approach does not align with my objectives. There are still valuable learnings from their paper and findings, though. 
 
-My goals for the v0.2 base model include:
+My goals for the base model included:
 
 #### State Space Model Focused:
 
-Why: Prioritize the sequential processing strengths of SSMs, which are more efficient on limited hardware compared to transformers.
+Prioritize the sequential processing strengths of SSMs, which are more efficient on limited hardware compared to transformers.
 
-Impact: This allows the model to efficiently handle sequences without the heavy computational load typically associated with transformer-based attention.
+This allows the model to efficiently handle sequences without the heavy computational load typically associated with transformer-based attention.
 
 #### State Space Duality:
 
-Why: Implement a flexible mechanism that balances linear and quadratic SSMs, enabling efficient attention for varying sequence lengths.
+Implement a flexible mechanism that balances linear and quadratic SSMs, enabling efficient attention for varying sequence lengths.
 
-Impact: This duality provides the model with the ability to switch between more efficient linear processing and higher-quality quadratic processing as needed.
+This duality provides the model with the ability to switch between more efficient linear processing and higher-quality quadratic processing as needed.
 
 #### Structured Processing for Quadratic SSMs:
 
-Why: Apply structured methods, such as block decomposition, to efficiently manage the increased computational demands of quadratic SSMs.
+Apply structured methods, such as block decomposition, to efficiently manage the increased computational demands of quadratic SSMs.
 
-Impact: By structuring the quadratic operations, the model can maintain performance without requiring extensive hardware resources.
+By structuring the quadratic operations, the model can maintain performance without requiring extensive hardware resources.
 
 #### Block Decomposition of Semiseparable Matrices:
 
-Why: Optimize memory usage by breaking down large matrices into smaller, more manageable blocks.
+Optimize memory usage by breaking down large matrices into smaller, more manageable blocks.
 
-Impact: This approach reduces memory overhead, allowing the model to scale effectively without sacrificing efficiency.
+This approach reduces memory overhead, allowing the model to scale effectively without sacrificing efficiency.
 
 #### Layer Normalization:
 
-Why: Stabilize outputs across the model’s layers, ensuring consistent performance during training and inference.
+Stabilize outputs across the model’s layers, ensuring consistent performance during training and inference.
 
-Impact: Layer normalization is critical for preventing issues such as exploding or vanishing gradients, particularly in sequential models.
+Layer normalization is critical for preventing issues such as exploding or vanishing gradients, particularly in sequential models.
 
 #### Memory and Numerical Stability:
 
-Why: Utilize stable initialization techniques and ensure the model remains numerically stable, even during long training runs.
+Utilize stable initialization techniques and ensure the model remains numerically stable, even during long training runs.
 
-Impact: This ensures that the model can train effectively without encountering instability issues, which is especially important when using SSMs.
+This ensures that the model can train effectively without encountering instability issues, which is especially important when using SSMs.
 
 #### Dropout Regularization:
 
-Why: Prevent overfitting by applying dropout, particularly important in models with sequential dependencies.
+Prevent overfitting by applying dropout, particularly important in models with sequential dependencies.
 
-Impact: Regularization helps the model generalize better, leading to more robust performance across different datasets and tasks.
+Regularization helps the model generalize better, leading to more robust performance across different datasets and tasks.
 
 ### Looking Ahead
 
-The v0.2 base model aims to fully leverage the advantages of SSMs while avoiding the pitfalls of traditional transformer-based approaches. By focusing on structured processing and memory-efficient techniques, the model is designed to perform well on limited hardware without compromising on capability.
+The base model aims to fully leverage the advantages of SSMs while avoiding the pitfalls of traditional transformer-based approaches. By focusing on structured processing and memory-efficient techniques, the model is designed to perform well on limited hardware without compromising on capability.
 
 ## Dependencies
 
@@ -94,6 +94,7 @@ You can generate additional data using the command:
 
 ```
 pip install ollama
+pip install pyyaml
 
 python data_generator_<generator>.py
 ```
