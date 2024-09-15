@@ -11,17 +11,6 @@ I'm still exploring a path forward that is stable across longer contexts.
 The code that's checked in is not ready to use yet, so if you want a more functional version of Why Snakes, you should 
 go back to the v0.1 release, which worked reasonably well.
 
-## Previous Releases: 
-### Why Snakes - v0.2 Base Model
-
-See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory. It has 99 million parameters.
-
-The v0.1 model was better.
-
-### Why Snakes - v0.1 Base Model
-
-The "Why Snakes" v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism. You can find it on the release page of the GitHub page. It has 120 million parameters.
-
 ## Design Philosophy and Goals:
 
 Mamba 2 integrates traditional transformer attention into SSM-based attention, but that approach does not align with my objectives. There are still valuable learnings from their paper and findings, though. 
@@ -77,6 +66,8 @@ The base model aims to fully leverage the advantages of SSMs while avoiding the 
 ## Dependencies
 
 The all versions of the model will train on cpu, but is a little slow. My suggestion if you only have a CPU is to limit the vocabulary and sequence length.
+
+For training and inference, I tried to keep the dependencies very minimal (just torch) -- but for building training data, I used pyyaml and ollama. 
 
 If you have cuda (look here for exact command: https://pytorch.org/get-started/locally/):
 
@@ -161,10 +152,10 @@ I documented the memory I *observed* being used for a number of settings. Withou
 around 0.6 GB of GPU used. Your vocabulary size will impact this, if you change the tokenizer. I didn't make an effort
 to be ultimately efficient. Your milage may vary if you have a smaller or larger vocabulary.
 
-I tested a lot with a training sequence length of 20, and it worked surprisingly well. It runs well even if you have a
+With v0.1, I tested a lot with a training sequence length of 20, and it worked surprisingly well. It runs well even if you have a
 CPU.
 
-If you are looking to quickly try out the model without needing it to do much, I'd suggest a batch size of 64, a
+If you are looking to quickly try out the v0.1 model without needing it to do much, I'd suggest a batch size of 64, a
 training sequence length of 20, and using a limited number of documents to keep your vocab down.
 
 Training sequence length and batch size can be changed at the bottom of `train.py`. Vocabulary size depends directly on
@@ -178,6 +169,16 @@ Train the model with the command:
 
 ```
 python train.py
+```
+
+To remove existing model files before you train (so you don't resume training from an existing point):
+```
+python train.py clean
+```
+
+To remove existing model files and the tokenizer before you train (so you can retrain the tokenizer):
+```
+python train.py clean all
 ```
 
 NOTE: This example shows a case where I over-fit, but I needed to ensure training worked. If I was using a much
@@ -229,9 +230,13 @@ Blog on Mamba 2:
 * https://tridao.me/blog/2024/mamba2-part3-algorithm/
 * https://tridao.me/blog/2024/mamba2-part4-systems/
 
-## Observations and Speculation
+## Previous Releases: 
 
-### v0.1 Training Observations and Speculation
+### Why Snakes - v0.1 Base Model
+
+The "Why Snakes" v0.1 base model is an example Large Language Model (LLM) that leverages State Space Model (SSM) concepts from the Mamba 2 paper for its attention mechanism. You can find it on the release page of the GitHub page. It has 120 million parameters.
+
+#### v0.1 Training Observations and Speculation
 
 * Memory Used: I looked at how much GPU was being used at during training and wrote it down.
     * When making changes to the model design, I knew it would impact the memory usage, so I put ? when I was no longer
@@ -293,7 +298,13 @@ I got training to start running on an L4 TPU with 296 million parameters, but wi
 not only be unbearably slow, I imagine that it'd eventually be numerically unstable. Any batch size less than 64 has
 been problematic.
 
-### v0.2 Training Observations and Speculation
+### Why Snakes - v0.2 Base Model
+
+See release notes for v0.2. It wasn't super good, but it was more faithful to the Mamba 2 paper. I trained on an a100 with 80 gb of video memory. It has 99 million parameters.
+
+The v0.1 model was better than v0.2.
+
+#### v0.2 Training Observations and Speculation
 
 * I really struggled with numeric stability. It seemed fine on my machine before beginning training with a larger 
 dataset, but it became a constant battle to keep training.

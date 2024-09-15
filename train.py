@@ -15,6 +15,8 @@ def cleanup_old_bins(remove_tokenizer=False, clear_cache=False):
         os.remove(f"{base_path}model/model_checkpoint.bin")
     if os.path.exists(f"{base_path}model/model.bin"):
         os.remove(f"{base_path}model/model.bin")
+    if os.path.exists(f"{base_path}model/model_config.json"):
+        os.remove(f"{base_path}model/model_config.json")
     if clear_cache and os.path.exists(f"{base_path}model/fine_tuning"):
         os.removedirs(f"{base_path}model/fine_tuning")
     if clear_cache and os.path.exists(f"{base_path}model/training_data_cache"):
@@ -32,7 +34,10 @@ def warmed_up() -> bool:
 
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "clean":
-        cleanup_old_bins()
+        if len(sys.argv) > 2 and sys.argv[2] == "all":
+            cleanup_old_bins(True, True)
+        else:
+            cleanup_old_bins()
 
     train_or_load_tokenizer("training_data")
     TRAIN_FOLDER = "small_training_data"
@@ -44,4 +49,3 @@ if __name__ == "__main__":
                                    use_validation_split=False)
         # trained = base_model_train(0.005, 512, 64, 400, patience=3, training_folder=TRAIN_FOLDER, use_validation_split=False)
         count += 1
-
