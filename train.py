@@ -45,7 +45,7 @@ if __name__ == "__main__":
     trained = False
     count = 0
     while not trained and count < 3:
-        trained = base_model_train(0.005, 32, 512, 400, patience=3, training_folder=TRAIN_FOLDER,
+        trained = base_model_train(0.005, 64, 64, 400, patience=3, training_folder=TRAIN_FOLDER,
                                    use_validation_split=False)
         # trained = base_model_train(0.005, 512, 64, 400, patience=3, training_folder=TRAIN_FOLDER, use_validation_split=False)
         count += 1

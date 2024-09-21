@@ -10,12 +10,12 @@ class LanguageModel(nn.Module):
         super().__init__()
         self.config = config
         self.embedding = nn.Embedding(config.vocab_size, config.embedding_dim)
-        self.ssm = Attention(config)
+        self.attention = Attention(config)
         self.output_layer = nn.Linear(config.output_dim, config.vocab_size)
 
     def forward(self, input_tokens):
         embedded = self.embedding(input_tokens)
-        context_representation = self.ssm(embedded)
+        context_representation = self.attention(embedded)
         output = self.output_layer(context_representation)
         return output
 
@@ -32,4 +32,3 @@ class LanguageModel(nn.Module):
 
     def count_parameters(self):
         return sum(p.numel() for p in self.parameters() if p.requires_grad)
-

@@ -1,163 +1,100 @@
 import torch
-import torch.nn as nn
-import torch.nn.functional as F
-import math
+from torch import nn
 
 from ys.language_model.config import Config
 
 
 class Attention(nn.Module):
-    """
-    SSDAttention implements a custom attention mechanism inspired by the Mamba 2 paper. This implementation
-    is adapted from concepts discussed in their Apache 2.0 licensed work but has been substantially modified and is not
-    a direct derivative.
-
-    The original code from which inspiration was drawn is under the Apache License 2.0. Acknowledgment and thanks to
-    the authors and contributors of the Mamba project for their insights and foundational work. You can find the
-    original code and license at: https://github.com/state-spaces/mamba/blob/main/mamba_ssm/modules/ssd_minimal.py
-
-    This version of SSDAttention is provided under the MIT License, which permits use, copy, modify, merge,
-    publish, distribute, sublicense, and/or sell copies of the software, and to permit persons to whom the software is
-    furnished to do so, subject to the following conditions: - The above copyright notice and this permission notice
-    shall be included in all copies or substantial portions of the software. - The software is provided "AS IS",
-    without warranty of any kind.
-
-    Args:
-        input_dim (int): Dimensionality of the input embeddings.
-        state_dim (int): Dimensionality of the state used within the attention mechanism.
-        output_dim (int): Desired dimensionality of the output.
-        block_length (int, optional): Length of each block/chunk for processing. Default is 32.
-        number_of_heads (int, optional): Number of attention heads. Default is 8.
-
-    Expected tensor shapes:
-        - Input tensor: (batch_size, sequence_length, input_dim)
-        - Output tensor: (batch_size, sequence_length, output_dim)
-    """
     def __init__(self, config: Config):
-        super(Attention, self).__init__()
-
-        self.block_length = config.block_size
-        self.input_dim = config.embedding_dim
-        self.output_dim = config.output_dim
-        self.number_of_heads = config.heads
+        super().__init__()
+        self.config = config
+        self.embedding_size = config.embedding_dim
         self.state_dim = config.state_dim
 
-        # Ensure that input_dim is divisible by number_of_heads
-        if self.input_dim % self.number_of_heads != 0:
-            raise ValueError(f"input_dim ({self.input_dim}) must be divisible by number_of_heads ({self.number_of_heads})")
+        # # State-space model parameters (learnable)
+        self.local_state_control = nn.Parameter(
+            0.1 * torch.randn(self.state_dim, self.state_dim) + 0.01)  # A: State transition matrix
+        self.local_input_influence = nn.Parameter(
+            0.1 * torch.randn(self.embedding_size, self.state_dim) + 0.01)  # B: Input matrix
+        self.local_blend_shaper = nn.Parameter(0.1 * torch.randn(self.state_dim,
+                                                                 self.state_dim) + 0.01)  # sort of C: tweaked Output shaping matrix
 
-        # Dimensionality of each attention head
-        self.head_dim = self.input_dim // self.number_of_heads
+        self.global_summary_state_control = nn.Parameter(
+            0.1 * torch.randn(self.state_dim, self.state_dim) + 0.01)
+        self.global_summary_state_influence = nn.Parameter(
+            0.1 * torch.randn(self.embedding_size, self.state_dim) + 0.01)
+        self.global_summary_output_shaper = nn.Parameter(
+            0.1 * torch.randn(self.state_dim, self.state_dim) + 0.01)
 
-        # Initialize the learnable parameters: attention_weights, state_transformation_weights,
-        # and output_transformation_weights
-        self.attention_weights = nn.Parameter(torch.randn(1, 1, 1, self.number_of_heads) * 0.1 + 0.01)
-        self.state_transformation_weights = nn.Parameter(
-            torch.randn(1, 1, self.number_of_heads, self.state_dim) * 0.1 + 0.01)
-        self.output_transformation_weights = nn.Parameter(
-            torch.randn(1, 1, self.number_of_heads, self.state_dim) * 0.1 + 0.01)
+        self.global_state_control = nn.Parameter(
+            0.1 * torch.randn(self.state_dim, self.state_dim) + 0.01)  # A: State transition matrix
+        self.global_input_influence = nn.Parameter(
+            0.1 * torch.randn(self.embedding_size, self.state_dim) + 0.01)  # B: Input matrix
+        self.global_output_shaper = nn.Parameter(
+            0.1 * torch.randn(self.state_dim, self.embedding_size) + 0.01)  # C: Output shaping matrix
 
-        # Linear layer to project the attention output to the desired output dimension
-        self.output_projection = nn.Linear(self.input_dim, self.output_dim)
+        # Layer normalization to prevent exploding/vanishing gradients
+        self.layer_norm = nn.LayerNorm(self.state_dim)
 
-    @staticmethod
-    def cumulative_sum_with_mask(tensor):
-        """
-        Compute the cumulative sum of the tensor along the last dimension, using a lower triangular mask to enforce
-        sequential dependence.
+        # Linear layer to reshape cumulative context to match input shape
+        self.linear_output = nn.Linear(self.embedding_size, self.embedding_size)
+        self.dropout_start = nn.Dropout(config.dropout_rate)
+        self.dropout_end = nn.Dropout(config.dropout_rate)
 
-        Args:
-            tensor (Tensor): Input tensor of shape (batch_size, sequence_length).
+    def forward(self, embedded_tokens):
+        device = embedded_tokens.device
+        batch_size, sequence_len, embedding_size = embedded_tokens.size()
+        embedded_tokens = self.dropout_start(embedded_tokens)
 
-        Returns:
-            Tensor: Cumulative sum tensor with shape (batch_size, sequence_length, sequence_length).
-        """
-        sequence_length = tensor.size(-1)
-        lower_triangular_mask = torch.tril(
-            torch.ones(sequence_length, sequence_length, device=tensor.device, dtype=torch.bool), diagonal=-1)
+        # My intuition here is that if we iterate tokens forward in standard state-space model fashion,
+        # we'll prefer recent tokens, while having less of an impact on more distant tokens.
+        #
+        # I figure that by having a local state, that represents information about the recent tokens -- though
+        # still arranged to prefer the most distant local state, I am freeing up the global state to remember
+        # more details about the overall conversation. I feel like the local tokens heavily influence the next
+        # token, but we still need to know about the overall conversation. My hope is that the local state
+        # will keep the output text coherent, while the global state makes it sensible and logical.
+        #
+        # I figure that by adding a global summary that is updated less frequently, I may lose fewer relevant
+        # conversation details. My intuition is that the global state prefers information near the end of the
+        # conversation at the point it is calculated, by adding it to the summary infrequently, I'm going to
+        # retain more details that mattered to each summary span.
+        #
+        # All of my intuition relies on the idea that by creating opportunities for the model to learn in
+        # specific areas, I'm freeing up the other aspects to learn about their own areas.
+        global_output = []
+        global_state = torch.zeros(batch_size, self.state_dim, device=device)
+        global_summary_state = torch.zeros(batch_size, self.state_dim, device=device)
+        for time_step in range(sequence_len):
+            local_beginning = max(0, time_step - self.config.local_size)
+            local_length = time_step - local_beginning
+            local_state = torch.zeros(batch_size, self.state_dim, device=device)
+            if local_length > 0:
+                local_end = local_beginning + local_length
+                local_tokens = embedded_tokens[:, local_beginning:local_end, :]
+                # reverse iterate to avoid the decay of information for "distant" tokens -- the global state already has a bias toward the "near" tokens
+                for local_time_step in range(local_length - 1, -1, -1):
+                    local_token = local_tokens[:, local_time_step, :]
+                    local_state = (local_state @ self.local_state_control) + (local_token @ self.local_input_influence)
+                    local_state = self.layer_norm(local_state)
+            blended_local_influence = (local_state @ self.local_blend_shaper)
 
-        cumulative_sum = torch.cumsum(tensor.unsqueeze(-1) * lower_triangular_mask.float(), dim=-2)
-        cumulative_sum = cumulative_sum.masked_fill(~lower_triangular_mask, -torch.inf)
+            next_token = embedded_tokens[:, time_step, :]
+            global_state = (global_state @ self.global_state_control) + (
+                        next_token @ self.global_input_influence) + blended_local_influence + global_summary_state
+            global_state = self.layer_norm(global_state)
+            global_time_step_output = (global_state @ self.global_output_shaper)
+            global_output.append(global_time_step_output)
+            if time_step % self.config.summary_frequency == (self.config.summary_frequency - 1):
+                global_summary_state = (global_summary_state @ self.global_summary_state_control) + (
+                            global_time_step_output @ self.global_summary_state_influence)
+                global_summary_state = self.layer_norm(global_summary_state)
+                global_summary_state = (global_summary_state @ self.global_summary_output_shaper)
 
-        return cumulative_sum
+        stacked_global_output = torch.stack(global_output, dim=1)
 
-    def forward(self, input_tensor):
-        """
-        Args:
-            input_tensor (Tensor): Input tensor of shape (batch_size, sequence_length, input_dim).
+        # Pass through linear layer and apply dropout
+        output = self.linear_output(stacked_global_output)
+        output = self.dropout_end(output)
 
-        Returns:
-            Tensor: Output tensor of shape (batch_size, sequence_length, output_dim).
-        """
-        batch_size, sequence_length, _ = input_tensor.shape
-
-        # Calculate the number of blocks/chunks
-        num_blocks = math.ceil(sequence_length / self.block_length)
-
-        # Determine padding if the sequence length isn't divisible by block_length
-        padding_length = num_blocks * self.block_length - sequence_length
-        if padding_length > 0:
-            input_tensor = F.pad(input_tensor, (0, 0, 0, padding_length), mode='constant', value=0)
-
-        # Reshape input to (batch_size, sequence_length, number_of_heads, head_dim)
-        reshaped_input = input_tensor.view(batch_size, -1, self.number_of_heads, self.head_dim)
-
-        # Expand parameters to match the batch and chunk dimensions
-        expanded_attention_weights = self.attention_weights.expand(batch_size, num_blocks, self.block_length,
-                                                                   self.number_of_heads)
-        expanded_state_transformation_weights = self.state_transformation_weights.expand(batch_size, num_blocks,
-                                                                                         self.block_length,
-                                                                                         self.number_of_heads,
-                                                                                         self.state_dim)
-        expanded_output_transformation_weights = self.output_transformation_weights.expand(batch_size, num_blocks,
-                                                                                           self.block_length,
-                                                                                           self.number_of_heads,
-                                                                                           self.state_dim)
-
-        # Rearrange attention_weights to shape (batch_size, number_of_heads, num_blocks, block_length)
-        rearranged_attention_weights = expanded_attention_weights.permute(0, 3, 1, 2)
-        cumulative_attention_weights = torch.cumsum(rearranged_attention_weights, dim=-1)
-
-        # Compute intra-block attention
-        intra_attention_weights = torch.exp(self.cumulative_sum_with_mask(rearranged_attention_weights))
-        reshaped_input = reshaped_input.view(batch_size, num_blocks, self.block_length, self.number_of_heads,
-                                             self.head_dim)
-        intra_block_output = torch.einsum("bclhn,bcshn,bhcls,bcshp->bclhp",
-                                          expanded_output_transformation_weights,
-                                          expanded_state_transformation_weights,
-                                          intra_attention_weights,
-                                          reshaped_input)
-
-        # Compute decay states for intra-block processing
-        decay_states = torch.exp(cumulative_attention_weights[:, :, :, -1:] - cumulative_attention_weights)
-        states = torch.einsum("bclhn,bhcl,bclhp->bchpn", expanded_state_transformation_weights, decay_states,
-                              reshaped_input)
-
-        # Initialize states if not provided
-        initial_states = torch.zeros_like(states[:, :1])
-        states = torch.cat([initial_states, states], dim=1)
-
-        # Compute inter-block decay
-        decay_chunk = torch.exp(self.cumulative_sum_with_mask(F.pad(cumulative_attention_weights[:, :, :, -1], (1, 0))))
-        inter_block_states = torch.einsum("bhzc,bchpn->bzhpn", decay_chunk, states)
-        states = inter_block_states[:, :-1]  # Exclude the last state which is beyond the current chunks
-
-        # Compute output from the states
-        state_decay_output = torch.exp(cumulative_attention_weights)
-        inter_block_output = torch.einsum('bclhn,bchpn,bhcl->bclhp', expanded_output_transformation_weights, states,
-                                          state_decay_output)
-
-        # Combine intra-block and inter-block outputs
-        combined_output = intra_block_output + inter_block_output
-
-        # Reshape combined_output back to (batch_size, sequence_length + padding_length, input_dim)
-        combined_output = combined_output.reshape(batch_size, -1, self.input_dim)
-
-        # Remove padding if added
-        if padding_length > 0:
-            combined_output = combined_output[:, :-padding_length, :]
-
-        # Project the attention output to the desired output dimension
-        output = self.output_projection(combined_output)
-
-        return output
+        return output  # Output shape: [batch_size, sequence_len, embedding_size]
