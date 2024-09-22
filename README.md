@@ -6,14 +6,19 @@
 
 ## Current Development: Why Snakes - v0.3 Base Model
 
-I'm still exploring a path forward that is stable across longer contexts.
-
-The code that's checked in is not ready to use yet, so if you want a more functional version of Why Snakes, you should 
-go back to the v0.1 release, which worked reasonably well.
+I've taken a step back from following the mamba-2 paper so closely and focused on making a simple state space model work. 
 
 ## Design Philosophy and Goals:
 
-Mamba 2 integrates traditional transformer attention into SSM-based attention, but that approach does not align with my objectives. There are still valuable learnings from their paper and findings, though. 
+I was originally inspired by the Mamba 2 paper. The idea of an LLM built with a non-transformer architecture excited me
+because the current architectures require a tremendous amount of hardware even to produce small models that work well 
+for a self-hosted solution
+
+I'm not convinced that state space models will be the technology that replaces transformers. There are a lot of 
+challenges around optimizing them, and achieving state-of-the-art quality is not easy. We've seen a couple state
+space models released recently, including Mamba 2, but also Mistral's Codestral.
+
+The hardest part of training a models in this family is numeric stability.  
 
 My goals for the base model included:
 
@@ -23,41 +28,83 @@ Prioritize the sequential processing strengths of SSMs, which are more efficient
 
 This allows the model to efficiently handle sequences without the heavy computational load typically associated with transformer-based attention.
 
-#### State Space Duality:
+State space models can be highly optimized use semiseparable structured matrices, which allows you to quickly do 
+parallel addition for state accumulation, but after spending weeks trying to make this work well for myself, I found it
+very frustrating. I'm still learning, and I'm likely making some major mistakes, but it was non-trivial.
 
-Implement a flexible mechanism that balances linear and quadratic SSMs, enabling efficient attention for varying sequence lengths.
+I went back to the roots of state space models. It effectively relies on three trainable matrices, that I think of as:
+* State Controller
+* Input Influencer
+* Output Shaper
 
-This duality provides the model with the ability to switch between more efficient linear processing and higher-quality quadratic processing as needed.
+If you look at formal papers, they'll call them `A, B, C`, which is not at all helpful. The formula for putting this to 
+use is something like `h_t=Ah_t + Bi[t]` and `output[t] = Ch_t`, which is equally illegible. 
 
-#### Structured Processing for Quadratic SSMs:
+The pseudocode for processing a simple sequence is effectively:
+```
+def ssm(sequence):
+    output = []
+    state = initial_state 
+    for t in time_steps:
+        next_data = sequence[t]
+        state = (state_controller @ state) + (input_influencer @ next_data)
+        output[t] = output_shaper @ state
+    return stack(output)
+```
 
-Apply structured methods, such as block decomposition, to efficiently manage the increased computational demands of quadratic SSMs.
+Obviously, you gain efficiency by processing batches, and your sequence is really the shape of your embedding output, 
+but the concept remains the same.
 
-By structuring the quadratic operations, the model can maintain performance without requiring extensive hardware resources.
+What mamba 2 did, was make the `input_influencer @ next_data` highly parallel by using a form of segsum (a way of 
+adding up groups of values from a matrix) so that you could then do update the state without iterating over all the
+time_steps in your python. The massive and efficient parallelization of that addition requires more GPU resources but 
+also leads to faster processing. The downside is that you are adding long sequences of embedding matrices, which might 
+exceed what a 32-bit float can hold -- giving you "inf" or "-inf" (infinity or negative infinity.) So, they'd chunk 
+up the sequences to add up chunks to make this less likely. 
 
-#### Block Decomposition of Semiseparable Matrices:
+Unfortunately, I had far less success at emulating their work than they did. And, as I said before, it's likely my 
+inexperience with optimizing segsum. I found that if I took the more standard approach to SSMs, and simply added a 
+normalization step (`state = layernorm(state)`), that I could almost always train stably:
+```
+def ssm(sequence):
+    output = []
+    state = initial_state 
+    for t in time_steps:
+        next_data = sequence[t]
+        state = (state_controller @ state) + (input_influencer @ next_data)
+        state = layernorm(state)
+        output[t] = output_shaper @ state
+    return stack(output)
+```
 
-Optimize memory usage by breaking down large matrices into smaller, more manageable blocks.
+But my intuition went a step beyond this. While this would be enough to work with short sequences -- something I found 
+on my very first day of experimenting with SSMs -- ensuring that the longer range model recollection worked was important.
 
-This approach reduces memory overhead, allowing the model to scale effectively without sacrificing efficiency.
+In version 0.3, I've included two summaries of the token's state history. Effectively, as we go through the time steps, I 
+I capture the regular updates for each step, but also have a second state space model to track what I called a 
+"local summary" and a "global summary".
 
-#### Layer Normalization:
+The summaries are simply following the ssm pattern, but their output is appended to the main state's state. Because 
+they are updated less frequently, I'm allowing them to potentially learn and retain information about historical 
+aspects of the conversation history and freeing up the main state to learn more about recent tokens. 
 
-Stabilize outputs across the model’s layers, ensuring consistent performance during training and inference.
+This means there are effectively three state space models:
+* global -- updated every timestep
+* local summary -- updated every 16 steps (with the current configuration)
+* global summary -- updated every 64 steps (with the current configuration)
 
-Layer normalization is critical for preventing issues such as exploding or vanishing gradients, particularly in sequential models.
+Because the attention is processing an entire sequence, it's imperative that we only consider steps behind the 
+current steps -- as at inference time, we can't look into the future, but since we are processing the time steps 
+in an intuitive forward directly, this is easy to ensure. (With the mamba 2 approach, they rely on masking to 
+ensure they don't add in values from the future.)
 
-#### Memory and Numerical Stability:
-
-Utilize stable initialization techniques and ensure the model remains numerically stable, even during long training runs.
-
-This ensures that the model can train effectively without encountering instability issues, which is especially important when using SSMs.
-
-#### Dropout Regularization:
-
-Prevent overfitting by applying dropout, particularly important in models with sequential dependencies.
-
-Regularization helps the model generalize better, leading to more robust performance across different datasets and tasks.
+I experimented with the local summary starting at the current timestamp and iterating backward up to 16 tokens, and 
+doing this every time step. (You can't go back before the 0th time step, obviously.) This inverse ordering might make 
+the oldest of those 16 tokens more impactful and the most recent the least impactful -- the nature of a recurrent 
+approach -- and I felt like by having two approaches it would improve the overall quality of my results. Unfortunately,
+swimming against time meant a complexity of N-squared within the cpu code, and it was dreadfully slow. If it was the 
+ideal approach, we'll never know. I switched local to be an less-frequently updated summary, because it might achieve 
+similar, though the burden of local knowledge would actually be on the main loop and the summary would help with history.
 
 ### Looking Ahead
 

@@ -40,12 +40,11 @@ if __name__ == "__main__":
             cleanup_old_bins()
 
     train_or_load_tokenizer("training_data")
-    TRAIN_FOLDER = "small_training_data"
+    TRAIN_FOLDER = "training_data"
 
     trained = False
     count = 0
     while not trained and count < 3:
-        trained = base_model_train(0.005, 64, 64, 400, patience=3, training_folder=TRAIN_FOLDER,
+        trained = base_model_train(0.003, 512, 64, 400, patience=5, training_folder=TRAIN_FOLDER,
                                    use_validation_split=False)
-        # trained = base_model_train(0.005, 512, 64, 400, patience=3, training_folder=TRAIN_FOLDER, use_validation_split=False)
         count += 1

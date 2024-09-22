@@ -80,8 +80,8 @@ class TextDataset(IterableDataset):
                     if sequences_returned >= self._length:
                         return
 
-                    x = torch.tensor(buffer[:self.sequence_length], dtype=torch.long)
-                    y = torch.tensor(buffer[1:self.sequence_length + 1], dtype=torch.long)
+                    x = torch.tensor(buffer[:self.sequence_length], dtype=torch.int) # save a little memory for input
+                    y = torch.tensor(buffer[1:self.sequence_length + 1], dtype=torch.long) # categorical cross-entropy requires long :(
 
                     yield x, y, self.mask
 
