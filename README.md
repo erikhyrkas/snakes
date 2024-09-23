@@ -55,7 +55,7 @@ def ssm(sequence):
 Obviously, you gain efficiency by processing batches, and your sequence is really the shape of your embedding output, 
 but the concept remains the same.
 
-What mamba 2 did, was make the `state_controller @ next_data` highly parallel by using a form of segsum (a way of 
+What mamba 2 did, was make the `state_controller @ state` highly parallel by using a form of segsum (a way of 
 adding up groups of values from a matrix) so that you could then do update the state without iterating over all the
 time_steps in your python. The massive and efficient parallelization of that addition requires more GPU resources but 
 also leads to faster processing. The downside is that you are adding long sequences of embedding matrices, which might 
