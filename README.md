@@ -62,7 +62,8 @@ also leads to faster processing. The downside is that you are adding long sequen
 exceed what a 32-bit float can hold -- giving you "inf" or "-inf" (infinity or negative infinity.) So, they'd chunk 
 up the sequences to add up chunks to make this less likely.
 
-This is (vaguely) the pseudocode for mamba 2 -- where `optimized_operation(state_controller, state)` is :
+This is (vaguely) the pseudocode for mamba 2 -- where `optimized_operation(state_controller, state)` leverages 
+semiseparable matrices :
 ```
 state = initial_state
 for t in time_steps:
