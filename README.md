@@ -28,7 +28,7 @@ Prioritize the sequential processing strengths of SSMs, which are more efficient
 
 This allows the model to efficiently handle sequences without the heavy computational load typically associated with transformer-based attention.
 
-State space models can be highly optimized use semiseparable structured matrices, which allows you to quickly do 
+State space models can be highly optimized to use semiseparable structured matrices, which allows you to quickly do 
 parallel addition for state accumulation, but after spending weeks trying to make this work well for myself, I found it
 very frustrating. I'm still learning, and I'm likely making some major mistakes, but it was non-trivial.
 
@@ -55,12 +55,21 @@ def ssm(sequence):
 Obviously, you gain efficiency by processing batches, and your sequence is really the shape of your embedding output, 
 but the concept remains the same.
 
-What mamba 2 did, was make the `input_influencer @ next_data` highly parallel by using a form of segsum (a way of 
+What mamba 2 did, was make the `state_controller @ next_data` highly parallel by using a form of segsum (a way of 
 adding up groups of values from a matrix) so that you could then do update the state without iterating over all the
 time_steps in your python. The massive and efficient parallelization of that addition requires more GPU resources but 
 also leads to faster processing. The downside is that you are adding long sequences of embedding matrices, which might 
 exceed what a 32-bit float can hold -- giving you "inf" or "-inf" (infinity or negative infinity.) So, they'd chunk 
-up the sequences to add up chunks to make this less likely. 
+up the sequences to add up chunks to make this less likely.
+
+This is (vaguely) the pseudocode for mamba 2 -- where `optimized_operation(state_controller, state)` is :
+```
+state = initial_state
+for t in time_steps:
+    next_data = data[t]
+    state = optimized_operation(state_controller, state) + (input_influencer @ next_data)
+    output[t] = output_shaper @ state
+```
 
 Unfortunately, I had far less success at emulating their work than they did. And, as I said before, it's likely my 
 inexperience with optimizing segsum. I found that if I took the more standard approach to SSMs, and simply added a 
