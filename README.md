@@ -81,7 +81,7 @@ But my intuition went a step beyond this. While this would be enough to work wit
 on my very first day of experimenting with SSMs -- ensuring that the longer range model recollection worked was important.
 
 In version 0.3, I've included two summaries of the token's state history. Effectively, as we go through the time steps, I 
-I capture the regular updates for each step, but also have a second state space model to track what I called a 
+capture the regular updates for each step, but also have a second state space model to track what I called a 
 "local summary" and a "global summary".
 
 The summaries are simply following the ssm pattern, but their output is appended to the main state's state. Because 
