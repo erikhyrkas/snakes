@@ -297,14 +297,15 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     vocab_size = tokenizer.vocab_size()
     print(f"Vocabulary size: {vocab_size}")
 
-    config = Config(vocab_size=tokenizer.vocab_size())
-    model = LanguageModel(config)
-    print(f"Number of parameters: {model.count_parameters()}")
 
     base_path = get_base_path()
     if os.path.exists(f"{base_path}model/model_checkpoint.bin"):
-        model.load(f"{base_path}model/model_checkpoint.bin", config_path)
+        model = LanguageModel.load(f"{base_path}model/model_checkpoint.bin", config_path)
         print(f"Resumed training from {base_path}model/model_checkpoint.bin")
+    else:
+        model = LanguageModel(Config(vocab_size=tokenizer.vocab_size()))
+
+    print(f"Number of parameters: {model.count_parameters()}")
 
     accumulation_steps = 16
     steps_per_epoch = math.ceil(number_of_samples / batch_size)
