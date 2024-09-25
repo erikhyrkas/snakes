@@ -25,8 +25,8 @@ def interactive_interface():
     interface = ModelInterface(model_save_path=model_path, tokenizer_save_path=tokenizer_path, config_save_path=config_save_path)
     params = interface.count_parameters()
 
-    print(f"Number of parameters: {params}")
-    print(f"Vocabulary size: {interface.vocab_size()}")
+    print(f"Number of parameters: {params:,}")
+    print(f"Vocabulary size: {interface.vocab_size():,}")
     print()
     print("Type text that the model will complete. Type 'exit' to exit.")
     while True:

@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from ys.language_model.attention import Attention
+from ys.language_model.attention_blocks import AttentionBlocks
 from ys.language_model.config import Config
 
 
@@ -10,8 +10,8 @@ class LanguageModel(nn.Module):
         super().__init__()
         self.config = config
         self.embedding = nn.Embedding(config.vocab_size, config.embedding_dim)
-        self.attention = Attention(config)
-        self.output_layer = nn.Linear(config.output_dim, config.vocab_size)
+        self.attention = AttentionBlocks(config)
+        self.output_layer = nn.Linear(config.embedding_dim, config.vocab_size)
 
     def forward(self, input_tokens):
         embedded = self.embedding(input_tokens)

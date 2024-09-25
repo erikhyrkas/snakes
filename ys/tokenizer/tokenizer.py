@@ -174,11 +174,11 @@ class Tokenizer:
         with open(filepath, 'rb') as f:
             self.index_to_word, self.word_to_index, self.current_index, self.initialized = pickle.load(f)
         if DEBUG_TOKENIZER:
-            print("Tokenizer vocabulary size: ", self.vocab_size())
+            print(f"Tokenizer vocabulary size: {self.vocab_size():,}")
 
     def print_vocabulary(self):
         print(self.word_to_index)
-        print("Tokenizer vocabulary size: ", self.vocab_size())
+        print(f"Tokenizer vocabulary size: {self.vocab_size():,}")
 
     def get_end_token(self):
         if not self.initialized:
@@ -204,7 +204,7 @@ def example_tokenize():
     tokens = tokenizer.encode("hello 1980 <start>Test ërik's world<start><end> <html> Erik<start>")
     print("Tokens:", tokens)
     print("Decoded:", tokenizer.decode(tokens))
-    print("Vocab Size:", tokenizer.vocab_size())
+    print(f"Vocab Size: {tokenizer.vocab_size():,}")
     tokenizer.print_vocabulary()
 
 

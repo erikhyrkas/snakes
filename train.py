@@ -40,11 +40,22 @@ if __name__ == "__main__":
             cleanup_old_bins()
 
     train_or_load_tokenizer("training_data")
-    TRAIN_FOLDER = "training_data"
 
-    trained = False
-    count = 0
-    while not trained and count < 3:
-        trained = base_model_train(0.0025, 512, 64, 400, patience=5, training_folder=TRAIN_FOLDER,
-                                   use_validation_split=False)
-        count += 1
+    TRAIN_FOLDER = "small_training_data"
+    base_model_train(0.0015, 128, 32, 25, patience=3, training_folder=TRAIN_FOLDER,
+                               use_validation_split=False)
+
+    base_path = get_base_path()
+    if os.path.exists(f"{base_path}model/scheduler_checkpoint.bin"):
+        os.remove(f"{base_path}model/scheduler_checkpoint.bin")
+    TRAIN_FOLDER = "training_data"
+    base_model_train(0.0015, 128, 32, 80, patience=3, training_folder=TRAIN_FOLDER,
+                               use_validation_split=False)
+
+
+    base_path = get_base_path()
+    if os.path.exists(f"{base_path}model/scheduler_checkpoint.bin"):
+        os.remove(f"{base_path}model/scheduler_checkpoint.bin")
+    TRAIN_FOLDER = "training_data"
+    base_model_train(0.0015, 512, 6, 200, patience=3, training_folder=TRAIN_FOLDER,
+                               use_validation_split=False)

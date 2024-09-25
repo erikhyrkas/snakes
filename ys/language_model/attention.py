@@ -10,7 +10,7 @@ class Attention(nn.Module):
         self.config = config
         self.embedding_size = config.embedding_dim
         self.state_dim = config.state_dim
-        self.output_dim = config.output_dim
+        self.output_dim = config.embedding_dim
 
         # State-space model parameters (learnable)
         self.global_state_control = nn.Parameter(

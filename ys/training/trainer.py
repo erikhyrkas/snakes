@@ -260,7 +260,7 @@ def get_training_file_names(directory="training_data"):
 def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs,
                      training_folder="training_data", patience=10, use_validation_split: bool = True):
     print(
-        f"LR: {learning_rate:.5f} Training Sequence Length: {training_sequence_length} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
+        f"LR: {learning_rate:.5f} Training Sequence Length: {training_sequence_length:,} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
     print(f"Use Validation Split: {use_validation_split}")
     base_path = get_base_path()
     model_path = f"{base_path}model/model.bin"
@@ -292,10 +292,10 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
         val_loader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False)
 
     number_of_samples = len(train_dataset)
-    print(f"Number of training samples: {number_of_samples} for sequence length: {training_sequence_length}")
+    print(f"Number of training samples: {number_of_samples:,} for sequence length: {training_sequence_length:,}")
 
     vocab_size = tokenizer.vocab_size()
-    print(f"Vocabulary size: {vocab_size}")
+    print(f"Vocabulary size: {vocab_size:,}")
 
 
     base_path = get_base_path()
@@ -305,7 +305,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     else:
         model = LanguageModel(Config(vocab_size=tokenizer.vocab_size()))
 
-    print(f"Number of parameters: {model.count_parameters()}")
+    print(f"Number of parameters: {model.count_parameters():,}")
 
     accumulation_steps = 16
     steps_per_epoch = math.ceil(number_of_samples / batch_size)
@@ -342,8 +342,8 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
         print("Saving model...")
         model.save(model_path, config_path)
         print(f"Model saved to {model_path}")
-        print(f"Number of parameters: {model.count_parameters()}")
-        print(f"Vocabulary size: {vocab_size}")
+        print(f"Number of parameters: {model.count_parameters():,}")
+        print(f"Vocabulary size: {vocab_size:,}")
     return model_trained
 
 
