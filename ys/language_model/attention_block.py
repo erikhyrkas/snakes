@@ -1,4 +1,3 @@
-
 import torch.nn as nn
 
 from ys.language_model.attention import Attention
@@ -17,6 +16,16 @@ class AttentionBlock(nn.Module):
         self.layer_norm1 = nn.LayerNorm(config.embedding_dim)  # For attention
         self.layer_norm2 = nn.LayerNorm(config.embedding_dim)  # For FFN
         self.dropout = nn.Dropout(config.dropout_rate)
+
+        # Apply weight initialization
+        self.apply(self._init_weights)
+
+    @staticmethod
+    def _init_weights(m):
+        if isinstance(m, nn.Linear):
+            nn.init.xavier_uniform_(m.weight)
+            if m.bias is not None:
+                nn.init.constant_(m.bias, 0)
 
     def forward(self, x):
         # Attention block with residual connection and normalization
