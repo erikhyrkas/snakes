@@ -2,8 +2,6 @@ import os
 import random
 import time
 
-import ollama
-
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
