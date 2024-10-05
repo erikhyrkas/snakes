@@ -20,6 +20,11 @@ class Attention(nn.Module):
         self.global_output_shaper = nn.Parameter(
             torch.zeros(self.state_dim, self.state_dim))  # C: Output shaping matrix
 
+        # Need to rename the summaries. Originally, the local looked back X tokens and knew nothing about the
+        # prior tokens, so it was truly local, which made the other summary the opposite: global.
+        # Now, both summaries have the opportunity to see information from all prior tokens, so the words
+        # global and local don't have meaning. Maybe "frequent and infrequent" summaries would be more
+        # descriptive.
         self.local_summary_state_control = nn.Parameter(
             torch.zeros(self.state_dim, self.state_dim))
         self.local_summary_state_influence = nn.Parameter(
