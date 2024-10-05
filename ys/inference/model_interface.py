@@ -51,21 +51,23 @@ class ModelInterface:
         next_token_id = torch.multinomial(top_p_probs, 1)
         return top_p_indices[next_token_id].item()
 
-    def complete(self, current_context: str, top_p: float = 0.9, max_tokens: int = 100000):
+    def complete(self, current_context: str, top_p: float = 0.9, max_tokens: int = 100000) -> str:
         tokens = self.tokenizer.encode(current_context)
+        original_length = len(tokens)
         for i in range(max_tokens):
-            input_tokens = torch.tensor(tokens).to(self.device)
-            if top_p >= 1.0 or top_p <= 0.0:
+            input_tokens = torch.tensor(tokens, device=self.device)
+            if not (0.0 < top_p <= 1.0):
                 next_token = self._predict_next_token(input_tokens)
             else:
                 next_token = self._predict_next_token_softmax(input_tokens, top_p)
             tokens.append(next_token)
             if next_token == self.end_token:
                 break
-        result = self.tokenizer.decode(tokens)
+        new_tokens = tokens[original_length:]
+        result = self.tokenizer.decode(new_tokens)
         return result
 
-    def instruct(self, prompt: str, top_p: float = 0.9, max_tokens: int = 100000):
+    def instruct(self, prompt: str, top_p: float = 0.9, max_tokens: int = 100000) -> str:
         new_prompt = prompt
         if '<start>' not in prompt:
             new_prompt = prompt + '\n<start>'

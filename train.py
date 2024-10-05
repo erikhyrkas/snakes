@@ -57,5 +57,5 @@ if __name__ == "__main__":
     if os.path.exists(f"{base_path}model/scheduler_checkpoint.bin"):
         os.remove(f"{base_path}model/scheduler_checkpoint.bin")
     TRAIN_FOLDER = "training_data"
-    base_model_train(0.0015, 512, 6, 200, patience=3, training_folder=TRAIN_FOLDER,
+    base_model_train(0.0015, 512, 6, 10, patience=3, training_folder=TRAIN_FOLDER,
                                use_validation_split=False)
