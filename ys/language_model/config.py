@@ -1,11 +1,8 @@
 class Config:
-    def __init__(self, vocab_size, embedding_dim=768, state_dim=4048, local_summary_frequency=16,
-                 global_summary_frequency=64, num_layers=8, dropout_rate=0.1):
+    def __init__(self, vocab_size, embedding_dim=2048, state_dim=8192, num_layers=4, dropout_rate=0.1):
         self.vocab_size = vocab_size
         self.embedding_dim = embedding_dim
         self.state_dim = state_dim
-        self.local_summary_frequency = local_summary_frequency
-        self.global_summary_frequency = global_summary_frequency
         self.num_layers = num_layers
         self.dropout_rate = dropout_rate
         self._validate_shapes()
@@ -22,8 +19,6 @@ class Config:
             "vocab_size": self.vocab_size,
             "embedding_dim": self.embedding_dim,
             "state_dim": self.state_dim,
-            "local_summary_frequency": self.local_summary_frequency,
-            "global_summary_frequency": self.global_summary_frequency,
             "num_layers": self.num_layers,
             "dropout_rate": self.dropout_rate,
         }
