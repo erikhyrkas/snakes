@@ -4,9 +4,11 @@
 
 `"Why did it have to be snakes?"`
 
-## Current Development: Why Snakes - v0.3 Base Model
+## Current Development: Why Snakes - v0.4 Base Model
 
-I've taken a step back from following the mamba-2 paper so closely and focused on making a simple state space model work. 
+I'm continuing my focus on making a simple state space model work. With this version, I'm searching for a better 
+mechanism for long range tokens to have their influence propagate. I'm still not ready to abandon the state space
+design for an RNN-based approach -- but I did link a paper below and that may be my next step. We'll see.
 
 ## Design Philosophy and Goals:
 
@@ -18,7 +20,10 @@ I'm not convinced that state space models will be the technology that replaces t
 challenges around optimizing them, and achieving state-of-the-art quality is not easy. We've seen a couple state
 space models released recently, including Mamba 2, but also Mistral's Codestral.
 
-The hardest part of training a models in this family is numeric stability.  
+The hardest part of training a models in this family is numeric stability.
+
+There has been a more recent paper on RNN's as an alternative to Transformers, and I find this intriguing. I've 
+included a link to it below, and I may consider whether that's a better path forward.
 
 My goals for the base model included:
 
@@ -87,34 +92,7 @@ def ssm(sequence):
     return stack(output)
 ```
 
-But my intuition went a step beyond this. While this would be enough to work with short sequences -- something I found 
-on my very first day of experimenting with SSMs -- ensuring that the longer range model recollection worked was important.
 
-In version 0.3, I've included two summaries of the token's state history. Effectively, as we go through the time steps, I 
-capture the regular updates for each step, but also have a second state space model to track what I called a 
-"local summary" and a "global summary".
-
-The summaries are simply following the ssm pattern, but their output is appended to the main state's state. Because 
-they are updated less frequently, I'm allowing them to potentially learn and retain information about historical 
-aspects of the conversation history and freeing up the main state to learn more about recent tokens. 
-
-This means there are effectively three state space models:
-* global -- updated every timestep
-* local summary -- updated every 16 steps (with the current configuration)
-* global summary -- updated every 64 steps (with the current configuration)
-
-Because the attention is processing an entire sequence, it's imperative that we only consider steps behind the 
-current steps -- as at inference time, we can't look into the future, but since we are processing the time steps 
-in an intuitive forward directly, this is easy to ensure. (With the mamba 2 approach, they rely on masking to 
-ensure they don't add in values from the future.)
-
-I experimented with the local summary starting at the current timestamp and iterating backward up to 16 tokens, and 
-doing this every time step. (You can't go back before the 0th time step, obviously.) This inverse ordering might make 
-the oldest of those 16 tokens more impactful and the most recent the least impactful -- the nature of a recurrent 
-approach -- and I felt like by having two approaches it would improve the overall quality of my results. Unfortunately,
-swimming against time meant a complexity of N-squared within the cpu code, and it was dreadfully slow. If it was the 
-ideal approach, we'll never know. I switched local to be an less-frequently updated summary, because it might achieve 
-similar, though the burden of local knowledge would actually be on the main loop and the summary would help with history.
 
 ### Looking Ahead
 
@@ -278,6 +256,8 @@ experiments, the results only were worse. It's entirely possible that I made a m
 
 Mamba 2 paper: https://arxiv.org/pdf/2405.21060
 
+RNN paper: https://arxiv.org/abs/2410.01201
+
 HiPPO initialization paper: https://arxiv.org/pdf/2206.12037
 
 Blog on Mamba 2:
@@ -377,3 +357,54 @@ dataset, but it became a constant battle to keep training.
  didn't match the attention dimensions, and that was likely a complete waste of energy as well.
 * Training on complicated patterns in the early iterations is inefficient. I think in the future, I'll get the loss to 
  converge fairly low and then do a second round of training with more complex training data.
+
+### Why Snakes - v0.3 Base Model
+
+Weighing in at over 1.3 billion parameters, it's the biggest model in this line I've trained. Having done some training 
+runs with the small dataset, it was very promising.  
+
+I went with the most straight forward state space model on the initial tests, then added two extra summary collectors to 
+the attention with the goal of being able to track more long range details. This made the model very slow, but in my 
+initial tests, it helped convergence. 
+
+Sadly, when trained against the full set of data with longer sequences, the model struggled to converge. The loss stopped 
+at about 2.09, which is low enough that the text was mostly english, but there were still the occasional nonsensical 
+word mixed in, and it did a terrible job of following the longer range token influence. It felt to me that the tokens
+less than a few back had too much influence on the next token -- to the extent that the start of the context was 
+completely lost. That it wasn't really tracking the whole context was enough to still converge as it was, but wouldn't
+be useful for my goals, so that exact design will be abandoned.
+
+What I got from v0.3 was that it's much easier to train (in terms of numeric stability) if you don't use the mamba-2 
+optimizations, but that it's also very slow. That's the major downside of an unlimited context -- if you have a 
+fixed-size context, there's some work you can do in parallel before doing the remainder in sequence. I mean, that's
+the whole premise of the transformer architecture -- create opportunities for massive parallelism, at the cost of
+requiring massive amounts of hardware.
+
+
+#### Notes about how v0.3 was uses summaries
+
+In version 0.3, I've included two summaries of the token's state history. Effectively, as we go through the time steps, I 
+capture the regular updates for each step, but also have a second state space model to track what I called a 
+"local summary" and a "global summary".
+
+The summaries are simply following the ssm pattern, but their output is appended to the main state's state. Because 
+they are updated less frequently, I'm allowing them to potentially learn and retain information about historical 
+aspects of the conversation history and freeing up the main state to learn more about recent tokens. 
+
+This means there are effectively three state space models:
+* global -- updated every timestep
+* local summary -- updated every 16 steps (with the current configuration)
+* global summary -- updated every 64 steps (with the current configuration)
+
+Because the attention is processing an entire sequence, it's imperative that we only consider steps behind the 
+current steps -- as at inference time, we can't look into the future, but since we are processing the time steps 
+in an intuitive forward directly, this is easy to ensure. (With the mamba 2 approach, they rely on masking to 
+ensure they don't add in values from the future.)
+
+I experimented with the local summary starting at the current timestamp and iterating backward up to 16 tokens, and 
+doing this every time step. (You can't go back before the 0th time step, obviously.) This inverse ordering might make 
+the oldest of those 16 tokens more impactful and the most recent the least impactful -- the nature of a recurrent 
+approach -- and I felt like by having two approaches it would improve the overall quality of my results. Unfortunately,
+swimming against time meant a complexity of N-squared within the cpu code, and it was dreadfully slow. If it was the 
+ideal approach, we'll never know. I switched local to be an less-frequently updated summary, because it might achieve 
+similar, though the burden of local knowledge would actually be on the main loop and the summary would help with history.
