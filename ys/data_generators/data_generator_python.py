@@ -42,7 +42,7 @@ def generate_python():
         class_name = task_class[1]
         prompt = class_prompt(task, class_name)
         print(prompt)
-        result = call_llm(prompt)
+        result = prompt_ollama(prompt)
         print(result)
         results.append(f"{task} using a Python class.<start>{result}\n<end>")
 

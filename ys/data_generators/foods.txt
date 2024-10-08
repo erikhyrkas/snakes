@@ -1,0 +1,567 @@
+Amaretto Sour
+BLT
+Bellini
+Black Tea
+Blue Lagoon
+Caipirinha
+Champagne
+Dark 'n' Stormy
+Fanta
+Gatorade
+Hot Toddy
+IPA 
+India Pale Ale
+Irish Coffee
+Long Island Iced Tea
+Mai Tai
+Monster
+Moscow Mule
+Paloma
+Pilsner
+Red Bull
+Sprite
+Swiss cheese
+absinthe
+alcoholic drink
+ale
+almond
+almond milk
+almonds
+aloo gobi
+americano
+aperol spritz
+apple
+apple juice
+apple pie
+apples
+avocado
+avocado toast
+avocados
+baba ganoush
+baba ghanouj
+bagel with lox
+baked beans
+baked potato
+baked trout
+baked ziti
+baklava
+banana
+banana split
+bananas
+bangers and mash
+bean
+beans
+beef
+beef carpaccio
+beef stew
+beef stroganoff
+beef tacos
+beef wellington
+beefs
+beer
+beers
+beet
+beets
+bell pepper
+bell peppers
+bibimbap
+biryani
+black bean soup
+bloody mary
+blueberries
+blueberry
+boba
+borscht
+bouillabaisse
+bourbon
+brandy
+brazil nut
+brazil nuts
+brie
+bries
+broccoli
+brownie
+brownies
+bruschetta
+bubble tea
+bulgogi
+bundt cake
+burritos
+butter
+butter chicken
+buttermilk
+butters
+cabbage
+cabbages
+caesar salad
+cake
+calamari
+calamaris
+cappuccino
+caprese salad
+carbonara
+carrot
+carrot cake
+carrots
+cashew
+cashews
+cauliflower
+cauliflowers
+ceviche
+chai tea
+chamomile tea
+chana masala
+charcuterie
+cheddar
+cheddars
+cheese
+cheesecake
+cheeses
+cherries
+cherry
+chestnut
+chestnuts
+chicken
+chicken alfredo
+chicken enchiladas
+chicken kiev
+chicken korma
+chicken marsala
+chicken parmesan
+chicken pot pie
+chicken quesadilla
+chicken salad
+chicken satay
+chicken shawarma
+chicken tikka masala
+chickens
+chili con carne
+chimichanga
+chocolate cake
+chocolate chip cookies
+chocolate milk
+chow mein
+churros
+cider
+clam
+clam chowder
+clams
+club sandwich
+cobbler
+coconut
+coconut water
+coconuts
+cod
+coffee
+cognac
+cola
+cold brew coffee
+cookie
+cookies
+cornbread
+corned beef
+cosmopolitan
+cottage cheese
+cottage cheeses
+couscous
+crab
+crab cakes
+crab salad
+crabs
+cranberry juice
+cream
+crepes
+croissant
+croque monsieur
+croquettes
+crumpet
+crème brûlée
+cucumber
+cucumbers
+cupcake
+cupcakes
+curry
+custard
+daiquiri
+dal makhani
+deviled eggs
+dim sum
+donut
+donuts
+duck
+ducks
+dumpling
+dumplings
+eclair
+egg
+egg rolls
+eggplant
+eggplant parmesan
+eggplants
+eggs
+eggs benedict
+empanadas
+enchiladas
+energy drinks
+espresso
+espresso macchiato
+fajitas
+falafel
+feta
+fettuccine alfredo
+fish and chips
+fish tacos
+flan
+focaccia
+fondue
+frappuccino
+french fries
+french onion soup
+french toast
+fried calamari
+fried chicken
+fried rice
+fried shrimp
+frittata
+fruit punch
+fruitcake
+fudge
+garlic
+garlics
+gazpacho
+gelato
+General Tso's chicken
+ghee
+gin
+gin and tonic
+ginger ale
+ginger tea
+gingerbread
+gnocchi
+goat
+goats
+gouda
+goudas
+goulash
+grape
+grape juice
+grapes
+gratin dauphinois
+greek salad
+green bean
+green beans
+green smoothie
+green tea
+grilled cheese sandwich
+grilled salmon
+guacamole
+gumbo
+gyro
+haggis
+ham and cheese sandwich
+hamburger
+hash browns
+hazelnut
+hazelnuts
+herbal tea
+herring
+herrings
+honey garlic chicken
+horchata
+hot chocolate
+hot dog
+hot sauce
+hummus
+ice cream
+ice cream sandwich
+ice creams
+iced coffee
+iced tea
+jalapeno poppers
+jambalaya
+kale
+kales
+kebab
+kefir
+ketchup
+key lime pie
+kiwi
+kiwis
+kombucha
+lager
+lamb
+lamb kebab
+lamb stew
+lambs
+lasagna
+lassi
+latte
+latte macchiato
+lemon
+lemon bars
+lemon chicken
+lemon soda
+lemonade
+lemons
+lentil
+lentils
+lettuce
+lettuces
+lime
+limes
+lobster
+lobster bisque
+lobster roll
+lobsters
+macadamia nut
+macadamia nuts
+macaron
+macaroni and cheese
+macarons
+macaroon
+macaroons
+mackerel
+mackerels
+maki roll
+malai kofta
+mango
+mangoes
+manhattan
+margarita
+martini
+masala dosa
+matcha
+mead
+meat pies
+meatballs
+meatloaf
+milk
+milk
+milks
+milkshake
+milkshake
+mimosa
+minestrone
+miso soup
+mocha
+mojito
+monte cristo sandwich
+moussaka
+mousse
+mozzarella
+muffin
+muffins
+muffuletta
+mulligatawny
+mussel
+mussels
+mussels in white wine sauce
+mustard
+nachos
+napoleon
+negroni
+nicoise salad
+non-alcoholic drink
+nut
+nuts
+old fashioned
+omelette
+onion
+onions
+orange
+orange chicken
+orange juice
+oranges
+oyster
+oysters
+oysters rockefeller
+pad thai
+paella
+pancakes
+paneer butter masala
+paneer tikka
+panna cotta
+papaya
+papayas
+parfait
+parmesan
+parmesans
+pasta primavera
+pastries
+pastry
+pavlova
+pea
+peach
+peaches
+peanut
+peanuts
+pear
+pears
+peas
+pecan
+pecans
+peking duck
+peking pork
+pesto pasta
+philly cheesesteak
+pho
+pie
+pierogi
+pies
+pine nut
+pine nuts
+pineapple
+pineapple juice
+pineapples
+pistachio
+pistachios
+pizza
+piña colada
+plum
+plums
+poached eggs
+polenta
+pomegranate
+pomegranates
+pork
+pork roast
+pork schnitzel
+pot roast
+pot stickers
+potato
+potatoes
+poutine
+pudding
+pâté
+quesadilla
+quiche
+rabbit
+rabbits
+radish
+radishes
+ramen
+ratatouille
+red velvet cake
+red wine
+reuben sandwich
+rice pilaf
+ricotta
+risotto
+roasted vegetables
+rogan josh
+root beer
+rosé
+rum
+saag paneer
+sake
+salmon
+salmons
+samosa
+sangria
+sardine
+sardines
+sauerbraten
+scallop
+scallops
+scotch
+scotch eggs
+seared tuna
+seltzer water
+shakshuka
+shawarma
+shepherd’s pie
+sherbet
+shortbread
+shrimp
+shrimp salad
+shrimp scampi
+shrimps
+smoothies
+soba
+soda water
+sorbet
+soufflé
+soufflé
+sourdough
+souvlaki
+soy milk
+spaghetti
+sparkling water
+spinach
+split pea soup
+sponge cake
+sports drink
+sports drinks
+spring rolls
+squid
+squids
+stir fry
+stout
+strawberries
+strawberry
+strudel
+stuffed peppers
+sundae
+sushi
+sushi roll
+sweet and sour pork
+sweet corn
+sweet corns
+s’mores
+taco salad
+tacos
+tacos al pastor
+tamales
+tandoori chicken
+tart
+tarts
+tea
+tempeh
+tempura
+tequila
+teriyaki chicken
+thai green curry
+thai red curry
+tilapia
+tiramisu
+tofu
+tomato
+tomato juice
+tomato soup
+tomatoes
+tonic
+tonic water
+tortellini
+tortilla
+tortilla española
+tortilla soup
+trifle
+trout
+trouts
+tuna
+tuna melt
+tuna salad
+tunas
+turkey
+turkeys
+udon
+udon noodle soup
+vanilla ice cream
+vindaloo
+vodka
+waffles
+waldorf salad
+walnut
+walnuts
+water
+watermelon
+watermelons
+whiskey
+whiskey sour
+white wine
+wine
+yogurt
+yogurts
+zucchini
+zucchinis
+éclairs
