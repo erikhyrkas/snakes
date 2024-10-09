@@ -1,5 +1,3 @@
-# todo: generate a regex
-# using regex_tasks.tsv, we'll generate regex example responses
 from typing import Tuple
 
 from ys.data_generators.util.generator_harness import generate_training_files
