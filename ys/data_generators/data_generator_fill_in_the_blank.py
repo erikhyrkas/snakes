@@ -47,14 +47,19 @@ def get_multiple_choice_options(correct_answers, statement):
     print(f"Statement: {statement}")
     print(f"correct_answers: {correct_answers}")
     for correct_answer in correct_answers:
-        prompt = f"Provide four multiple-choice options for the word '{correct_answer}' in the sentence: {statement}\nOne option should be correct, and the others should be plausible but incorrect. Only provide the plausible words separated by comma. Make no other comments or statements."
+        prompt = f"Provide four multiple-choice options for the word '{correct_answer}' in the sentence: {statement}\nOne option should be correct, and the others should be plausible but incorrect. Only provide the plausible words separated by comma. Insure consistent capitalization with the correct answer -- unless it's a proper noun or the correct answer is capitalized, the words should be lower case. Make no other comments or statements."
         options = prompt_ollama(prompt)  # Assume this returns a list of options in a formatted string
         options_list = options.split(",")  # Parse options into a list
         options_list = [option.strip() for option in options_list]
+        simplified_list = []
+        for option in options_list:
+            if option.lower() != correct_answer.lower():
+                simplified_list.append(option)
+
         print(f"Options: {options_list}")
-        options_list.append(correct_answer)
-        random.shuffle(options_list)
-        multiple_choice.append(options_list)
+        simplified_list.append(correct_answer)
+        random.shuffle(simplified_list)
+        multiple_choice.append(simplified_list)
     return multiple_choice
 
 
@@ -91,7 +96,6 @@ def generate_questions_for_category(category):
 
 
 def entry_generator() -> Tuple[int, str, str]:
-    all_questions = {}
     categories = [
         "Mathematics",
         "Science",
@@ -164,22 +168,23 @@ def entry_generator() -> Tuple[int, str, str]:
 
                 simple_correct_answer = ", ".join(correct_answers)
                 steps = prompt_ollama(
-                    f"Provide a step-by-step explanation as to why the answers to the following fill-in-the-blank {question_category} question is ({simple_correct_answer}):\n```{prompt}```\n\nDo not provide additional comments beyond the step-by-step explanation.")
+                    f"Provide a step-by-step explanation as to why the answers to the following fill-in-the-blank {question_category} question is ({simple_correct_answer}):\n```{prompt}```\n\nDo not provide additional comments beyond the step-by-step explanation. Each step should start with 'Step (x): ', where x is the step number. After the steps, conclude your explanation with the words 'The answer is {correct_answer_letter}'.")
 
-                if use_single_letter_directions:
-                    formatted_correct_answer_1 = f"The answer is {correct_answer_letter}"
-                    formatted_correct_answer_2 = f"The answer is {correct_answer_letter}{punctuation}"
-                    formatted_correct_answer_3 = f"The answer is {correct_answer_letter}."
-                    if steps.endswith(formatted_correct_answer_1):
-                        steps = steps[:-len(formatted_correct_answer_1)]
-                    elif steps.endswith(formatted_correct_answer_2):
-                        steps = steps[:-len(formatted_correct_answer_2)]
-                    elif steps.endswith(formatted_correct_answer_3):
-                        steps = steps[:-len(formatted_correct_answer_3)]
+                formatted_correct_answer_1 = f"The answer is {correct_answer_letter}".lower()
+                formatted_correct_answer_2 = f"The answer is {correct_answer_letter}{punctuation}".lower()
+                formatted_correct_answer_3 = f"The answer is {correct_answer_letter}.".lower()
+                lower_steps = steps.lower()
+                if lower_steps.endswith(formatted_correct_answer_1):
+                    steps = steps[:-len(formatted_correct_answer_1)]
+                elif lower_steps.endswith(formatted_correct_answer_2):
+                    steps = steps[:-len(formatted_correct_answer_2)]
+                elif lower_steps.endswith(formatted_correct_answer_3):
+                    steps = steps[:-len(formatted_correct_answer_3)]
 
                 steps = steps.strip()
-                correct_answer = f"{steps}\n\n{correct_answer}"
-                if index % 1000 == 0:
+                if "I cannot " not in steps:
+                    correct_answer = f"{steps}\n\n{correct_answer}"
+                if index % 500 == 0:
                     file_number = file_number + 1
                 index += 1
                 yield file_number, prompt, correct_answer
