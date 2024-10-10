@@ -39,7 +39,7 @@ def entry_generator() -> Tuple[int, str, str]:
     decades = ['', '1920s', '1930s', '1940s', '1950s', '1960s', '1970s', '1980s', '1990s', '2000s', '2010s', '2020s']
     file_number: int = 0
     index = 0
-    for _ in range(200):
+    for _ in range(25): # Note, I truncated this after generating way too much data.
         random.shuffle(categories)
         for category in categories:
             time_period_list = ['']
