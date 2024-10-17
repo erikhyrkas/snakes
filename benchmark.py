@@ -192,6 +192,14 @@ class PostscriptChecker:
         return response.endswith(postscript)
 
 
+# This is based on:
+#
+# @article{zhou2023instruction,
+#   title={Instruction-Following Evaluation for Large Language Models},
+#   author={Zhou, Jeffrey and Lu, Tianjian and Mishra, Swaroop and Brahma, Siddhartha and Basu, Sujoy and Luan, Yi and Zhou, Denny and Hou, Le},
+#   journal={arXiv preprint arXiv:2311.07911},
+#   year={2023}
+# }
 class IFEvalEvaluator:
     def __init__(self, model):
         self.model = model
