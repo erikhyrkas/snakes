@@ -192,6 +192,13 @@ class Tokenizer:
                         print(f"Character '{letter}' wasn't in vocabulary. Skipping!")
         return tokens
 
+    def tokens_to_words(self, tokens):
+        words = []
+        for token in tokens:
+            word = self.index_to_word[token]
+            words.append(word)
+        return words
+
     def decode(self, tokens):
         text = ''
         capitalize_next = False
@@ -252,7 +259,12 @@ class Tokenizer:
                     word = word.upper()
                     shout_next = False
 
-                for _ in range(repeat_next):
+                if repeat_next > 1:
+                    for _ in range(repeat_next):
+                        text += word[0]
+                    next_part = word[1:]
+                    text += next_part
+                else:
                     text += word
                 repeat_next = 1
         return text
@@ -306,51 +318,94 @@ def example_tokenize():
 def run_tokenizer_tests():
     tokenizer = Tokenizer()
     test_cases = [
-        "LaSalle is a great example of camelCase splitting.",
-        "The quick brown fox jumps over the lazy dog.",
-        "Jalapeño is a spicy pepper! Do you like Piña colada?",
-        "THIS IS AN ALL CAPS SENTENCE.",
-        "Under_score and CamelCase mixed together.",
-        "1234 numbers and symbols *&^%$#@! are tricky.",
-        "_Meet the new *Star* player of the team.",
-        "eCommerce is the future of onlineShopping.",
-        "hello <start>Test world<end> Erik<start>",
-        "The symbol € is a UTF-8 character, as is ™.",
-        "JSON-like: {'key': 'value', 'number': 1001}",
-        "Math symbols: 2 * 3 = 6 and a^2 + b^2 = c^2.",
-        "The 1980s were fun but I came in 43th place in my race.",
-        "Can you write a blog post for me?<start>Here's a post for you.<end>",
-        "  Python  needs  spaces.   So, let's give it   spaces    .",
-        "<pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad>",
-        "Erik is testing padding.<pad><pad><pad><pad>",
-        "<start><start><start><start><start>",
-        "<end><end><end><end><end><end>",
-        "a-a",
-        "a--a",
-        "a---a",
-        "a----a",
-        "a-----a",
-        "a------a",
-        "a-------a",
-        "a--------a",
-        "a---------a",
-        "a----------a",
-        "a-----------a",
-        "a-----abc------a",
-        "a     abc  a",
+        ("LaSalle is a great example of camelCase splitting.",
+         ['<upper>', '<nospace>', ' la', '<upper>', '<nospace>', ' salle', ' is', ' a', ' great', ' example', ' of',
+          ' camel', '<upper>', '<nospace>', ' case', ' splitting', '.']),
+        ("The quick brown fox jumps over the lazy dog.",
+         ['<upper>', '<nospace>', ' the', ' quick', ' brown', ' fox', ' jumps', ' over', ' the', ' lazy', ' dog', '.']),
+        ("Jalapeño is a spicy pepper! Do you like Piña colada?",
+         ['<upper>', '<nospace>', ' jalapeño', ' is', ' a', ' spicy', ' pepper', '!', '<upper>', ' do', ' you', ' like',
+          '<upper>', ' piña', ' colada', '?']),
+        ("THIS IS AN ALL CAPS SENTENCE.",
+         ['<shout>', '<nospace>', ' this', '<shout>', ' is', '<shout>', ' an', '<shout>', ' all', '<shout>', ' caps',
+          '<shout>', ' sentence', '.']),
+        ("Under_score and CamelCase mixed together.",
+         ['<upper>', '<nospace>', ' under', '_', '<nospace>', ' score', ' and', '<upper>', ' camel', '<upper>',
+          '<nospace>', ' case', ' mixed', ' together', '.']),
+        ("1234 numbers and symbols *&^%$#@! are tricky.",
+         ['1234', ' numbers', ' and', ' symbols', '<space>', '*', '&', '^', '%', '$', '#', '@', '!', ' are', ' tricky',
+          '.']),
+        ("_Meet the new *Star* player of the team.",
+         ['_', '<upper>', '<nospace>', ' meet', ' the', ' new', '<space>', '*', '<upper>', '<nospace>', ' star', '*',
+          ' player', ' of', ' the', ' team', '.']),
+        ("eCommerce is the future of onlineShopping.",
+         ['<nospace>', ' e', '<upper>', '<nospace>', ' commerce', ' is', ' the', ' future', ' of', ' online', '<upper>',
+          '<nospace>', ' shopping', '.']),
+        ("hello <start>Test world<end> Erik<start>",
+         ['<nospace>', ' hello', '<space>', '<start>', '<upper>', '<nospace>', ' test', ' world', '<end>', '<upper>',
+          ' erik', '<start>']),
+        ("The symbol € is a UTF-8 character, as is ™.",
+         ['<upper>', '<nospace>', ' the', ' symbol', '<space>', '€', ' is', ' a', '<shout>', ' utf', '-', '8',
+          ' character', ',', ' as', ' is', '<space>', '™', '.']),
+        ("JSON-like: {'key': 'value', 'number': 1001}",
+         ['<shout>', '<nospace>', ' json', '-', '<nospace>', ' like', ':', '<space>', '{', "'", '<nospace>', ' key',
+          "'", ':', '<space>', "'", '<nospace>', ' value', "'", ',', '<space>', "'", '<nospace>', ' number', "'", ':',
+          '<space>', '1001', '}']),
+        ("Math symbols: 2 * 3 = 6 and a^2 + b^2 = c^2.",
+         ['<upper>', '<nospace>', ' math', ' symbols', ':', '<space>', '2', '<space>', '*', '<space>', '3', '<space>',
+          '=', '<space>', '6', ' and', ' a', '^', '2', '<space>', '+', ' b', '^', '2', '<space>', '=', ' c', '^', '2',
+          '.']),
+        ("The 1980s were fun but I came in 43th place in my race.",
+         ['<upper>', '<nospace>', ' the', '<space>', '1980', '<nospace>', ' s', ' were', ' fun', ' but', '<upper>',
+          ' i', ' came', ' in', '<space>', '43', '<nospace>', ' th', ' place', ' in', ' my', ' race', '.']),
+        ("Can you write a blog post for me?<start>Here's a post for you.<end>",
+         ['<upper>', '<nospace>', ' can', ' you', ' write', ' a', ' blog', ' post', ' for', ' me', '?', '<start>',
+          '<upper>', '<nospace>', ' here', "'", '<nospace>', ' s', ' a', ' post', ' for', ' you', '.', '<end>']),
+        ("  Python  needs  spaces.   So, let's give it   spaces    .",
+         ['<repeata>', '<upper>', ' python', '<repeata>', ' needs', '<repeata>', ' spaces', '.', '<repeatb>', '<upper>',
+          ' so', ',', ' let', "'", '<nospace>', ' s', ' give', ' it', '<repeatb>', ' spaces', '<repeatc>', '<space>',
+          '.']),
+        ("<pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad><pad>",
+         ['<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>', '<pad>']),
+        ("Erik is testing padding.<pad><pad><pad><pad>",
+         ['<upper>', '<nospace>', ' erik', ' is', ' testing', ' padding', '.', '<pad>', '<pad>', '<pad>', '<pad>']),
+        ("<start><start><start><start><start>", ['<start>', '<start>', '<start>', '<start>', '<start>']),
+        ("<end><end><end><end><end><end>", ['<end>', '<end>', '<end>', '<end>', '<end>', '<end>']),
+        ("a-a", ['<nospace>', ' a', '-', '<nospace>', ' a']),
+        ("a--a", ['<nospace>', ' a', '<repeata>', '-', '<nospace>', ' a']),
+        ("a---a", ['<nospace>', ' a', '<repeatb>', '-', '<nospace>', ' a']),
+        ("a----a", ['<nospace>', ' a', '<repeatc>', '-', '<nospace>', ' a']),
+        ("a-----a", ['<nospace>', ' a', '<repeatd>', '-', '<nospace>', ' a']),
+        ("a------a", ['<nospace>', ' a', '<repeate>', '-', '<nospace>', ' a']),
+        ("a-------a", ['<nospace>', ' a', '<repeatf>', '-', '<nospace>', ' a']),
+        ("a--------a", ['<nospace>', ' a', '<repeatg>', '-', '<nospace>', ' a']),
+        ("a---------a", ['<nospace>', ' a', '<repeath>', '-', '<nospace>', ' a']),
+        ("a----------a", ['<nospace>', ' a', '<repeati>', '-', '<nospace>', ' a']),
+        ("a-----------a", ['<nospace>', ' a', '<repeati>', '-', '-', '<nospace>', ' a']),
+        ("a-----abc------a",
+         ['<nospace>', ' a', '<repeatd>', '-', '<nospace>', ' abc', '<repeate>', '-', '<nospace>', ' a']),
+        ("a     abc  a", ['<nospace>', ' a', '<repeatd>', ' abc', '<repeata>', ' a']),
+        ("            def my_py_func(x):\n            def something_func(x):\n              x += 2", ['<repeati>', '<space>', '<repeata>', ' def', ' my', '_', '<nospace>', ' py', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeata>', ' def', ' something', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeatc>', ' x', '<space>', '+', '=', '<space>', '2'])
     ]
 
     tokenizer.get_pad_token()
-    for test in test_cases:
+    for test_case in test_cases:
+        test = test_case[0]
         tokenizer.learn_new_vocab(test)
 
-    for idx, test in enumerate(test_cases):
+    for idx, test_case in enumerate(test_cases):
+        test = test_case[0]
+        expected_tokens = test_case[1]
         print(f"Test Case {idx + 1}:")
         print(f"Original: {test}")
         tokens = tokenizer.encode(test)
         print(f"Tokens: {tokens}")
         decode_text = tokenizer.decode(tokens)
         print(f"Decoded: {decode_text}")
+        token_words = tokenizer.tokens_to_words(tokens)
+        print(f"Tokens as Words: {token_words}")
+        print(f"Expected: {expected_tokens}")
+        assert token_words == expected_tokens
         print("-" * 80)
 
 
