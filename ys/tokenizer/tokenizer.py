@@ -385,7 +385,8 @@ def run_tokenizer_tests():
         ("a-----abc------a",
          ['<nospace>', ' a', '<repeatd>', '-', '<nospace>', ' abc', '<repeate>', '-', '<nospace>', ' a']),
         ("a     abc  a", ['<nospace>', ' a', '<repeatd>', ' abc', '<repeata>', ' a']),
-        ("            def my_py_func(x):\n            def something_func(x):\n              x += 2", ['<repeati>', '<space>', '<repeata>', ' def', ' my', '_', '<nospace>', ' py', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeata>', ' def', ' something', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeatc>', ' x', '<space>', '+', '=', '<space>', '2'])
+        ("            def my_py_func(x):\n            def something_func(x):\n              x += 2", ['<repeati>', '<space>', '<repeata>', ' def', ' my', '_', '<nospace>', ' py', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeata>', ' def', ' something', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeatc>', ' x', '<space>', '+', '=', '<space>', '2']),
+        ("  def something():\n    pass", ['<repeata>', ' def', ' something', '(', ')', ':', '<newline>', '<repeatc>', ' pass'])
     ]
 
     tokenizer.get_pad_token()
@@ -397,11 +398,11 @@ def run_tokenizer_tests():
         test = test_case[0]
         expected_tokens = test_case[1]
         print(f"Test Case {idx + 1}:")
-        print(f"Original: {test}")
+        print(f"Original: |{test}|")
         tokens = tokenizer.encode(test)
         print(f"Tokens: {tokens}")
         decode_text = tokenizer.decode(tokens)
-        print(f"Decoded: {decode_text}")
+        print(f"Decoded: |{decode_text}|")
         token_words = tokenizer.tokens_to_words(tokens)
         print(f"Tokens as Words: {token_words}")
         print(f"Expected: {expected_tokens}")
