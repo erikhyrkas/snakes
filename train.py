@@ -32,6 +32,12 @@ def warmed_up() -> bool:
     return os.path.exists(f"{base_path}model/model.bin")
 
 
+def remove_scheduler_checkpoint():
+    base_path = get_base_path()
+    if os.path.exists(f"{base_path}model/scheduler_checkpoint.bin"):
+        os.remove(f"{base_path}model/scheduler_checkpoint.bin")
+
+
 if __name__ == "__main__":
     if len(sys.argv) > 1 and sys.argv[1] == "clean":
         if len(sys.argv) > 2 and sys.argv[2] == "all":
@@ -42,6 +48,11 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "training_data"
-    base_model_train(0.005, 128, 32, 200, patience=3, training_folder=TRAIN_FOLDER,
-                               use_validation_split=False)
 
+    base_model_train(0.003, 128, 24, 30, patience=3, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+
+    # remove_scheduler_checkpoint()
+    #
+    # base_model_train(0.003, 1024, 4, 5, patience=5, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)

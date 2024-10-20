@@ -3,6 +3,8 @@ import re
 
 DEBUG_TOKENIZER = False
 
+REPEAT_ARRAY = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i']
+
 
 class Tokenizer:
     def __init__(self):
@@ -10,7 +12,9 @@ class Tokenizer:
         self.word_to_index = {}
         self.current_index = 0
         self.initialized = False
-        self.special_tokens = ["<upper>", "<shout>", "<start>", "<end>", "<space>", "<newline>", "<pad>"]
+        self.special_tokens = ["<upper>", "<shout>", "<start>", "<end>", "<space>", "<newline>", "<pad>",
+                               "<nospace>", "<repeata>", "<repeatb>", "<repeatc>", "<repeatd>", "<repeate>",
+                               "<repeatf>", "<repeath>", "<repeati>"]
 
     def _add_to_vocab(self, word):
         if word not in self.word_to_index:
@@ -50,6 +54,37 @@ class Tokenizer:
 
             self.initialized = True
 
+    @staticmethod
+    def _detect_repeats(text):
+        repeats_replaced = ''
+        last_char = ''
+        repeat_count = 0
+
+        for char in text:
+            if (char.isspace() or not char.isalnum()) and char == last_char:
+                repeat_count += 1
+                if repeat_count == 10:
+                    # If repeat count reaches 10, insert a <repeat-10> token
+                    repeats_replaced += f"<repeati>{char}"
+                    repeat_count = 0  # Reset repeat count after inserting
+            else:
+                if repeat_count > 1:
+                    repeat_letter = REPEAT_ARRAY[repeat_count - 2]
+                    repeats_replaced += f"<repeat{repeat_letter}>{last_char}"
+                elif repeat_count == 1:
+                    repeats_replaced += last_char
+                last_char = char
+                repeat_count = 1
+
+        # Append any remaining repeat count
+        if repeat_count > 1:
+            repeat_letter = REPEAT_ARRAY[repeat_count - 2]
+            repeats_replaced += f"<repeat{repeat_letter}>{last_char}"
+        elif repeat_count == 1:
+            repeats_replaced += last_char
+
+        return repeats_replaced
+
     def learn_new_vocab(self, document: str):
         if not self.initialized:
             self._initialize_vocabulary()
@@ -73,7 +108,7 @@ class Tokenizer:
         symbol_regex = r'[^\w\s]|_'  # Single symbol or punctuation mark
 
         # Create a combined regex to match all tokens
-        combined_regex = f'({space_regex}|{tag_regex}|{cap_word_regex}|{all_caps_regex}|{lower_word_regex}|{single_cap_regex}|{number_regex}|{symbol_regex})'
+        combined_regex = f'({space_regex}|{tag_regex}|{all_caps_regex}|{cap_word_regex}|{lower_word_regex}|{single_cap_regex}|{number_regex}|{symbol_regex})'
 
         # Find all matches using the combined regex
         matches = re.findall(combined_regex, text)
@@ -84,7 +119,8 @@ class Tokenizer:
         return tokens
 
     def to_words(self, text: str):
-        tokens = self._split_text(text)
+        text_no_repeats = self._detect_repeats(text)
+        tokens = self._split_text(text_no_repeats)
 
         result = []
         for token in tokens:
@@ -97,18 +133,40 @@ class Tokenizer:
             elif token.isspace():
                 for _ in token:
                     result.append('<space>')
+            elif token.startswith('<repeat'):
+                result.append(token.lower())
             elif re.match(r'<[a-z]+>', token):
                 result.append(token)  # tag
-            elif re.match(r'[A-Z][a-zà-ÿ]*', token):
-                result.append('<upper>')
-                result.append(token.lower())
             elif re.match(r'[A-Z][A-ZÀ-ß]+', token):
+                no_space = len(result) == 0 or result[-1] != '<space>'
+                if not no_space:
+                    result.pop()
                 result.append('<shout>')
-                result.append(token.lower())
+                if no_space:
+                    result.append('<nospace>')
+                result.append(' ' + token.lower())
+            elif re.match(r'[A-Z][a-zà-ÿ]*', token):
+                no_space = len(result) == 0 or result[-1] != '<space>'
+                if not no_space:
+                    result.pop()
+                result.append('<upper>')
+                if no_space:
+                    result.append('<nospace>')
+                result.append(' ' + token.lower())
             elif re.match(r'[a-zà-ÿ]+', token):
-                result.append(token)
+                no_space = len(result) == 0 or result[-1] != '<space>'
+                if no_space:
+                    result.append('<nospace>')
+                else:
+                    result.pop()
+                result.append(' ' + token)
             elif re.match(r'[A-ZÀ-ß]', token):
-                result.append(token.lower())
+                no_space = len(result) == 0 or result[-1] != '<space>'
+                if no_space:
+                    result.append('<nospace>')
+                else:
+                    result.pop()
+                result.append(' ' + token.lower())
             else:
                 result.append(token)
 
@@ -138,28 +196,65 @@ class Tokenizer:
         text = ''
         capitalize_next = False
         shout_next = False
+        repeat_next = 1
+        no_space = False
         for token in tokens:
             word = self.index_to_word[token]
-            if word == '<space>':
-                text += ' '
+            if word == '<nospace>':
+                no_space = True
+            elif word == '<repeata>':
+                repeat_next = 2
+            elif word == '<repeatb>':
+                repeat_next = 3
+            elif word == '<repeatc>':
+                repeat_next = 4
+            elif word == '<repeatd>':
+                repeat_next = 5
+            elif word == '<repeate>':
+                repeat_next = 6
+            elif word == '<repeatf>':
+                repeat_next = 7
+            elif word == '<repeatg>':
+                repeat_next = 8
+            elif word == '<repeath>':
+                repeat_next = 9
+            elif word == '<repeati>':
+                repeat_next = 10
+            elif word == '<space>':
+                for _ in range(repeat_next):
+                    text += ' '
+                repeat_next = 1
             elif word == '<newline>':
-                text += '\n'
+                for _ in range(repeat_next):
+                    text += '\n'
+                repeat_next = 1
             elif word == '<upper>':
                 capitalize_next = True
             elif word == '<shout>':
                 shout_next = True
             elif word == '_':
-                text += '_'
+                for _ in range(repeat_next):
+                    text += '_'
+                repeat_next = 1
             elif word in self.special_tokens:
                 continue  # Skip rendering of standalone special tokens
             else:
+                if no_space:
+                    word = word.strip()
+                    no_space = False
                 if capitalize_next:
-                    word = word.capitalize()
+                    if word[0].isspace():
+                        word = ' ' + (word.strip()).capitalize()
+                    else:
+                        word = word.capitalize()
                     capitalize_next = False
                 if shout_next:
                     word = word.upper()
                     shout_next = False
-                text += word
+
+                for _ in range(repeat_next):
+                    text += word
+                repeat_next = 1
         return text
 
     def vocab_size(self):
@@ -230,6 +325,19 @@ def run_tokenizer_tests():
         "Erik is testing padding.<pad><pad><pad><pad>",
         "<start><start><start><start><start>",
         "<end><end><end><end><end><end>",
+        "a-a",
+        "a--a",
+        "a---a",
+        "a----a",
+        "a-----a",
+        "a------a",
+        "a-------a",
+        "a--------a",
+        "a---------a",
+        "a----------a",
+        "a-----------a",
+        "a-----abc------a",
+        "a     abc  a",
     ]
 
     tokenizer.get_pad_token()
