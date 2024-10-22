@@ -104,7 +104,7 @@ class Tokenizer:
         all_caps_regex = r'[A-Z][A-ZÀ-ß]+'  # All capital letters in a row, including accented uppercase characters
         lower_word_regex = r'[a-zà-ÿ]+'  # One or more lowercase letters, including accented characters
         single_cap_regex = r'[A-ZÀ-ß]'  # A single capital word (like 'A' or accented capital)
-        number_regex = r'\d+'  # One or more numbers
+        number_regex = r'\d'  # One or more numbers
         symbol_regex = r'[^\w\s]|_'  # Single symbol or punctuation mark
 
         # Create a combined regex to match all tokens
@@ -318,6 +318,7 @@ def example_tokenize():
 def run_tokenizer_tests():
     tokenizer = Tokenizer()
     test_cases = [
+        ("rebasing and understanding", []),
         ("LaSalle is a great example of camelCase splitting.",
          ['<upper>', '<nospace>', ' la', '<upper>', '<nospace>', ' salle', ' is', ' a', ' great', ' example', ' of',
           ' camel', '<upper>', '<nospace>', ' case', ' splitting', '.']),
@@ -333,8 +334,8 @@ def run_tokenizer_tests():
          ['<upper>', '<nospace>', ' under', '_', '<nospace>', ' score', ' and', '<upper>', ' camel', '<upper>',
           '<nospace>', ' case', ' mixed', ' together', '.']),
         ("1234 numbers and symbols *&^%$#@! are tricky.",
-         ['1234', ' numbers', ' and', ' symbols', '<space>', '*', '&', '^', '%', '$', '#', '@', '!', ' are', ' tricky',
-          '.']),
+         ['1', '2', '3', '4', ' numbers', ' and', ' symbols', '<space>', '*', '&', '^', '%', '$', '#', '@', '!', ' are',
+          ' tricky', '.']),
         ("_Meet the new *Star* player of the team.",
          ['_', '<upper>', '<nospace>', ' meet', ' the', ' new', '<space>', '*', '<upper>', '<nospace>', ' star', '*',
           ' player', ' of', ' the', ' team', '.']),
@@ -350,14 +351,15 @@ def run_tokenizer_tests():
         ("JSON-like: {'key': 'value', 'number': 1001}",
          ['<shout>', '<nospace>', ' json', '-', '<nospace>', ' like', ':', '<space>', '{', "'", '<nospace>', ' key',
           "'", ':', '<space>', "'", '<nospace>', ' value', "'", ',', '<space>', "'", '<nospace>', ' number', "'", ':',
-          '<space>', '1001', '}']),
+          '<space>', '1', '0', '0', '1', '}']),
         ("Math symbols: 2 * 3 = 6 and a^2 + b^2 = c^2.",
          ['<upper>', '<nospace>', ' math', ' symbols', ':', '<space>', '2', '<space>', '*', '<space>', '3', '<space>',
           '=', '<space>', '6', ' and', ' a', '^', '2', '<space>', '+', ' b', '^', '2', '<space>', '=', ' c', '^', '2',
           '.']),
         ("The 1980s were fun but I came in 43th place in my race.",
-         ['<upper>', '<nospace>', ' the', '<space>', '1980', '<nospace>', ' s', ' were', ' fun', ' but', '<upper>',
-          ' i', ' came', ' in', '<space>', '43', '<nospace>', ' th', ' place', ' in', ' my', ' race', '.']),
+         ['<upper>', '<nospace>', ' the', '<space>', '1', '9', '8', '0', '<nospace>', ' s', ' were', ' fun', ' but',
+          '<upper>', ' i', ' came', ' in', '<space>', '4', '3', '<nospace>', ' th', ' place', ' in', ' my', ' race',
+          '.']),
         ("Can you write a blog post for me?<start>Here's a post for you.<end>",
          ['<upper>', '<nospace>', ' can', ' you', ' write', ' a', ' blog', ' post', ' for', ' me', '?', '<start>',
           '<upper>', '<nospace>', ' here', "'", '<nospace>', ' s', ' a', ' post', ' for', ' you', '.', '<end>']),
@@ -385,8 +387,16 @@ def run_tokenizer_tests():
         ("a-----abc------a",
          ['<nospace>', ' a', '<repeatd>', '-', '<nospace>', ' abc', '<repeate>', '-', '<nospace>', ' a']),
         ("a     abc  a", ['<nospace>', ' a', '<repeatd>', ' abc', '<repeata>', ' a']),
-        ("            def my_py_func(x):\n            def something_func(x):\n              x += 2", ['<repeati>', '<space>', '<repeata>', ' def', ' my', '_', '<nospace>', ' py', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeata>', ' def', ' something', '_', '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeatc>', ' x', '<space>', '+', '=', '<space>', '2']),
-        ("  def something():\n    pass", ['<repeata>', ' def', ' something', '(', ')', ':', '<newline>', '<repeatc>', ' pass'])
+        ("            def my_py_func(x):\n            def something_func(x):\n              x += 2",
+         ['<repeati>', '<space>', '<repeata>', ' def', ' my', '_', '<nospace>', ' py', '_', '<nospace>', ' func', '(',
+          '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeata>', ' def', ' something', '_',
+          '<nospace>', ' func', '(', '<nospace>', ' x', ')', ':', '<newline>', '<repeati>', '<space>', '<repeatc>',
+          ' x', '<space>', '+', '=', '<space>', '2']),
+        ("  def something():\n    pass",
+         ['<repeata>', ' def', ' something', '(', ')', ':', '<newline>', '<repeatc>', ' pass']),
+        ("999 888 675 432 1090 1 2 3 4",
+         ['9', '9', '9', '<space>', '8', '8', '8', '<space>', '6', '7', '5', '<space>', '4', '3', '2', '<space>', '1',
+          '0', '9', '0', '<space>', '1', '<space>', '2', '<space>', '3', '<space>', '4'])
     ]
 
     tokenizer.get_pad_token()
