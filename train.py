@@ -49,10 +49,6 @@ if __name__ == "__main__":
 
     TRAIN_FOLDER = "training_data"
 
-    base_model_train(0.003, 128, 24, 30, patience=3, training_folder=TRAIN_FOLDER,
+    remove_scheduler_checkpoint()
+    base_model_train(0.003, 256, 16, 25, patience=2, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
-
-    # remove_scheduler_checkpoint()
-    #
-    # base_model_train(0.003, 1024, 4, 5, patience=5, training_folder=TRAIN_FOLDER,
-    #                  use_validation_split=False)

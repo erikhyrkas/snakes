@@ -39,7 +39,7 @@ def pretty_time(seconds: float) -> str:
 
 
 def train_model(model, train_loader: DataLoader, val_loader: Optional[DataLoader], optimizer, criterion, scheduler,
-                epochs=100, max_grad_norm=1.0, patience=5, accumulation_steps=8):
+                epochs=100, max_grad_norm=1.0, patience=5, accumulation_steps=8, step_report=1):
     print("Training model...")
     device_name = "cuda" if torch.cuda.is_available() else "cpu"
     print(f"Using {device_name}")
@@ -65,10 +65,10 @@ def train_model(model, train_loader: DataLoader, val_loader: Optional[DataLoader
 
         if device_name == "cuda":
             epoch_loss = cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
-                                    scaler, train_loader, total_steps, scheduler)
+                                    scaler, train_loader, total_steps, scheduler, step_report)
         else:
             epoch_loss = cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
-                                   train_loader, total_steps, scheduler)
+                                   train_loader, total_steps, scheduler, step_report)
 
         if val_loader is not None:
             model.eval()
@@ -144,7 +144,7 @@ def calc_val_loss(criterion, inputs, model, targets, masks):
 
 
 def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
-               scaler: torch.amp.GradScaler, train_loader, total_steps, scheduler):
+               scaler: torch.amp.GradScaler, train_loader, total_steps, scheduler, step_report):
     epoch_loss = torch.tensor(0.0)
     grad_norm = torch.tensor(0.0)
     start_time = time.time()
@@ -186,7 +186,7 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
                 scheduler.step()
 
         epoch_loss += loss.item()
-        if step % 10 == 0:  # Log every 10 steps
+        if (step % step_report == 0) or (step == 1):  # Log every step_report steps
             elapsed_time = time.time() - start_time
             estimated_completion = (elapsed_time / step) * total_steps
             estimated_remaining = estimated_completion - elapsed_time
@@ -206,9 +206,11 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
 
 
 def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer, train_loader, total_steps,
-              scheduler):
+              scheduler, step_report):
     epoch_loss = 0.0
     start_time = time.time()
+    step = 1
+    blank_line = ' ' * 80
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
 
@@ -226,14 +228,21 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
             optimizer.zero_grad()
 
         epoch_loss += loss.item()
-        elapsed_time = time.time() - start_time
-        estimated_completion = (elapsed_time / step) * total_steps
-        estimated_remaining = estimated_completion - elapsed_time
-        print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} - {pretty_time(elapsed_time)} '
-              f'elapsed/~{pretty_time(estimated_remaining)} remaining', end='\r', flush=True)
+        if (step % step_report == 0) or (step == 1):  # Log every step_report steps
+            elapsed_time = time.time() - start_time
+            estimated_completion = (elapsed_time / step) * total_steps
+            estimated_remaining = estimated_completion - elapsed_time
+            lr = scheduler.get_last_lr()[0]
+            print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
+                  f'elapsed/~{pretty_time(estimated_remaining)} remaining', end='\r', flush=True)
         if math.isnan(epoch_loss) or math.isinf(epoch_loss):
             break
-    print()
+
+    elapsed_time = time.time() - start_time
+    lr = scheduler.get_last_lr()[0]
+    print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
+          f'elapsed{blank_line}')
+
     return epoch_loss / total_steps
 
 
@@ -258,7 +267,7 @@ def get_training_file_names(directory="training_data"):
 
 
 def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs,
-                     training_folder="training_data", patience=10, use_validation_split: bool = True):
+                     training_folder="training_data", patience=10, use_validation_split: bool = True, step_report=1):
     print(
         f"LR: {learning_rate:.5f} Training Sequence Length: {training_sequence_length:,} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
     print(f"Use Validation Split: {use_validation_split}")
@@ -337,7 +346,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
         scheduler.load_state_dict(torch.load(f'{base_path}model/scheduler_checkpoint.bin', weights_only=False))
 
     model_trained = train_model(model, train_loader, val_loader, optimizer, criterion, scheduler, epochs=max_epochs,
-                                patience=patience, accumulation_steps=accumulation_steps)
+                                patience=patience, accumulation_steps=accumulation_steps, step_report=step_report)
     if model_trained:
         print("Saving model...")
         model.save(model_path, config_path)
