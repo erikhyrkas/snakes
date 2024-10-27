@@ -32,8 +32,8 @@ class Attention(nn.Module):
 
         # Initialize parameters using context manager
         with torch.no_grad():
-            nn.init.xavier_uniform_(self.global_state_control)
-            nn.init.xavier_uniform_(self.global_output_shaper)
+            nn.init.uniform_(self.global_state_control, a=0.01, b=0.05)
+            nn.init.uniform_(self.global_input_influence, a=0.01, b=0.05)
             nn.init.xavier_uniform_(self.global_input_influence)
             nn.init.xavier_uniform_(self.embedding_to_state.weight)
             nn.init.xavier_uniform_(self.state_to_output.weight)
@@ -66,7 +66,6 @@ class Attention(nn.Module):
             input_gate = self.gate_input_proj(state_tokens[:, t])
             gated_bias = torch.sigmoid(state_gate + input_gate) * self.state_bias  # Element-wise gated bias
 
-
             # Create the next state instead of modifying in place
             next_state = (next_states[:, t] @ self.global_state_control +
                           state_tokens[:, t] @ self.global_input_influence +
@@ -74,6 +73,7 @@ class Attention(nn.Module):
 
             residual_next_state = next_states[:, t] + next_state  # residual connection
             next_states[:, t + 1] = self.layer_norm(residual_next_state)
+            # next_states[:, t + 1] = self.layer_norm(next_state)
 
         # Compute outputs
         global_outputs = next_states[:, 1:] @ self.global_output_shaper
