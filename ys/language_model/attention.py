@@ -21,7 +21,8 @@ class Attention(nn.Module):
             torch.zeros(self.state_dim, self.state_dim))  # C: Output shaping matrix
 
         self.state_bias = nn.Parameter(torch.zeros(self.state_dim))  # Bias term for state transitions
-        self.gate_weight = nn.Parameter(torch.ones(self.state_dim)) # Gate for controlling state bias
+        self.gate_state_proj = nn.Linear(self.state_dim, self.state_dim)
+        self.gate_input_proj = nn.Linear(self.state_dim, self.state_dim)
 
         # Layer normalization to prevent exploding/vanishing gradients
         self.layer_norm = nn.LayerNorm(self.state_dim)
@@ -61,7 +62,10 @@ class Attention(nn.Module):
         # Compute all states at once using the added bias term
         for t in range(sequence_len):
             # Calculate the gated bias for each time step
-            gated_bias = torch.sigmoid(self.gate_weight) * self.state_bias  # Element-wise gated bias
+            state_gate = self.gate_state_proj(next_states[:, t])
+            input_gate = self.gate_input_proj(state_tokens[:, t])
+            gated_bias = torch.sigmoid(state_gate + input_gate) * self.state_bias  # Element-wise gated bias
+
 
             # Create the next state instead of modifying in place
             next_state = (next_states[:, t] @ self.global_state_control +
