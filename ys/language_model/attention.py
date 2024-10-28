@@ -1,5 +1,6 @@
 import torch
 from torch import nn
+from torch.nn import functional as F
 
 from ys.language_model.config import Config
 
@@ -23,6 +24,7 @@ class Attention(nn.Module):
         self.state_bias = nn.Parameter(torch.zeros(self.state_dim))  # Bias term for state transitions
         self.gate_state_proj = nn.Linear(self.state_dim, self.state_dim)
         self.gate_input_proj = nn.Linear(self.state_dim, self.state_dim)
+        self.glu_projection = nn.Linear(self.state_dim, 2 * self.state_dim)
 
         # Layer normalization to prevent exploding/vanishing gradients
         self.layer_norm = nn.LayerNorm(self.state_dim)
@@ -70,6 +72,10 @@ class Attention(nn.Module):
             next_state = (next_states[:, t] @ self.global_state_control +
                           state_tokens[:, t] @ self.global_input_influence +
                           gated_bias)
+
+            next_state = self.glu_projection(next_state)  # [batch, 2 * state_dim]
+            # Apply GLU, which will reduce it back to [batch, state_dim]
+            next_state = F.glu(next_state, dim=-1)
 
             residual_next_state = next_states[:, t] + next_state  # residual connection
             next_states[:, t + 1] = self.layer_norm(residual_next_state)

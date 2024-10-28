@@ -3,7 +3,10 @@ from torch import nn
 from ys.language_model.attention_block import AttentionBlock
 from ys.language_model.config import Config
 
-
+# This is "stacked attention", which is different from multi-head attention.
+# where multi head attention maps the embedding layer into multiple head spaces using
+# a linear transform, stacked attention uses different attention layers to process
+# the input in series. In my experiments, stacked attention has not been exceptional.
 class AttentionBlocks(nn.Module):
     def __init__(self, config: Config):
         super().__init__()

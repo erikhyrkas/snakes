@@ -3,7 +3,7 @@ import torch.nn as nn
 from ys.language_model.attention import Attention
 from ys.language_model.config import Config
 
-
+# After attention, apply a non-linear transformation.
 class AttentionBlock(nn.Module):
     def __init__(self, config: Config):
         super().__init__()
