@@ -7,7 +7,7 @@ from ys.language_model.config import Config
 # where multi head attention maps the embedding layer into multiple head spaces using
 # a linear transform, stacked attention uses different attention layers to process
 # the input in series. In my experiments, stacked attention has not been exceptional.
-class AttentionBlocks(nn.Module):
+class StackedAttentionBlocks(nn.Module):
     def __init__(self, config: Config):
         super().__init__()
         self.attention_layers = nn.ModuleList([AttentionBlock(config) for _ in range(config.num_layers)])
