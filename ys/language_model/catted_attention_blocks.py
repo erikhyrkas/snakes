@@ -16,7 +16,6 @@ class CattedAttentionBlocks(nn.Module):
         self.attention_layers = nn.ModuleList([AttentionBlock(config) for _ in range(config.num_layers)])
         self.embedding_dim = config.embedding_dim
         self.attention_shaper = nn.Linear(self.embedding_dim * config.num_layers, self.embedding_dim)
-        self.dropout = nn.Dropout(config.dropout_rate)
         self.layer_norm = nn.LayerNorm(self.embedding_dim)
 
     def forward(self, embedded_input):
@@ -34,7 +33,7 @@ class CattedAttentionBlocks(nn.Module):
         reshaped_attention = self.attention_shaper(
             concatenated_attention)  # shape: [batch_size, sequence_len, embedding_dim]
 
-        # Apply dropout and layer normalization
-        reshaped_attention = self.layer_norm(reshaped_attention + embedded_input)  # Residual connection and normalize
+        # Apply layer normalization
+        reshaped_attention = self.layer_norm(reshaped_attention)
 
         return reshaped_attention

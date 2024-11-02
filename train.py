@@ -48,15 +48,5 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "training_data"
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.003, 16, 256, 50, patience=2, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.003, 128, 40, 10, patience=2, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.003, 256, 20, 25, patience=2, training_folder=TRAIN_FOLDER,
+    base_model_train(0.003, 256, 16, 25, patience=2, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)

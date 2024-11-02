@@ -21,9 +21,6 @@ class Attention(nn.Module):
         self.global_output_shaper = nn.Parameter(
             torch.zeros(self.state_dim, self.state_dim))  # C: Output shaping matrix
 
-        self.state_bias = nn.Parameter(torch.zeros(self.state_dim))  # Bias term for state transitions
-        self.gate_state_proj = nn.Linear(self.state_dim, self.state_dim)
-        self.gate_input_proj = nn.Linear(self.state_dim, self.state_dim)
         self.glu_projection = nn.Linear(self.state_dim, 2 * self.state_dim)
 
         # Layer normalization to prevent exploding/vanishing gradients
@@ -39,8 +36,6 @@ class Attention(nn.Module):
             nn.init.xavier_uniform_(self.global_input_influence)
             nn.init.xavier_uniform_(self.embedding_to_state.weight)
             nn.init.xavier_uniform_(self.state_to_output.weight)
-            # Initialize biases to zero
-            nn.init.zeros_(self.state_bias)
             if self.embedding_to_state.bias is not None:
                 nn.init.zeros_(self.embedding_to_state.bias)
             if self.state_to_output.bias is not None:
@@ -61,25 +56,17 @@ class Attention(nn.Module):
         # Initialize states
         next_states = torch.zeros(batch_size, sequence_len + 1, self.state_dim, device=device)
 
-        # Compute all states at once using the added bias term
+        # Compute all states at once
         for t in range(sequence_len):
-            # Calculate the gated bias for each time step
-            state_gate = self.gate_state_proj(next_states[:, t])
-            input_gate = self.gate_input_proj(state_tokens[:, t])
-            gated_bias = torch.sigmoid(state_gate + input_gate) * self.state_bias  # Element-wise gated bias
-
-            # Create the next state instead of modifying in place
+            # Create the next state
             next_state = (next_states[:, t] @ self.global_state_control +
-                          state_tokens[:, t] @ self.global_input_influence +
-                          gated_bias)
+                          state_tokens[:, t] @ self.global_input_influence)
 
             next_state = self.glu_projection(next_state)  # [batch, 2 * state_dim]
             # Apply GLU, which will reduce it back to [batch, state_dim]
             next_state = F.glu(next_state, dim=-1)
 
-            residual_next_state = next_states[:, t] + next_state  # residual connection
-            next_states[:, t + 1] = self.layer_norm(residual_next_state)
-            # next_states[:, t + 1] = self.layer_norm(next_state)
+            next_states[:, t + 1] = self.layer_norm(next_state)
 
         # Compute outputs
         global_outputs = next_states[:, 1:] @ self.global_output_shaper
