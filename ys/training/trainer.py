@@ -7,6 +7,7 @@ from typing import Optional
 import torch
 import torch.nn as nn
 from torch import optim
+from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.utils.data import DataLoader
 
 from ys.language_model.config import Config
@@ -145,6 +146,7 @@ def calc_val_loss(criterion, inputs, model, targets, masks):
 
 def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
                scaler: torch.amp.GradScaler, train_loader, total_steps, scheduler, step_report):
+
     epoch_loss = torch.tensor(0.0)
     grad_norm = torch.tensor(0.0)
     start_time = time.time()
@@ -157,6 +159,7 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
         with torch.amp.autocast('cuda'):
             outputs = model(inputs)
             loss = calculate_loss(criterion, masks, outputs, targets)
+            loss += model.attention.orthogonality_penalty()
 
         # Loss scaling
         scaled_loss = scaler.scale(loss)
@@ -182,9 +185,6 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
 
             optimizer.zero_grad(set_to_none=True)
 
-            if scheduler.last_epoch < scheduler.total_steps:
-                scheduler.step()
-
         epoch_loss += loss.item()
         if (step % step_report == 0) or (step == 1):  # Log every step_report steps
             elapsed_time = time.time() - start_time
@@ -198,6 +198,8 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
         if not torch.isfinite(epoch_loss):
             print(f"\nStopping epoch early due to non-finite loss: {epoch_loss}")
             return float('inf')
+
+    scheduler.step()
 
     elapsed_time = time.time() - start_time
     print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
@@ -216,6 +218,7 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
 
         outputs = model(inputs)
         loss = calculate_loss(criterion, masks, outputs, targets)
+        loss += model.attention.orthogonality_penalty()
         normalized_loss = loss / accumulation_steps
         normalized_loss.backward()
 
@@ -223,8 +226,6 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
         if step % accumulation_steps == 0:
             torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
             optimizer.step()
-            if scheduler.last_epoch < scheduler.total_steps:
-                scheduler.step()
             optimizer.zero_grad()
 
         epoch_loss += loss.item()
@@ -242,6 +243,8 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
     lr = scheduler.get_last_lr()[0]
     print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
           f'elapsed{blank_line}')
+
+    scheduler.step()
 
     return epoch_loss / total_steps
 
@@ -317,21 +320,9 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     print(f"Number of parameters: {model.count_parameters():,}")
 
     accumulation_steps = 16
-    steps_per_epoch = math.ceil(number_of_samples / batch_size)
-    total_training_steps = (math.ceil(steps_per_epoch / accumulation_steps) * max_epochs) + 1
-    warmup_steps = int(0.1 * total_training_steps)
 
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01, eps=1e-8)
-    scheduler = optim.lr_scheduler.OneCycleLR(
-        optimizer,
-        max_lr=learning_rate,
-        total_steps=total_training_steps,
-        pct_start=warmup_steps / total_training_steps,
-        anneal_strategy='linear',
-        cycle_momentum=False,
-        div_factor=25,  # Starts the learning rate at max_lr / 25
-        final_div_factor=10000  # Ends the learning rate at max_lr / 10000
-    )
+    scheduler = CosineAnnealingLR(optimizer, max_epochs)
     criterion = nn.CrossEntropyLoss(reduction='none')
 
     if os.path.exists(f'{base_path}model/optimizer_checkpoint.bin'):
