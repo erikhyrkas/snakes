@@ -48,5 +48,5 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "training_data"
-    base_model_train(0.00025, 256, 32, 30, patience=2, training_folder=TRAIN_FOLDER,
+    base_model_train(0.0005, 256, 64, 20, patience=5, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)

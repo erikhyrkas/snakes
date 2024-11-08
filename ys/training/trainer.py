@@ -147,32 +147,52 @@ def calc_val_loss(criterion, inputs, model, targets, masks):
 def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
                scaler: torch.amp.GradScaler, train_loader, total_steps, scheduler, step_report):
 
+    use_accumulation = True
     epoch_loss = torch.tensor(0.0)
     grad_norm = torch.tensor(0.0)
     start_time = time.time()
     step = 1
     lr = scheduler.get_last_lr()[0]
     blank_line = ' ' * 80
+    unscaled_this_step = False
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
 
         with torch.amp.autocast('cuda'):
             outputs = model(inputs)
             loss = calculate_loss(criterion, masks, outputs, targets)
-            loss += model.attention.orthogonality_penalty()
+            # loss += model.attention.orthogonality_penalty()
 
         # Loss scaling
         scaled_loss = scaler.scale(loss)
 
         # Gradient accumulation
-        scaled_loss = scaled_loss / accumulation_steps
+        if use_accumulation:
+            scaled_loss = scaled_loss / accumulation_steps
         scaled_loss.backward()
 
         step = i + 1
 
-        if step % accumulation_steps == 0 or step == len(train_loader):
+        if not use_accumulation:
+            # Directly step and zero gradients for non-accumulation
+            if not unscaled_this_step:
+                scaler.unscale_(optimizer)  # Unscale before clipping
+                unscaled_this_step = True
+            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
+
+            if torch.isfinite(grad_norm):
+                scaler.step(optimizer)
+                scaler.update()
+                unscaled_this_step = False
+            else:
+                print(f"\nGradient norm is {grad_norm}. Skipping this batch.")
+
+            optimizer.zero_grad(set_to_none=True)
+        elif step % accumulation_steps == 0 or step == len(train_loader):
             # Unscale gradients
-            # scaler.unscale_(optimizer)  #optional?
+            if not unscaled_this_step:
+                scaler.unscale_(optimizer)  # Unscale before clipping
+                unscaled_this_step = True
 
             # Clip gradients
             grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
@@ -180,6 +200,7 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             if torch.isfinite(grad_norm):
                 scaler.step(optimizer)
                 scaler.update()
+                unscaled_this_step = False
             else:
                 print(f"\nGradient norm is {grad_norm}. Skipping this batch.")
 
