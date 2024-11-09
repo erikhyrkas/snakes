@@ -23,29 +23,24 @@ class Attention(nn.Module):
             nn.Linear(self.state_dim, 2 * self.state_dim) for _ in range(self.num_layers)
         ])
         self.embedding_to_state = nn.Linear(self.embedding_dim, self.state_dim * self.num_layers)
-        # self.state_to_output = nn.Linear(self.state_dim * self.num_layers, self.embedding_dim)
 
         # Feed-forward layer, separate per layer
         self.feed_forward_layers = nn.ModuleList([
             nn.Sequential(
                 nn.Linear(self.state_dim, self.state_dim),
                 nn.GELU(),
-                nn.Linear(self.state_dim, self.embedding_dim),
+                nn.Linear(self.state_dim, self.embedding_dim),  # Output back to embedding_dim
             ) for _ in range(self.num_layers)
         ])
 
         # Attention-based aggregation layer
         self.layer_attention_weights = nn.Linear(self.embedding_dim, 1)  # One score per layer per token
 
-        # Projection layer to reshape concatenated outputs back to embedding size
-        self.attention_shaper = nn.Linear(self.state_dim * self.num_layers, self.state_dim)
-
         # Separate LayerNorm for embedding and state
         self.layer_norm_embedding = nn.LayerNorm(self.embedding_dim)
         self.layer_norm_state = nn.LayerNorm(self.state_dim)
 
         self.dropout_start = nn.Dropout(config.dropout_rate)
-        self.dropout_end = nn.Dropout(config.dropout_rate)
 
         # Initialize weights with custom initialization for GLU
         self._initialize_weights()
@@ -98,29 +93,18 @@ class Attention(nn.Module):
         # Compute outputs for each layer without flattening the layer dimension
         attention_output = torch.einsum('btld,lds->btld', next_states[:, 1:], self.output_shaper)
 
-        # Flatten the layer dimension for concatenation and reshaping
-        attention_output = attention_output.reshape(batch_size, sequence_len, self.num_layers * self.state_dim)
-
-        # Project concatenated output back to original embedding size
-        reshaped_attention = self.attention_shaper(attention_output)
-
-        # Aggregate outputs from each feed-forward layer with attention-based weighting
-        layer_outputs = torch.stack([ff(reshaped_attention) for ff in self.feed_forward_layers],
-                                    dim=1)  # Shape: (batch_size, num_layers, sequence_len, self.embedding_dim)
+        # Apply feed-forward layer separately for each layer's output
+        # (batch_size, sequence_len, num_layers, state_dim) -> (batch_size, num_layers, sequence_len, embedding_dim)
+        layer_outputs = torch.stack([ff(attention_output[:, :, i, :]) for i, ff in enumerate(self.feed_forward_layers)], dim=1)
 
         # Calculate attention scores for each layer
-        attention_scores = F.softmax(self.layer_attention_weights(layer_outputs).squeeze(-1),
-                                     dim=1)  # Shape: (batch_size, num_layers, sequence_len)
+        attention_scores = F.softmax(self.layer_attention_weights(layer_outputs).squeeze(-1), dim=1)
 
         # Apply attention scores to layer outputs and sum
-        weighted_layer_outputs = (layer_outputs * attention_scores.unsqueeze(-1)).sum(
-            dim=1)  # Shape: (batch_size, sequence_len, self.embedding_dim)
+        weighted_layer_outputs = (layer_outputs * attention_scores.unsqueeze(-1)).sum(dim=1)
 
-        # Ensure final output matches expected embedding dimension
-        reshaped_attention = self.layer_norm_embedding(
-            weighted_layer_outputs)  # Shape: [batch_size, sequence_len, self.embedding_dim]
-
-        reshaped_attention = self.dropout_end(reshaped_attention)
+        # Normalize final output
+        reshaped_attention = self.layer_norm_embedding(weighted_layer_outputs)
 
         return reshaped_attention
 
