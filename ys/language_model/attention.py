@@ -106,7 +106,7 @@ class Attention(nn.Module):
         # Normalize final output
         reshaped_attention = self.layer_norm_embedding(weighted_layer_outputs)
 
-        return reshaped_attention
+        return reshaped_attention # Shape: batch_size, sequence_len, embedding_dim
 
     def orthogonality_penalty(self, lambda_orthogonality = 0.001):
         """Encourage diversity in the heads by penalizing similar weight matrices."""
