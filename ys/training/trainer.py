@@ -1,6 +1,7 @@
 import math
 import os
 import random
+import shutil
 import time
 from typing import Optional
 
@@ -361,7 +362,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
                                 patience=patience, accumulation_steps=accumulation_steps, step_report=step_report)
     if model_trained:
         print("Saving model...")
-        model.save(model_path, config_path)
+        shutil.copyfile(f"{base_path}model/model_checkpoint.bin", model_path)
         print(f"Model saved to {model_path}")
         print(f"Number of parameters: {model.count_parameters():,}")
         print(f"Vocabulary size: {vocab_size:,}")
