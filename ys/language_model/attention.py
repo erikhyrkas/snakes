@@ -27,6 +27,7 @@ class Attention(nn.Module):
         # Feed-forward layer, separate per layer
         self.feed_forward_layers = nn.ModuleList([
             nn.Sequential(
+                nn.LayerNorm(self.state_dim),
                 nn.Linear(self.state_dim, self.state_dim),
                 nn.GELU(),
                 nn.Linear(self.state_dim, self.embedding_dim),  # Output back to embedding_dim
@@ -39,6 +40,7 @@ class Attention(nn.Module):
         # Separate LayerNorm for embedding and state
         self.layer_norm_embedding = nn.LayerNorm(self.embedding_dim)
         self.layer_norm_state = nn.LayerNorm(self.state_dim)
+        self.layer_norm_glu = nn.LayerNorm(self.state_dim)  # Optional for GLU inputs
 
         self.dropout_start = nn.Dropout(config.dropout_rate)
 
@@ -77,7 +79,8 @@ class Attention(nn.Module):
             # Temporary variable to store GLU results for each layer
             glu_outputs = []
             for layer in range(self.num_layers):
-                glu_result = F.glu(self.glu_projection[layer](next_state[:, layer, :]), dim=-1)
+                normalized_input = self.layer_norm_glu(next_state[:, layer, :])
+                glu_result = F.glu(self.glu_projection[layer](normalized_input), dim=-1)
                 glu_outputs.append(glu_result)
 
             # Stack the results and reshape back to (batch_size, num_layers, state_dim)
