@@ -1,4 +1,5 @@
 import os
+import shutil
 import sys
 
 from ys.training.trainer import get_base_path, train_or_load_tokenizer, base_model_train
@@ -48,5 +49,27 @@ if __name__ == "__main__":
     train_or_load_tokenizer("training_data")
 
     TRAIN_FOLDER = "training_data"
-    base_model_train(0.0005, 256, 72, 10, patience=5, training_folder=TRAIN_FOLDER,
+
+    base_model_train(0.00025, 16, 1024, 50, patience=5, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 64, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 256, 72, 10, patience=10, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_256.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 512, 32, 5, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_512.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 1024, 12, 3, patience=3, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024.bin")

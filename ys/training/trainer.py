@@ -8,7 +8,7 @@ from typing import Optional
 import torch
 import torch.nn as nn
 from torch import optim
-from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.lr_scheduler import CosineAnnealingLR, CosineAnnealingWarmRestarts
 from torch.utils.data import DataLoader
 
 from ys.language_model.config import Config
@@ -344,7 +344,7 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     accumulation_steps = 16
 
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01, eps=1e-8)
-    scheduler = CosineAnnealingLR(optimizer, max_epochs)
+    scheduler = CosineAnnealingWarmRestarts(optimizer, max_epochs) # CosineAnnealingLR(optimizer, max_epochs)
     criterion = nn.CrossEntropyLoss(reduction='none')
 
     if os.path.exists(f'{base_path}model/optimizer_checkpoint.bin'):
