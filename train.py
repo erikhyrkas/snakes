@@ -59,6 +59,14 @@ if __name__ == "__main__":
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64.bin")
 
+    # while training, the machine restarted, and at least some of the epochs were run,
+    # but sadly, the code doesn't current record epoch numbers so, running the 256 sequence length twice
+    # is a close approximation to what I did.
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 256, 72, 10, patience=10, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_256.bin")
+
     remove_scheduler_checkpoint()
     base_model_train(0.00025, 256, 72, 10, patience=10, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
