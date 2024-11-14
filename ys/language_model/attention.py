@@ -3,9 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 from ys.language_model.config import Config
 
-# Combining catted_attention_blocks, attention_block, and attention, and then optimizing with einsum.
-# there have been a few other optimizations and improvements since the original combining, in the
-# interest of speed, but also in an attempt to improve the quality of the results.
 class Attention(nn.Module):
     def __init__(self, config: Config):
         super().__init__()
@@ -72,7 +69,9 @@ class Attention(nn.Module):
         # Recurrent update loop, using last_state to cache previous results
         for t in range(sequence_len):
             # Calculate the control and influence components based on the last state and current input
+            # next_state_control = torch.matmul(last_state, self.state_control) # (batch_size, num_layers, state_dim)
             next_state_control = torch.einsum('bld,lds->bld', last_state, self.state_control)
+            # next_state_influence = torch.matmul(state_tokens[:, t], self.input_influence)  # (batch_size, num_layers, state_dim)
             next_state_influence = torch.einsum('bld,lds->bld', state_tokens[:, t], self.input_influence)
             next_state = next_state_control + next_state_influence
 
@@ -94,6 +93,7 @@ class Attention(nn.Module):
             next_states[:, t + 1] = next_state
 
         # Compute outputs for each layer without flattening the layer dimension
+        # attention_output = torch.matmul(next_states[:, 1:], self.output_shaper) # (batch_size, sequence_len, num_layers, state_dim)
         attention_output = torch.einsum('btld,lds->btld', next_states[:, 1:], self.output_shaper)
 
         # Apply feed-forward layer separately for each layer's output
