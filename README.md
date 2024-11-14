@@ -24,6 +24,10 @@ the number of layers, however if it isn't converging it's not valuable to have a
 The amount of layer normalization necessary to train stably adds computation complexity and reduces some of the 
 representational flexibility.
 
+With this version, I found that training with increasingly larger sequence lengths, which also means smaller and 
+smaller batch sizes -- which might be challenging with the amount of layer normalization. Training is still ongoing, 
+but so far (through a sequence length of 256) the loss is still converging.
+
 ## Design Philosophy and Goals:
 
 I was originally inspired by the Mamba 2 paper. The idea of an LLM built with a non-transformer architecture excited me
