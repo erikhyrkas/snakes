@@ -16,6 +16,14 @@ embedding size: 768
 state size: 1024
 layers: 12
 
+These parameters create a model with 200,383,540 parameters, which is smaller than is possible to train on my machine, 
+but I've found that more layers converge better but at the cost of memory usage during training. The way to reach 
+more than a billion parameters with only 32 gb of video memory is to increase the embedding and state size and shrink
+the number of layers, however if it isn't converging it's not valuable to have a bunch of useless parameters.
+
+The amount of layer normalization necessary to train stably adds computation complexity and reduces some of the 
+representational flexibility.
+
 ## Design Philosophy and Goals:
 
 I was originally inspired by the Mamba 2 paper. The idea of an LLM built with a non-transformer architecture excited me
