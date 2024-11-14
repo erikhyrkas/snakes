@@ -240,7 +240,7 @@ def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optim
 
         outputs = model(inputs)
         loss = calculate_loss(criterion, masks, outputs, targets)
-        loss += model.attention.orthogonality_penalty()
+        # loss += model.attention.orthogonality_penalty()
         normalized_loss = loss / accumulation_steps
         normalized_loss.backward()
 
