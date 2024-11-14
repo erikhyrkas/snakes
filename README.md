@@ -10,6 +10,12 @@ I'm continuing my focus on making a simple state space model work. With this ver
 mechanism for long range tokens to have their influence propagate. I'm still not ready to abandon the state space
 design for an RNN-based approach -- but I did link a paper below and that may be my next step. We'll see.
 
+Currently training with:
+vocabulary size: 68,915
+embedding size: 768
+state size: 1024
+layers: 12
+
 ## Design Philosophy and Goals:
 
 I was originally inspired by the Mamba 2 paper. The idea of an LLM built with a non-transformer architecture excited me
