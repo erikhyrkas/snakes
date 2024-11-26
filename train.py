@@ -73,11 +73,26 @@ if __name__ == "__main__":
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_256.bin")
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00025, 512, 32, 5, patience=5, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00025, 512, 32, 11, patience=10, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_512.bin")
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00025, 1024, 12, 3, patience=3, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00025, 1024, 12, 10, patience=10, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.0001, 1024, 12, 10, patience=10, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024_2.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00008, 64, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64_2.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00008, 66, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)  # slightly different sequence length
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64_3.bin")

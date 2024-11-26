@@ -14,7 +14,7 @@ Currently training with:
 vocabulary size: 68,915
 embedding size: 768
 state size: 1024
-layers: 12
+layers: 12 (This is roughly equivalent to heads)
 
 These parameters create a model with 200,383,540 parameters, which is smaller than is possible to train on my machine, 
 but I've found that more layers converge better but at the cost of memory usage during training. The way to reach 
@@ -24,9 +24,12 @@ the number of layers, however if it isn't converging it's not valuable to have a
 The amount of layer normalization necessary to train stably adds computation complexity and reduces some of the 
 representational flexibility.
 
-With this version, I found that training with increasingly larger sequence lengths, which also means smaller and 
-smaller batch sizes -- which might be challenging with the amount of layer normalization. Training is still ongoing, 
-but so far (through a sequence length of 256) the loss is still converging.
+With this version, I found that training with increasingly larger sequence lengths led to good loss convergence, 
+which also means smaller and smaller batch sizes -- which might be challenging with the amount of layer normalization.
+
+The final base model is fine for the prompt "write a story" with a short (64 token) sequences, but the results are 
+pretty poor for longer sequences. In some brief experiments, the model was worthless for anything other than very 
+brief stories. 
 
 ## Design Philosophy and Goals:
 
