@@ -6,20 +6,20 @@ from ys.language_model.config import Config
 class Attention(nn.Module):
     def __init__(self, config: Config):
         super().__init__()
-        self.num_layers = config.num_layers
+        self.num_heads = config.num_heads
         self.embedding_dim = config.embedding_dim
         self.state_dim = config.state_dim
 
         # Stacked parameters for each layer in the state-space model
-        self.state_control = nn.Parameter(torch.zeros(self.num_layers, self.state_dim, self.state_dim))
-        self.input_influence = nn.Parameter(torch.zeros(self.num_layers, self.state_dim, self.state_dim))
-        self.output_shaper = nn.Parameter(torch.zeros(self.num_layers, self.state_dim, self.state_dim))
+        self.state_control = nn.Parameter(torch.zeros(self.num_heads, self.state_dim, self.state_dim))
+        self.input_influence = nn.Parameter(torch.zeros(self.num_heads, self.state_dim, self.state_dim))
+        self.output_shaper = nn.Parameter(torch.zeros(self.num_heads, self.state_dim, self.state_dim))
 
         # GLU and linear projections with layer-specific weights stacked
         self.glu_projection = nn.ModuleList([
-            nn.Linear(self.state_dim, 2 * self.state_dim) for _ in range(self.num_layers)
+            nn.Linear(self.state_dim, 2 * self.state_dim) for _ in range(self.num_heads)
         ])
-        self.embedding_to_state = nn.Linear(self.embedding_dim, self.state_dim * self.num_layers)
+        self.embedding_to_state = nn.Linear(self.embedding_dim, self.state_dim * self.num_heads)
 
         # Feed-forward layer, separate per layer
         self.feed_forward_layers = nn.ModuleList([
@@ -28,7 +28,7 @@ class Attention(nn.Module):
                 nn.Linear(self.state_dim, self.state_dim),
                 nn.GELU(),
                 nn.Linear(self.state_dim, self.embedding_dim),  # Output back to embedding_dim
-            ) for _ in range(self.num_layers)
+            ) for _ in range(self.num_heads)
         ])
 
         # Attention-based aggregation layer
@@ -60,44 +60,44 @@ class Attention(nn.Module):
 
         # Project embeddings to state dimensions, reshaped for all layers
         state_tokens = self.embedding_to_state(embedded_input)
-        state_tokens = state_tokens.view(batch_size, sequence_len, self.num_layers, self.state_dim)
+        state_tokens = state_tokens.view(batch_size, sequence_len, self.num_heads, self.state_dim)
 
         # Initialize the cached state for each layer
-        last_state = torch.zeros(batch_size, self.num_layers, self.state_dim, device=device)
-        next_states = torch.zeros(batch_size, sequence_len + 1, self.num_layers, self.state_dim, device=device)
+        last_state = torch.zeros(batch_size, self.num_heads, self.state_dim, device=device)
+        next_states = torch.zeros(batch_size, sequence_len + 1, self.num_heads, self.state_dim, device=device)
 
         # Recurrent update loop, using last_state to cache previous results
         for t in range(sequence_len):
             # Calculate the control and influence components based on the last state and current input
-            # next_state_control = torch.matmul(last_state, self.state_control) # (batch_size, num_layers, state_dim)
+            # next_state_control = torch.matmul(last_state, self.state_control) # (batch_size, num_heads, state_dim)
             next_state_control = torch.einsum('bld,lds->bld', last_state, self.state_control)
-            # next_state_influence = torch.matmul(state_tokens[:, t], self.input_influence)  # (batch_size, num_layers, state_dim)
+            # next_state_influence = torch.matmul(state_tokens[:, t], self.input_influence)  # (batch_size, num_heads, state_dim)
             next_state_influence = torch.einsum('bld,lds->bld', state_tokens[:, t], self.input_influence)
             next_state = next_state_control + next_state_influence
 
             # Temporary variable to store GLU results for each layer
             glu_outputs = []
-            for layer in range(self.num_layers):
+            for layer in range(self.num_heads):
                 normalized_input = self.layer_norm_glu(next_state[:, layer, :])
                 glu_result = F.glu(self.glu_projection[layer](normalized_input), dim=-1)
                 glu_outputs.append(glu_result)
 
-            # Stack the results and reshape back to (batch_size, num_layers, state_dim)
+            # Stack the results and reshape back to (batch_size, num_heads, state_dim)
             next_state = torch.stack(glu_outputs, dim=1)
 
             # Apply layer normalization
-            next_state = self.layer_norm_state(next_state.view(-1, self.state_dim)).view(batch_size, self.num_layers, self.state_dim)
+            next_state = self.layer_norm_state(next_state.view(-1, self.state_dim)).view(batch_size, self.num_heads, self.state_dim)
 
             # Update cached state and store current state
             last_state = next_state
             next_states[:, t + 1] = next_state
 
         # Compute outputs for each layer without flattening the layer dimension
-        # attention_output = torch.matmul(next_states[:, 1:], self.output_shaper) # (batch_size, sequence_len, num_layers, state_dim)
+        # attention_output = torch.matmul(next_states[:, 1:], self.output_shaper) # (batch_size, sequence_len, num_heads, state_dim)
         attention_output = torch.einsum('btld,lds->btld', next_states[:, 1:], self.output_shaper)
 
         # Apply feed-forward layer separately for each layer's output
-        # (batch_size, sequence_len, num_layers, state_dim) -> (batch_size, num_layers, sequence_len, embedding_dim)
+        # (batch_size, sequence_len, num_heads, state_dim) -> (batch_size, num_heads, sequence_len, embedding_dim)
         layer_outputs = torch.stack([ff(attention_output[:, :, i, :]) for i, ff in enumerate(self.feed_forward_layers)], dim=1)
 
         # Calculate attention scores for each layer
@@ -114,10 +114,10 @@ class Attention(nn.Module):
     def orthogonality_penalty(self, lambda_orthogonality = 0.001):
         """Encourage diversity in the heads by penalizing similar weight matrices."""
         penalty = 0
-        if self.num_layers < 2:
+        if self.num_heads < 2:
             return penalty
-        for i in range(self.num_layers):
-            for j in range(i + 1, self.num_layers):
+        for i in range(self.num_heads):
+            for j in range(i + 1, self.num_heads):
                 # State control orthogonality penalty
                 # penalty += torch.sum((self.state_control[i] @ self.state_control[j].T).pow(2))
                 # Input influence orthogonality penalty
@@ -125,5 +125,5 @@ class Attention(nn.Module):
                 # # Output shaper orthogonality penalty
                 # penalty += torch.sum((self.output_shaper[i] @ self.output_shaper[j].T).pow(2))
         # Normalize penalty based on the number of layers
-        penalty /= (self.num_layers * (self.num_layers - 1)) / 2
+        penalty /= (self.num_heads * (self.num_heads - 1)) / 2
         return penalty * lambda_orthogonality

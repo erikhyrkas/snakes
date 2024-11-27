@@ -1,8 +1,9 @@
 class Config:
-    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, num_layers=12, dropout_rate=0.01):
+    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, num_heads=6, num_layers=6, dropout_rate=0.01):
         self.vocab_size = vocab_size
         self.embedding_dim = embedding_dim
         self.state_dim = state_dim
+        self.num_heads = num_heads
         self.num_layers = num_layers
         self.dropout_rate = dropout_rate
         self._validate_shapes()
@@ -13,12 +14,14 @@ class Config:
         assert self.state_dim > 0, "State dimension must be positive"
         assert 0 <= self.dropout_rate < 1, "Dropout rate must be between 0 and 1"
         assert self.num_layers > 0, "Number of layers must be greater than 0"
+        assert self.num_heads > 0, "Number of heads must be greater than 0"
 
     def to_dict(self):
         return {
             "vocab_size": self.vocab_size,
             "embedding_dim": self.embedding_dim,
             "state_dim": self.state_dim,
+            "num_heads": self.num_heads,
             "num_layers": self.num_layers,
             "dropout_rate": self.dropout_rate,
         }

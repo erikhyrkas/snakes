@@ -50,49 +50,83 @@ if __name__ == "__main__":
 
     TRAIN_FOLDER = "training_data"
 
-    base_model_train(0.00025, 16, 1024, 50, patience=5, training_folder=TRAIN_FOLDER,
+    # I want to see if using varying lengths of short sequences will help solidify which words work together.
+    # Basic ideas, like that "The" is generally followed by a noun, or that a noun is generally followed by a
+    # verb or adverb. These exceptionally short sequences aren't useful for teaching it to remember long context,
+    # but we'll slowly expand.
+    #
+    # My sequence and batch sizes are tuned to fit in memory, but aren't often a power of two. I found that it
+    # really didn't have much impact on the speed of training, despite initially thinking that encouraging allocations
+    # along memory boundaries and avoiding fragmentation might help. It might just be that things are too complex
+    # to ever really fall along memory boundaries and that I'm always going to have some fragmentation.
+
+    base_model_train(0.001, 3, 3700, 50, patience=5, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00025, 64, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
+    base_model_train(0.001, 5, 2048, 50, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.001, 4, 2700, 50, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
+
+
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 16, 680, 100, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 63, 170, 40, patience=5, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64.bin")
 
-    # while training, the machine restarted, and at least some of the epochs were run,
-    # but sadly, the code doesn't current record epoch numbers so, running the 256 sequence length twice
-    # is a close approximation to what I did.
     remove_scheduler_checkpoint()
-    base_model_train(0.00025, 256, 72, 10, patience=10, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00025, 254, 42, 20, patience=10, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_256.bin")
 
+
+    base_model_train(0.00025, 15, 680, 100, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
+
     remove_scheduler_checkpoint()
-    base_model_train(0.00025, 256, 72, 10, patience=10, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00025, 68, 170, 40, patience=5, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
+    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64.bin")
+
+    remove_scheduler_checkpoint()
+    base_model_train(0.00025, 235, 42, 40, patience=10, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_256.bin")
 
-    remove_scheduler_checkpoint()
-    base_model_train(0.00025, 512, 32, 11, patience=10, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_512.bin")
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.00025, 1024, 12, 10, patience=10, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024.bin")
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.0001, 1024, 12, 10, patience=10, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024_2.bin")
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.00008, 64, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64_2.bin")
-
-    remove_scheduler_checkpoint()
-    base_model_train(0.00008, 66, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
-                     use_validation_split=False)  # slightly different sequence length
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64_3.bin")
+    # remove_scheduler_checkpoint()
+    # base_model_train(0.00025, 512, 32, 11, patience=10, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)
+    # shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_512.bin")
+    #
+    # remove_scheduler_checkpoint()
+    # base_model_train(0.00025, 1024, 12, 10, patience=10, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)
+    # shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024.bin")
+    #
+    # remove_scheduler_checkpoint()
+    # base_model_train(0.0001, 1024, 12, 10, patience=10, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)
+    # shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_1024_2.bin")
+    #
+    # remove_scheduler_checkpoint()
+    # base_model_train(0.00008, 64, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)
+    # shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64_2.bin")
+    #
+    # remove_scheduler_checkpoint()
+    # base_model_train(0.00008, 66, 256, 20, patience=5, training_folder=TRAIN_FOLDER,
+    #                  use_validation_split=False)  # slightly different sequence length
+    # shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_64_3.bin")
