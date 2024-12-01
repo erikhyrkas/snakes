@@ -75,15 +75,17 @@ class Attention(nn.Module):
             next_state_influence = torch.einsum('bld,lds->bld', state_tokens[:, t], self.input_influence)
             next_state = next_state_control + next_state_influence
 
-            # Temporary variable to store GLU results for each layer
-            glu_outputs = []
+            # Temporary variable to store swiglu results for each layer
+            swi_glu_outputs = []
             for layer in range(self.num_heads):
                 normalized_input = self.layer_norm_glu(next_state[:, layer, :])
-                glu_result = F.glu(self.glu_projection[layer](normalized_input), dim=-1)
-                glu_outputs.append(glu_result)
+                projected = self.glu_projection[layer](normalized_input)  # Linear projection
+                x_a, x_b = projected.chunk(2, dim=-1)  # Split into two parts
+                swi_glu_result = F.silu(x_a) * x_b  # Apply Swish (SiLU) to x_a and multiply by x_b
+                swi_glu_outputs.append(swi_glu_result)
 
             # Stack the results and reshape back to (batch_size, num_heads, state_dim)
-            next_state = torch.stack(glu_outputs, dim=1)
+            next_state = torch.stack(swi_glu_outputs, dim=1)
 
             # Apply layer normalization
             next_state = self.layer_norm_state(next_state.view(-1, self.state_dim)).view(batch_size, self.num_heads, self.state_dim)
