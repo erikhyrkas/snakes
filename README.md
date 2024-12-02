@@ -4,32 +4,40 @@
 
 `"Why did it have to be snakes?"`
 
-## Current Development: Why Snakes - v0.4 Base Model
+## Current Development: Why Snakes - v0.5 Base Model
 
-I'm continuing my focus on making a simple state space model work. With this version, I'm searching for a better 
-mechanism for long range tokens to have their influence propagate. I'm still not ready to abandon the state space
-design for an RNN-based approach -- but I did link a paper below and that may be my next step. We'll see.
+The v0.4 really helped me nail down what I needed to do to train stably and build an attention mechanism that worked 
+well. Unfortunately, it didn't capture long range dependencies (> 64 tokens) well, and it wasn't terribly smart. Baby 
+steps, though. I'm not tokenizing the same way as many other LLMs, so 64 tokens is more than you think, but it's still
+not great. The unlimited context "worked", just that the model had the occasional weird word injected that made no 
+sense, and it completely lost focus on what it was doing. I suspect it was as good or better than many of the base
+models from 2 years ago, but that's probably parental pride. I didn't bother gathering metrics because I know it was
+not going to do well enough. I didn't bother fine-tuning, since it wasn't where I wanted to be.
 
-Currently training with:
-vocabulary size: 68,915
-embedding size: 768
-state size: 1024
-layers: 12 (This is roughly equivalent to heads)
+For v0.5, I'm switching from glu to SwiGLU, adding layers and renaming the old "layers" to "heads", and adding more 
+story-based training data. 
 
-These parameters create a model with 200,383,540 parameters, which is smaller than is possible to train on my machine, 
-but I've found that more layers converge better but at the cost of memory usage during training. The way to reach 
-more than a billion parameters with only 32 gb of video memory is to increase the embedding and state size and shrink
-the number of layers, however if it isn't converging it's not valuable to have a bunch of useless parameters.
+Why SwiGLU? GLU worked fairly well, but from what I've read, SwiGLU works better, so we'll find out. The goal is
+to selectively remember important pieces of past context, or put another way, selectively forget unimportant pieces. 
+This helps maximize the use of our limited state space. 
 
-The amount of layer normalization necessary to train stably adds computation complexity and reduces some of the 
-representational flexibility.
+Why layers? Back in a previous version (maybe 0.3 or 0.2), I had stacked attention, which is effectively the same thing
+you just run attention multiple times with a feedforward network in between. The goal is to help with reasoning skills,
+but I was struggling to get any improvements to results. Why add it back? At the time, the actual attention (stacked or
+not) wasn't learning well enough. My hope is, now that I have an attention mechanism that learns well, it will
+increase the model's reasoning skills.
 
-With this version, I found that training with increasingly larger sequence lengths led to good loss convergence, 
-which also means smaller and smaller batch sizes -- which might be challenging with the amount of layer normalization.
+More data? Yeah. I just generated more story-based data. I want to dilute some of the other reasoning training data
+so that the model learns language structure better. It took a lot of training to just get it to string words together
+well with the last version, and I think part of that is the amount of structured, code, and math training files.
 
-The final base model is fine for the prompt "write a story" with a short (64 token) sequences, but the results are 
-pretty poor for longer sequences. In some brief experiments, the model was worthless for anything other than very 
-brief stories. 
+Validation set. I've re-enabled it, but I'm not delusional, I'm not quite using it correctly. I'm running multiple 
+rounds of training, and each round picks a new validation set, which means that validation data from one round of
+training is leaking into the next round of training. This is still an improvement over no validation set, but it's 
+not optimal. Why bother? I considered not bothering, but thought it was a much quicker way of validating that training
+was making generalized progress than manually testing. 
+
+
 
 ## Design Philosophy and Goals:
 
@@ -429,3 +437,30 @@ approach -- and I felt like by having two approaches it would improve the overal
 swimming against time meant a complexity of N-squared within the cpu code, and it was dreadfully slow. If it was the 
 ideal approach, we'll never know. I switched local to be an less-frequently updated summary, because it might achieve 
 similar, though the burden of local knowledge would actually be on the main loop and the summary would help with history.
+
+### Why Snakes - v0.4 Base Model
+
+Focussed on making a simple state space model work well. With this version, I'm searched for a better 
+mechanism for long range tokens to have their influence propagate. I'm still not ready to abandon the state space
+design for an RNN-based approach -- but I did link a paper below and that may be my next step. We'll see.
+
+Trained with:
+vocabulary size: 68,915
+embedding size: 768
+state size: 1024
+layers: 12 (This is roughly equivalent to heads)
+
+These parameters created a model with 200,383,540 parameters, which is smaller than is possible to train on my machine, 
+but I've found that more layers converge better but at the cost of memory usage during training. The way to reach 
+more than a billion parameters with only 32 gb of video memory is to increase the embedding and state size and shrink
+the number of layers, however if it isn't converging it's not valuable to have a bunch of useless parameters.
+
+The amount of layer normalization necessary to train stably adds computation complexity and reduces some of the 
+representational flexibility.
+
+With this version, I found that training with increasingly larger sequence lengths led to good loss convergence, 
+which also means smaller and smaller batch sizes -- which might be challenging with the amount of layer normalization.
+
+The final base model is fine for the prompt "write a story" with a short (64 token) sequences, but the results are 
+pretty poor for longer sequences. In some brief experiments, the model was worthless for anything other than very 
+brief stories.
