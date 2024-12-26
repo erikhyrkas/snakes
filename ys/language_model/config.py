@@ -1,5 +1,5 @@
 class Config:
-    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, num_heads=6, num_layers=6, dropout_rate=0.01):
+    def __init__(self, vocab_size, embedding_dim=1024, state_dim=2048, num_heads=8, num_layers=8, dropout_rate=0.01):
         self.vocab_size = vocab_size
         self.embedding_dim = embedding_dim
         self.state_dim = state_dim

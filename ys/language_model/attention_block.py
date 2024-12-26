@@ -30,10 +30,8 @@ class AttentionBlock(nn.Module):
     def forward(self, x):
         # Attention block with residual connection and normalization
         attn_out = self.attention(x)
-        # x = self.layer_norm1(attn_out + x)  # Residual connection and LayerNorm
+        attn_out = self.layer_norm1(attn_out + x)
 
         # Feed-forward block with residual connection and normalization
         ff_out = self.feed_forward(attn_out)
-        x = self.layer_norm2(ff_out + x)  # Residual connection and LayerNorm
-
-        return x
+        return self.layer_norm2(ff_out + x)

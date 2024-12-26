@@ -35,9 +35,9 @@ class Attention(nn.Module):
         self.layer_attention_weights = nn.Linear(self.embedding_dim, 1)  # One score per layer per token
 
         # Separate LayerNorm for embedding and state
-        self.layer_norm_embedding = nn.LayerNorm(self.embedding_dim)
+        self.layer_norm_output = nn.LayerNorm(self.embedding_dim)
         self.layer_norm_state = nn.LayerNorm(self.state_dim)
-        self.layer_norm_glu = nn.LayerNorm(self.state_dim)  # Optional for GLU inputs
+        self.layer_norm_glu = nn.LayerNorm(self.state_dim)
 
         self.dropout_start = nn.Dropout(config.dropout_rate)
 
@@ -109,7 +109,7 @@ class Attention(nn.Module):
         weighted_layer_outputs = (layer_outputs * attention_scores.unsqueeze(-1)).sum(dim=1)
 
         # Normalize final output
-        reshaped_attention = self.layer_norm_embedding(weighted_layer_outputs)
+        reshaped_attention = self.layer_norm_output(weighted_layer_outputs)
 
         return reshaped_attention # Shape: batch_size, sequence_len, embedding_dim
 
