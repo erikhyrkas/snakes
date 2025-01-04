@@ -51,12 +51,12 @@ if __name__ == "__main__":
     TRAIN_FOLDER = "training_data"
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00005, 16, 128, 100, patience=2, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00005, 16, 256, 100, patience=2, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00005, 250, 8, 5, patience=2, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00001, 250, 16, 5, patience=2, training_folder=TRAIN_FOLDER,
                      use_validation_split=True)
     shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_250.bin")
 
