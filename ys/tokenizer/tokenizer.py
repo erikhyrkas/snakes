@@ -318,7 +318,21 @@ def example_tokenize():
 def run_tokenizer_tests():
     tokenizer = Tokenizer()
     test_cases = [
-        ("rebasing and understanding", []),
+        ("Email: test@example.com", ['<upper>', '<nospace>', ' email', ':', ' test', '@', '<nospace>', ' example', '.', '<nospace>', ' com']),
+        ("This is a <start>test<end>", ['<upper>', '<nospace>', ' this', ' is', ' a', '<space>', '<start>', '<nospace>', ' test', '<end>']),
+        ("-", ['-']),
+        ("--", ['<repeata>', '-']),
+        ("---", ['<repeatb>', '-']),
+        ("----", ['<repeatc>', '-']),
+        ("-----", ['<repeatd>', '-']),
+        ("------", ['<repeate>', '-']),
+        ("-------", ['<repeatf>', '-']),
+        ("--------", ['<repeatg>', '-']),
+        ("---------", ['<repeath>', '-']),
+        ("----------", ['<repeati>', '-']),
+        ("-----------", ['<repeati>', '-', '-']),
+        ("", []),
+        ("rebasing and understanding", ['<nospace>', ' rebasing', ' and', ' understanding']),
         ("LaSalle is a great example of camelCase splitting.",
          ['<upper>', '<nospace>', ' la', '<upper>', '<nospace>', ' salle', ' is', ' a', ' great', ' example', ' of',
           ' camel', '<upper>', '<nospace>', ' case', ' splitting', '.']),
