@@ -18,12 +18,12 @@ def cleanup_old_bins(remove_tokenizer=False, clear_cache=False):
         os.remove(f"{base_path}model/model.bin")
     if os.path.exists(f"{base_path}model/model_config.json"):
         os.remove(f"{base_path}model/model_config.json")
-    if clear_cache and os.path.exists(f"{base_path}model/fine_tuning"):
-        os.removedirs(f"{base_path}model/fine_tuning")
-    if clear_cache and os.path.exists(f"{base_path}model/training_data_cache"):
-        os.removedirs(f"{base_path}model/training_data_cache")
-    if clear_cache and os.path.exists(f"{base_path}model/validation_data_cache"):
-        os.removedirs(f"{base_path}model/validation_data_cache")
+    if clear_cache and os.path.exists(f"{base_path}/fine_tuning"):
+        shutil.rmtree(f"{base_path}/fine_tuning", ignore_errors=True)
+    if clear_cache and os.path.exists(f"{base_path}/training_data_cache"):
+        shutil.rmtree(f"{base_path}/training_data_cache", ignore_errors=True)
+    if clear_cache and os.path.exists(f"{base_path}/validation_data_cache"):
+        shutil.rmtree(f"{base_path}/validation_data_cache", ignore_errors=True)
     if remove_tokenizer and os.path.exists(f"{base_path}model/tokenizer.pkl"):
         os.remove(f"{base_path}model/tokenizer.pkl")
 
@@ -51,12 +51,13 @@ if __name__ == "__main__":
     TRAIN_FOLDER = "training_data"
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00005, 16, 256, 100, patience=2, training_folder=TRAIN_FOLDER,
+    base_model_train(0.00005, 1024, 4, 2, patience=2, training_folder=TRAIN_FOLDER,
                      use_validation_split=False)
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_16.bin")
 
     remove_scheduler_checkpoint()
-    base_model_train(0.00001, 250, 16, 5, patience=2, training_folder=TRAIN_FOLDER,
-                     use_validation_split=True)
-    shutil.copyfile(f"{get_base_path()}model/model_checkpoint.bin", f"{get_base_path()}model/model_checkpoint_250.bin")
+    base_model_train(0.00005, 128, 48, 25, patience=2, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
 
+    remove_scheduler_checkpoint()
+    base_model_train(0.000005, 1024, 4, 3, patience=2, training_folder=TRAIN_FOLDER,
+                     use_validation_split=False)
