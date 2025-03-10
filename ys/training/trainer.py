@@ -147,58 +147,44 @@ def calc_val_loss(criterion, inputs, model, targets, masks):
 
 def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer,
                scaler: torch.amp.GradScaler, train_loader, total_steps, scheduler, step_report):
-
-    use_accumulation = True
-    epoch_loss = torch.tensor(0.0)
-    grad_norm = torch.tensor(0.0)
+    use_accumulation = accumulation_steps > 0  # Dynamically set based on accumulation_steps
+    epoch_loss = torch.tensor(0.0, device=device)
+    grad_norm = torch.tensor(0.0, device=device)
     start_time = time.time()
     step = 1
     lr = scheduler.get_last_lr()[0]
     blank_line = ' ' * 80
     unscaled_this_step = False
+
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
 
         with torch.amp.autocast('cuda'):
             outputs = model(inputs)
             loss = calculate_loss(criterion, masks, outputs, targets)
-            # loss += model.attention.orthogonality_penalty()
 
         # Loss scaling
         scaled_loss = scaler.scale(loss)
 
-        # Gradient accumulation
         if use_accumulation:
             scaled_loss = scaled_loss / accumulation_steps
-        scaled_loss.backward()
 
+        scaled_loss.backward()
         step = i + 1
 
-        if not use_accumulation:
-            # Directly step and zero gradients for non-accumulation
-            if not unscaled_this_step:
-                scaler.unscale_(optimizer)  # Unscale before clipping
-                unscaled_this_step = True
-            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
-
-            if torch.isfinite(grad_norm):
-                scaler.step(optimizer)
-                scaler.update()
-                unscaled_this_step = False
-            else:
-                print(f"\nGradient norm is {grad_norm}. Skipping this batch.")
-
-            optimizer.zero_grad(set_to_none=True)
-        elif step % accumulation_steps == 0 or step == len(train_loader):
-            # Unscale gradients
+        # Gradient update logic
+        if not use_accumulation or step % accumulation_steps == 0 or step == len(train_loader):
+            # Unscale gradients only if necessary
             if not unscaled_this_step:
                 scaler.unscale_(optimizer)  # Unscale before clipping
                 unscaled_this_step = True
 
-            # Clip gradients
-            grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
+            # Clip gradients only if accumulation is enabled
+            if use_accumulation:
+                grad_norm = torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
 
-            if torch.isfinite(grad_norm):
+            # Apply optimizer step if gradients are finite
+            if not use_accumulation or torch.isfinite(grad_norm):
                 scaler.step(optimizer)
                 scaler.update()
                 unscaled_this_step = False
@@ -208,66 +194,79 @@ def cuda_train(accumulation_steps, criterion, device, max_grad_norm, model, opti
             optimizer.zero_grad(set_to_none=True)
 
         epoch_loss += loss.item()
-        if (step % step_report == 0) or (step == 1):  # Log every step_report steps
+        if step % step_report == 0 or step == 1:
             elapsed_time = time.time() - start_time
             estimated_completion = (elapsed_time / step) * total_steps
             estimated_remaining = estimated_completion - elapsed_time
-            lr = scheduler.get_last_lr()[0]
             print(
-                f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} Grad Norm: {grad_norm:.3f} - {pretty_time(elapsed_time)} '
-                f'elapsed/~{pretty_time(estimated_remaining)} remaining{blank_line}', end='\r', flush=True)
+                f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} '
+                f'Grad Norm: {grad_norm:.3f} - {pretty_time(elapsed_time)} elapsed/~{pretty_time(estimated_remaining)} remaining',
+                end='\r', flush=True
+            )
 
         if not torch.isfinite(epoch_loss):
             print(f"\nStopping epoch early due to non-finite loss: {epoch_loss}")
             return float('inf')
 
     scheduler.step()
-
     elapsed_time = time.time() - start_time
-    print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
-          f'elapsed{blank_line}')
+    print(
+        f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} elapsed{blank_line}')
     return epoch_loss / total_steps
 
 
 def cpu_train(accumulation_steps, criterion, device, max_grad_norm, model, optimizer, train_loader, total_steps,
               scheduler, step_report):
+    use_accumulation = accumulation_steps > 0  # Dynamically set
+
     epoch_loss = 0.0
     start_time = time.time()
     step = 1
     blank_line = ' ' * 80
+
     for i, (inputs, targets, masks) in enumerate(train_loader):
         inputs, targets, masks = inputs.to(device), targets.to(device), masks.to(device)
 
         outputs = model(inputs)
         loss = calculate_loss(criterion, masks, outputs, targets)
-        # loss += model.attention.orthogonality_penalty()
-        normalized_loss = loss / accumulation_steps
-        normalized_loss.backward()
 
+        # Only divide by accumulation_steps if it is greater than 0
+        if use_accumulation:
+            loss = loss / accumulation_steps
+
+        loss.backward()
         step = i + 1
-        if step % accumulation_steps == 0:
-            torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
+
+        # Gradient update logic
+        if not use_accumulation or step % accumulation_steps == 0:
+            if use_accumulation:
+                torch.nn.utils.clip_grad_norm_(model.parameters(), max_grad_norm)
+
             optimizer.step()
             optimizer.zero_grad()
 
         epoch_loss += loss.item()
-        if (step % step_report == 0) or (step == 1):  # Log every step_report steps
+
+        if step % step_report == 0 or step == 1:
             elapsed_time = time.time() - start_time
             estimated_completion = (elapsed_time / step) * total_steps
             estimated_remaining = estimated_completion - elapsed_time
             lr = scheduler.get_last_lr()[0]
-            print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
-                  f'elapsed/~{pretty_time(estimated_remaining)} remaining', end='\r', flush=True)
-        if math.isnan(epoch_loss) or math.isinf(epoch_loss):
-            break
+            print(
+                f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - '
+                f'{pretty_time(elapsed_time)} elapsed/~{pretty_time(estimated_remaining)} remaining',
+                end='\r', flush=True
+            )
 
-    elapsed_time = time.time() - start_time
-    lr = scheduler.get_last_lr()[0]
-    print(f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} '
-          f'elapsed{blank_line}')
+        if math.isnan(epoch_loss) or math.isinf(epoch_loss):
+            print("\nStopping early due to non-finite loss.")
+            return float('inf')
 
     scheduler.step()
-
+    elapsed_time = time.time() - start_time
+    lr = scheduler.get_last_lr()[0]
+    print(
+        f'Step {step}/{total_steps} Loss: {epoch_loss / step:.3f} LR: {lr:.5f} - {pretty_time(elapsed_time)} elapsed{blank_line}')
     return epoch_loss / total_steps
 
 
@@ -292,7 +291,8 @@ def get_training_file_names(directory="training_data"):
 
 
 def base_model_train(learning_rate, training_sequence_length, batch_size, max_epochs,
-                     training_folder="training_data", patience=10, use_validation_split: bool = True, step_report=1):
+                     training_folder="training_data", patience=10, use_validation_split: bool = True, step_report=1,
+                     accumulation_steps=0):
     print(
         f"LR: {learning_rate:.5f} Training Sequence Length: {training_sequence_length:,} Batch Size: {batch_size} Epochs: {max_epochs} training folder: {training_folder}")
     print(f"Use Validation Split: {use_validation_split}")
@@ -331,20 +331,17 @@ def base_model_train(learning_rate, training_sequence_length, batch_size, max_ep
     vocab_size = tokenizer.vocab_size()
     print(f"Vocabulary size: {vocab_size:,}")
 
-
     base_path = get_base_path()
     if os.path.exists(f"{base_path}model/model_checkpoint.bin"):
         model = LanguageModel.load(f"{base_path}model/model_checkpoint.bin", config_path)
         print(f"Resumed training from {base_path}model/model_checkpoint.bin")
     else:
-        model = LanguageModel(Config(vocab_size=tokenizer.vocab_size()))
+        model = LanguageModel(Config(vocab_size=tokenizer.vocab_size(), pad_token_id=tokenizer.get_pad_token()))
 
     print(f"Number of parameters: {model.count_parameters():,}")
 
-    accumulation_steps = 16
-
     optimizer = optim.AdamW(model.parameters(), lr=learning_rate, weight_decay=0.01, eps=1e-8)
-    scheduler = CosineAnnealingWarmRestarts(optimizer, max_epochs) # CosineAnnealingLR(optimizer, max_epochs)
+    scheduler = CosineAnnealingWarmRestarts(optimizer, max_epochs)  # CosineAnnealingLR(optimizer, max_epochs)
     criterion = nn.CrossEntropyLoss(reduction='none')
 
     if os.path.exists(f'{base_path}model/optimizer_checkpoint.bin'):
@@ -388,5 +385,7 @@ def train_or_load_tokenizer(training_folder, tokenizer_file_name='tokenizer.pkl'
                 tokenizer.learn_new_vocab(document)  # Add document content to vocab
                 del document  # Free memory as soon as possible
 
+        tokenizer.prune_vocabulary()
+        print("Pruned vocabulary.")
         tokenizer.save(tokenizer_path)
     return tokenizer
