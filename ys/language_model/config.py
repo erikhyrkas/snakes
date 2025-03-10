@@ -1,5 +1,7 @@
 class Config:
-    def __init__(self, vocab_size, embedding_dim=768, state_dim=1024, num_heads=8, num_layers=8, dropout_rate=0.01):
+    def __init__(self, vocab_size, pad_token_id, embedding_dim=8096, state_dim=1024,
+                 num_heads=5, num_layers=4, dropout_rate=0.01):
+        self.pad_token_id = pad_token_id
         self.vocab_size = vocab_size
         self.embedding_dim = embedding_dim
         self.state_dim = state_dim
@@ -15,6 +17,7 @@ class Config:
         assert 0 <= self.dropout_rate < 1, "Dropout rate must be between 0 and 1"
         assert self.num_layers > 0, "Number of layers must be greater than 0"
         assert self.num_heads > 0, "Number of heads must be greater than 0"
+        assert self.pad_token_id > -1, "Pad token id must be positive"
 
     def to_dict(self):
         return {
@@ -23,6 +26,7 @@ class Config:
             "state_dim": self.state_dim,
             "num_heads": self.num_heads,
             "num_layers": self.num_layers,
+            "pad_token_id": self.pad_token_id,
             "dropout_rate": self.dropout_rate,
         }
 
