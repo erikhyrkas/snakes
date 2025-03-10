@@ -1,3 +1,4 @@
+import concurrent.futures
 import os
 import numpy as np
 import torch
@@ -19,7 +20,11 @@ class TextDataset(IterableDataset):
             os.makedirs(self.cache_dir)
 
         # Preprocess and cache tokens
-        self.cached_files = [self._cache_file(file) for file in self.files]
+        # self.cached_files = [self._cache_file(file) for file in self.files]
+        # with concurrent.futures.ThreadPoolExecutor(max_workers=256) as executor:
+        #     self.cached_files = list(executor.map(self._cache_file, self.files))
+        with concurrent.futures.ProcessPoolExecutor(max_workers=60) as executor:
+            self.cached_files = list(executor.map(self._cache_file, self.files))
 
         # Shuffle files if required
         if self.shuffle_files:
@@ -34,6 +39,7 @@ class TextDataset(IterableDataset):
         """Tokenize and cache the file if not already cached."""
         cached_file = os.path.join(self.cache_dir, os.path.basename(file) + ".npy")
         if not os.path.exists(cached_file):
+            print(f"Tokenizing and caching file {cached_file}...")
             with open(file, 'r', encoding='utf-8') as f:
                 text = f.read()
             tokens = self.tokenizer.encode(text)
