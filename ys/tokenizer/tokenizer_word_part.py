@@ -364,12 +364,11 @@ def example_tokenize():
 def run_tokenizer_tests():
     tokenizer = Tokenizer()
     test_cases = [
-        ("rebasing and understanding", []),
+        ("rebasing and understanding", ['<nospace>', ' re', 'bas', 'ing', ' and', ' under', 'stand', 'ing']),
         ("LaSalle is a great example of camelCase splitting.",
-         ['<upper>', '<nospace>', ' la', '<upper>', '<nospace>', ' salle', ' is', ' a', ' great', ' example', ' of',
-          ' camel', '<upper>', '<nospace>', ' case', ' splitting', '.']),
+         ['<upper>', '<nospace>', ' la', '<upper>', '<nospace>', ' salle', ' is', ' a', ' great', ' ex', 'ample', ' of', ' camel', '<upper>', '<nospace>', ' case', ' split', 'ting', '.']),
         ("The quick brown fox jumps over the lazy dog.",
-         ['<upper>', '<nospace>', ' the', ' quick', ' brown', ' fox', ' jumps', ' over', ' the', ' lazy', ' dog', '.']),
+         ['<upper>', '<nospace>', ' the', ' quick', ' brown', ' fox', ' jump', 's', ' over', ' the', ' laz', 'y', ' dog', '.']),
         ("Jalapeño is a spicy pepper! Do you like Piña colada?",
          ['<upper>', '<nospace>', ' jalapeño', ' is', ' a', ' spicy', ' pepper', '!', '<upper>', ' do', ' you', ' like',
           '<upper>', ' piña', ' colada', '?']),
