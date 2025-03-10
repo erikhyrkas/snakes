@@ -1,5 +1,6 @@
 import pickle
 import re
+from collections import defaultdict
 
 DEBUG_TOKENIZER = False
 
@@ -10,6 +11,8 @@ class Tokenizer:
     def __init__(self):
         self.index_to_word = {}
         self.word_to_index = {}
+        self.token_frequencies = defaultdict(int)
+        self.unprunable_index = 0
         self.current_index = 0
         self.initialized = False
         self.special_tokens = ["<upper>", "<shout>", "<start>", "<end>", "<space>", "<newline>", "<pad>",
@@ -52,6 +55,7 @@ class Tokenizer:
             for char in extended_chars:
                 self._add_to_vocab(char)
 
+            self.unprunable_index = self.current_index
             self.initialized = True
 
     @staticmethod
@@ -90,8 +94,79 @@ class Tokenizer:
             self._initialize_vocabulary()
         words = self.to_words(document)
         for word in words:
+            self.token_frequencies[word] += 1
             if word not in self.word_to_index:
                 self._add_to_vocab(word)
+
+    def prune_vocabulary(self, min_frequency_percentage=0.001):
+        """
+        Remove infrequent tokens and replace them with letter-based tokenization
+        or subword units.
+        """
+        if not self.initialized:
+            raise "cannot prune uninitialized tokenizer"
+        total_occurrences = sum(self.token_frequencies.values())
+        min_frequency = max(1, int((min_frequency_percentage / 100) * total_occurrences))
+        print(
+            f"Pruning tokens that are used less than {min_frequency_percentage}% of the time, which is a frequency of {min_frequency} / {total_occurrences}")
+
+        unprunable_items = [word for index, word in self.index_to_word.items() if index <= self.unprunable_index]
+        low_frequency_items = [word for word, freq in self.token_frequencies.items() if freq < min_frequency]
+        to_prune = [word for word in low_frequency_items if word not in unprunable_items]
+        to_keep = [word for index, word in self.index_to_word.items() if word not in to_prune]
+
+        print(f"Pruning {len(to_prune)} tokens...")
+
+        # Reset vocab
+        self.index_to_word.clear()
+        self.word_to_index.clear()
+        self.current_index = 0
+
+        # Re-add common tokens
+        for word in to_keep:
+            print(f"keeping {word}")
+            self._add_to_vocab(word)
+
+        print(f"New vocab size: {self.vocab_size()}")
+        #
+        # for pruned_token in to_prune:
+        #     sub_parts = self._split_subwords(pruned_token)
+        #     print(f"Replaced '{pruned_token}' → {sub_parts}")
+        #     for part in sub_parts:
+        #         self._add_to_vocab(part)
+
+    @staticmethod
+    def _split_subwords(word):
+        """Split infrequent words into common prefixes and suffixes."""
+        common_prefixes = [
+            ' counter',
+            ' hetero', ' contra', ' circum',
+            ' extra', ' hyper', ' micro', ' multi', ' retro', ' ultra', ' inter', ' trans', ' super', ' under',
+            ' auto', ' homo', ' hypo', ' mono', ' poly', ' post', ' tele', ' semi', ' anti', ' over', ' fore',
+            ' mid', ' mal', ' pro', ' syn', ' sym', ' tri', ' dis', ' non', ' mis', ' sub', ' pre', ' con', ' com',
+            ' co', ' de', ' ex', ' un', ' re', ' in', ' im', ' il', ' ir', ' en', ' em', ' de', ' bi',
+        ]
+        common_suffixes = ['itive', 'ative', 'ation', 'ition',
+                           'ment', 'ness', 'less', 'able', 'ible', 'tion', 'eous', 'ious',
+                           'ting', 'ning', 'bing',
+                           'ous', 'ive', 'ity', 'ial', 'iest', 'est', 'ful', 'ing', 'ion',
+                           'ted', 'ned', 'bed',
+                           'al', 'ed', 'en', 'er', 'ic', 'ty', 'ly', 'es',
+                           's', 'y',
+                           'all', 'eng', 'ino', 'ig', 'ick', 'an', 'cke', 'ji', 'awa', 'osa',
+                           'ula', 'ard', 'tt', 'ah', 'sha', 'ska', 'ck', 'and', 'ell', 'one',
+                           'gee', 'lin', 'kov', 'de', 'ini', 'iah', 'va', 'am', 'ach', 'el',
+                           'eth', 'ian', 'eo', 'ri', 'lo', 'lle', 'le', 'tyl', 'inn', 'rd']
+
+        for prefix in common_prefixes:
+            if word.startswith(prefix):
+                return [prefix, word[len(prefix):]]
+
+        for suffix in common_suffixes:
+            if word.endswith(suffix):
+                return [word[:-len(suffix)], suffix]
+
+        return list(word)  # Default: split into characters
 
     @staticmethod
     def _split_text(text):
@@ -207,6 +282,9 @@ class Tokenizer:
         no_space = False
         for token in tokens:
             word = self.index_to_word[token]
+            if word is None or len(word) == 0:
+                print(f"\nError: Token {token} became '{word}'")
+                continue
             if word == '<nospace>':
                 no_space = True
             elif word == '<repeata>':
@@ -249,24 +327,25 @@ class Tokenizer:
                 if no_space:
                     word = word.strip()
                     no_space = False
-                if capitalize_next:
-                    if word[0].isspace():
-                        word = ' ' + (word.strip()).capitalize()
-                    else:
-                        word = word.capitalize()
-                    capitalize_next = False
-                if shout_next:
-                    word = word.upper()
-                    shout_next = False
+                if len(word) > 0:
+                    if capitalize_next:
+                        if word[0].isspace():
+                            word = ' ' + (word.strip()).capitalize()
+                        else:
+                            word = word.capitalize()
+                        capitalize_next = False
+                    if shout_next:
+                        word = word.upper()
+                        shout_next = False
 
-                if repeat_next > 1:
-                    for _ in range(repeat_next):
-                        text += word[0]
-                    next_part = word[1:]
-                    text += next_part
-                else:
-                    text += word
-                repeat_next = 1
+                    if repeat_next > 1:
+                        for _ in range(repeat_next):
+                            text += word[0]
+                        next_part = word[1:]
+                        text += next_part
+                    else:
+                        text += word
+                    repeat_next = 1
         return text
 
     def vocab_size(self):
@@ -318,8 +397,10 @@ def example_tokenize():
 def run_tokenizer_tests():
     tokenizer = Tokenizer()
     test_cases = [
-        ("Email: test@example.com", ['<upper>', '<nospace>', ' email', ':', ' test', '@', '<nospace>', ' example', '.', '<nospace>', ' com']),
-        ("This is a <start>test<end>", ['<upper>', '<nospace>', ' this', ' is', ' a', '<space>', '<start>', '<nospace>', ' test', '<end>']),
+        ("Email: test@example.com",
+         ['<upper>', '<nospace>', ' email', ':', ' test', '@', '<nospace>', ' example', '.', '<nospace>', ' com']),
+        ("This is a <start>test<end>",
+         ['<upper>', '<nospace>', ' this', ' is', ' a', '<space>', '<start>', '<nospace>', ' test', '<end>']),
         ("-", ['-']),
         ("--", ['<repeata>', '-']),
         ("---", ['<repeatb>', '-']),
@@ -417,6 +498,9 @@ def run_tokenizer_tests():
     for test_case in test_cases:
         test = test_case[0]
         tokenizer.learn_new_vocab(test)
+
+    oov_list = [('barargasg drulkj', ['<nospace>', ' ', 'b', 'a', 'r', 'a', 'r', 'g', 'a', 's', 'g', ' ', 'd', 'r', 'u', 'l', 'k', 'j'])]
+    test_cases += oov_list
 
     for idx, test_case in enumerate(test_cases):
         test = test_case[0]
