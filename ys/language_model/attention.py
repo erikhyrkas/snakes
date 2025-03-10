@@ -91,7 +91,8 @@ class Attention(nn.Module):
             next_state = self.layer_norm_state(next_state.view(-1, self.state_dim)).view(batch_size, self.num_heads, self.state_dim)
 
             # Update cached state and store current state
-            last_state = next_state
+            # last_state = next_state
+            last_state = next_state.detach()
             next_states[:, t + 1] = next_state
 
         # Compute outputs for each layer without flattening the layer dimension
