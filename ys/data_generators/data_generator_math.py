@@ -226,4 +226,4 @@ def learn_math(file_path: str):
 
 
 if __name__ == '__main__':
-    learn_math("./training_data/step-by-step-math")
+    learn_math("./training_data_v2/step-by-step-math")

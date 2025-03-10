@@ -1,5 +1,7 @@
 import random
+from typing import Tuple
 
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
@@ -56,42 +58,21 @@ def generate_slice_of_life_story(group, location, topic):
     return prompt_ollama(prompt)
 
 
-def write_stories_to_file(stories: dict, base_file_name, file_count):
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
-    with open(output_file, 'w', encoding="utf-8") as file:
-        for prompt in stories:
-            story = stories[prompt]
-            file.write(f"{prompt}<start>{story}\n<end>\n\n")
-        file.flush()
-
-
-def generate_slice_of_life_stories():
+def entry_generator() -> Tuple[str, str]:
     names = load_items('./ys/data_generators/names.txt')
     groups = group_names(names)
     locations = load_items('./ys/data_generators/locations.txt')
     topics = load_items('./ys/data_generators/wiki_topics.txt')
 
-    base_file_name = 'llama-slice-of-life'
-    file_count = 0
-    stories = dict()
+    while True:
+        for idx, group in enumerate(groups):
+            location = random.choice(locations)
+            topic = random.choice(topics)
+            prompt = f"Write a slice-of-life story about {group} discussing {topic} {location}."
+            story = generate_slice_of_life_story(group, location, topic)
+            yield prompt, story
 
-    for idx, group in enumerate(groups):
-        print(f"Generating slice of life {idx + 1} of {len(groups)}: {group}")
-
-        location = random.choice(locations)
-        topic = random.choice(topics)
-        prompt = f"Write a slice-of-life story about {group} discussing {topic} {location}."
-        story = generate_slice_of_life_story(group, location, topic)
-        stories[prompt] = story
-
-        if len(stories) == 20:
-            write_stories_to_file(stories, base_file_name, file_count)
-            stories = dict()
-            file_count += 1
-
-    if stories:
-        write_stories_to_file(stories, base_file_name, file_count)
 
 
 if __name__ == '__main__':
-    generate_slice_of_life_stories()
+    generate_training_files_v2("generated-slice-of-life", entry_generator)

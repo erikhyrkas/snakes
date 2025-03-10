@@ -3,6 +3,7 @@ from collections import deque
 
 from ys.tokenizer.tokenizer import Tokenizer
 
+
 # run from root folder
 
 def write_records(records, target_folder, items_per_file, tokenizer):

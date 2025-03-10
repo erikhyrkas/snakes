@@ -1,13 +1,12 @@
-import string
-
-from ys.data_generators.util.generator_harness import generate_training_files
-from typing import Tuple
 import random
+import string
+from typing import Tuple
 
+from ys.data_generators.util.generator_harness import generate_training_files, generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
-def entry_generator() -> Tuple[int, str, str]:
+def entry_generator() -> Tuple[str, str]:
     """
     A generator that yields a file number, a dynamically generated training prompt, and a validated response.
     Each iteration generates a new prompt and response, validates the response, and retries if necessary.
@@ -45,8 +44,7 @@ def entry_generator() -> Tuple[int, str, str]:
     ]
 
     # Initialize counters
-    file_number: int = 0
-    index = 0
+
     max_retries = 5
     categories = ['History', 'Geography', 'Science', 'Literature', 'Movies', 'Music', 'Art', 'Sports', 'World Capitals',
                   'Famous People', 'Animals', 'Mythology and Religion', 'Technology', 'Inventions', 'Space',
@@ -56,7 +54,7 @@ def entry_generator() -> Tuple[int, str, str]:
                   "Science", "Literature", "Animals", "Space", "Mathematics", "Architecture", "Nature and Environment",
                   "Languages", "Art", "Famous Quotes", "Inventions"
                   ]
-    for _ in range(4000):
+    while True:
         num_instructions = random.randint(1, 3)
         category = random.choice(categories)
         question = prompt_ollama(
@@ -95,13 +93,11 @@ def entry_generator() -> Tuple[int, str, str]:
         question = question.replace('[sentence_count]', f'{sentence_count}')
         word_range = word_count + random.randint(50, 100)
         question = question.replace('[word_range]', f'{word_count}-{word_range}')
-        print(f"Question: {question}")
         answer = ''
         retry_count = 0
         valid_response = False
         while not valid_response and retry_count < max_retries:
             answer = prompt_ollama(question)
-            print(f"Answer: {answer}")
             full_validation_prompt = f"Answer Yes or No, with no other response.\nDoes this response answer the question exactly, formatting the answer perfectly?\n\nQuestion: {question}\n\nAnswer:\n```{answer}```"
             valid = prompt_ollama(full_validation_prompt)
             valid_response = 'Yes' == valid.strip()
@@ -114,13 +110,8 @@ def entry_generator() -> Tuple[int, str, str]:
                 f"Failed to generate valid response after {max_retries} attempts for instruction '{question}' and answer '{answer}'")
             continue
 
-        # Increment file_number every 200 entries
-        if index % 200 == 0:
-            file_number += 1
-        index += 1
-
-        yield file_number, question, answer
+        yield question, answer
 
 
 if __name__ == '__main__':
-    generate_training_files("generated-if", entry_generator)
+    generate_training_files_v2("generated-if", entry_generator)

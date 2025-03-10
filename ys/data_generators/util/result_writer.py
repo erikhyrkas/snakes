@@ -14,6 +14,16 @@ def append_prompt_responses_to_file(prompt_responses: dict, base_file_name, file
             file.write(f"{prompt}{response.strip()}\n\n")
         file.flush()
 
+def append_prompt_response_to_file_v2(prompt: str, response: str, base_file_name, file_count):
+    output_file = f'./training_data_v2/{base_file_name}-{file_count}.md'
+    with open(output_file, 'a', encoding="utf-8") as file:
+        if "<start>" not in response:
+            response = "<start>" + response
+        if "<end>" not in response:
+            response = response + "<end>"
+        file.write(f"{prompt}{response.strip()}\n\n")
+        file.flush()
+
 def append_prompt_response_to_file(prompt: str, response: str, base_file_name, file_count):
     output_file = f'./training_data/{base_file_name}-{file_count}.md'
     with open(output_file, 'a', encoding="utf-8") as file:

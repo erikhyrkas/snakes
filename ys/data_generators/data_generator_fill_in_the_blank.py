@@ -1,10 +1,9 @@
 import random
-import string
 import re
-
+import string
 from typing import Tuple
 
-from ys.data_generators.util.generator_harness import generate_training_files
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
@@ -95,7 +94,7 @@ def generate_questions_for_category(category):
     return questions
 
 
-def entry_generator() -> Tuple[int, str, str]:
+def entry_generator() -> Tuple[str, str]:
     categories = [
         "Mathematics",
         "Science",
@@ -107,9 +106,7 @@ def entry_generator() -> Tuple[int, str, str]:
         "Social Sciences"
     ]
 
-    file_number: int = 0
-    index = 0
-    for _ in range(20):
+    while True:
         for category in categories:
             category_questions = generate_questions_for_category(category)
             #             question = {
@@ -184,11 +181,8 @@ def entry_generator() -> Tuple[int, str, str]:
                 steps = steps.strip()
                 if "I cannot " not in steps:
                     correct_answer = f"{steps}\n\n{correct_answer}"
-                if index % 500 == 0:
-                    file_number = file_number + 1
-                index += 1
-                yield file_number, prompt, correct_answer
+                yield prompt, correct_answer
 
 
 if __name__ == '__main__':
-    generate_training_files("generated-fill-in-the-blank", entry_generator)
+    generate_training_files_v2("generated-fill-in-the-blank", entry_generator)

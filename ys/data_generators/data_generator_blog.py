@@ -1,4 +1,8 @@
+import random
+from typing import Tuple
+
 from data_generator_wiki import load_topics
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
@@ -22,26 +26,16 @@ def write_blogs_to_file(articles: dict, base_file_name, file_count):
         file.flush()
 
 
-def generate_wiki_articles():
+def entry_generator() -> Tuple[str, str]:
     topics = load_topics()
 
-    base_file_name = 'llama-blog'
-    file_count = 0
-    articles = dict()
-
-    for idx, topic in enumerate(topics):
-        print(f"Generating blog post {idx + 1} of {len(topics)}: {topic}")
-        article = generate_blog_post(topic)
-        articles[topic] = article
-
-        if len(articles) == 20:
-            write_blogs_to_file(articles, base_file_name, file_count)
-            articles = dict()
-            file_count += 1
-
-    if articles:
-        write_blogs_to_file(articles, base_file_name, file_count)
+    while True:
+        random.shuffle(topics)
+        for idx, topic in enumerate(topics):
+            print(f"Generating blog post {idx + 1} of {len(topics)}: {topic}")
+            article = generate_blog_post(topic)
+            yield f"Write a blog post about {topic}.", article
 
 
 if __name__ == '__main__':
-    generate_wiki_articles()
+    generate_training_files_v2("generated-blog", entry_generator)

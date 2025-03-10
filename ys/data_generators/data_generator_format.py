@@ -1,5 +1,4 @@
 import os
-
 import random
 
 from ys.data_generators.factory.structured_data_generator import StructuredDataGenerator
@@ -52,7 +51,7 @@ def main():
     base_file_name = 'format-convertion'
     structured_data_generator = StructuredDataGenerator('names.txt', 'cities.tsv')
     for file_count in range(20):
-        output_file = f'./training_data/{base_file_name}-{file_count}.md'
+        output_file = f'./training_data_v2/{base_file_name}-{file_count}.md'
         if os.path.exists(output_file):
             continue
         with open(output_file, 'w', encoding="utf-8") as file:

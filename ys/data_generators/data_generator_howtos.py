@@ -1,5 +1,7 @@
 import random
+from typing import Tuple
 
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
@@ -28,26 +30,15 @@ def write_howto_to_file(howtos: dict, base_file_name, file_count):
         file.flush()
 
 
-def generate_howtos():
+def entry_generator() -> Tuple[str, str]:
     topics = load_howto_topics()
 
-    base_file_name = 'llama-howto'
-    file_count = 0
-    howtos = dict()
-
-    for idx, topic in enumerate(topics):
-        print(f"Generating howto {idx + 1} of {len(topics)}: {topic}")
-        howto_answer = generate_howto_result(topic)
-        howtos[topic] = howto_answer
-
-        if len(howtos) == 25:
-            write_howto_to_file(howtos, base_file_name, file_count)
-            howtos = dict()
-            file_count += 1
-
-    if howtos:
-        write_howto_to_file(howtos, base_file_name, file_count)
+    while True:
+        for idx, topic in enumerate(topics):
+            howto_answer = generate_howto_result(topic)
+            howto_prompt = f"How do I {topic}?"
+            yield howto_prompt, howto_answer
 
 
 if __name__ == '__main__':
-    generate_howtos()
+    generate_training_files_v2("generated-howto", entry_generator)

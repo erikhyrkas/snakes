@@ -1,9 +1,7 @@
-import string
+import random
+from typing import Tuple
 
 from ys.data_generators.util.generator_harness import generate_training_files
-from typing import Tuple
-import random
-
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 

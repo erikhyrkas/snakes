@@ -1,5 +1,7 @@
 import random
+from typing import Tuple
 
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 # Map of dates to descriptions
@@ -126,43 +128,14 @@ def generate_event_prompt(date, description):
     return prompt
 
 
-def write_scripts(prompts: list, base_file_name, file_count):
-    """
-    Write generated prompts to a markdown file.
-    """
-    output_file = f'./training_data/{base_file_name}-{file_count}.md'
-    with open(output_file, 'w', encoding="utf-8") as file:
-        for prompt in prompts:
-            script = prompt_ollama(prompt)
-            file.write(
-                f"{prompt}<start>{script}\n<end>\n\n"
-            )
-        file.flush()
-
-
-def generate_event_prompts():
-    """
-    Generate prompts for all important dates and write them to files.
-    """
+def entry_generator() -> Tuple[str, str]:
     dates = load_dates()
 
-    base_file_name = 'llama-scripts'
-    file_count = 0
-    prompts = []
-
-    for idx, (date, description) in enumerate(dates):
-        print(f"Generating prompt {idx + 1} of {len(dates)}: {date}")
-        prompt = generate_event_prompt(date, description)
-        prompts.append(prompt)
-
-        if len(prompts) == 52:
-            write_scripts(prompts, base_file_name, file_count)
-            prompts = []
-            file_count += 1
-
-    if prompts:
-        write_scripts(prompts, base_file_name, file_count)
-
+    while True:
+        for idx, (date, description) in enumerate(dates):
+            prompt = generate_event_prompt(date, description)
+            script = prompt_ollama(prompt)
+            yield prompt, script
 
 if __name__ == '__main__':
-    generate_event_prompts()
+    generate_training_files_v2("generated-scripts", entry_generator)

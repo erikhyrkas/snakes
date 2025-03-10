@@ -1,13 +1,11 @@
-import string
-
-from ys.data_generators.util.generator_harness import generate_training_files
-from typing import Tuple
 import random
+from typing import Tuple
 
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
-def entry_generator() -> Tuple[int, str, str]:
+def entry_generator() -> Tuple[str, str]:
     genres = [
         "Drama",
         "Comedy",
@@ -24,9 +22,9 @@ def entry_generator() -> Tuple[int, str, str]:
         "Slice of Life",
         "Epic",
     ]
-    file_number: int = 0
-    index = 0
-    for _ in range(2800):
+
+    verbs = ['an exciting', 'a', 'a fun', 'an interesting', 'a long', 'a short', 'a thought provoking', 'an unexpected', 'a silly', 'a funny', 'a humorous', 'a playful']
+    while True:
         all_titles = dict()
         for genre in genres:
             lower_genre = genre.lower()
@@ -41,15 +39,12 @@ def entry_generator() -> Tuple[int, str, str]:
         random.shuffle(all_titles_shuffled_keys)
         for title in all_titles_shuffled_keys:
             genre = all_titles[title].lower()
-            base_prompt = f"Write a bedtime story called `{title}`."
-            script = prompt_ollama(f"{base_prompt} The genre is `{genre}`. Do not make another other comments or acknowledgements.")
+            verb = random.choice(verbs)
+            base_prompt = f"Write {verb} bedtime story called `{title}`."
+            story = prompt_ollama(f"{base_prompt} The genre is `{genre}`. Do not make another other comments or acknowledgements.")
 
-            if index % 50 == 0:
-                file_number += 1
-            index += 1
-
-            yield file_number, base_prompt, script
+            yield base_prompt, story
 
 
 if __name__ == '__main__':
-    generate_training_files("generated-bedtime", entry_generator)
+    generate_training_files_v2("generated-bedtime", entry_generator)

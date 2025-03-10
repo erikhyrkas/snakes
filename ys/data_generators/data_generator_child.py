@@ -1,19 +1,15 @@
-import string
+import random
+from typing import Tuple
 
 from ys.data_generators.data_generator_names import load_items
-from ys.data_generators.util.generator_harness import generate_training_files
-from typing import Tuple
-import random
-
+from ys.data_generators.util.generator_harness import generate_training_files_v2
 from ys.data_generators.util.ollama_prompter import prompt_ollama
 
 
-def entry_generator() -> Tuple[int, str, str]:
+def entry_generator() -> Tuple[str, str]:
     main_characters = load_items('./ys/data_generators/names.txt')
 
-    file_number: int = 0
-    index = 0
-    for _ in range(100):
+    while True:
         all_titles = dict()
         for name in main_characters:
             titles_string = prompt_ollama(
@@ -30,12 +26,8 @@ def entry_generator() -> Tuple[int, str, str]:
             base_prompt = f"Tell the child-appropriate tale called `{title}`."
             script = prompt_ollama(f"{base_prompt} The main character is a child named `{name}`. Do not make another other comments or acknowledgements.")
 
-            if index % 50 == 0:
-                file_number += 1
-            index += 1
-
-            yield file_number, base_prompt, script
+            yield base_prompt, script
 
 
 if __name__ == '__main__':
-    generate_training_files("generated-child", entry_generator)
+    generate_training_files_v2("generated-child", entry_generator)
